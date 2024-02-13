@@ -2,6 +2,14 @@ import React from 'react';
 
 
 // Reusable Button Component.
-function Button () {
 
-}
+function UniversalButton () {
+
+    return(
+        <button>
+            
+        </button>
+    )
+};
+
+export default UniversalButton;
