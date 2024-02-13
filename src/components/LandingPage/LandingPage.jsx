@@ -19,6 +19,7 @@ function LandingPage() {
     console.log(`login`, login);
   };
 
+  const newVariable = 'lalala'
 
 
 
