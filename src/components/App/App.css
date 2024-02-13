@@ -1,3 +1,11 @@
+
+/* defaults your css for the document *BEN* */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body,
 #react-root {
@@ -9,18 +17,24 @@ body {
   margin: 0px;
 }
 
-img {
+/* img {
   display: inline-block;
   max-width: 100%;
-}
+} */
 
 /* --------------------------------------------------------------------------------
 Container
 -------------------------------------------------------------------------------- */
 
-.container {
+/* .container {
   padding: 20px;
-}
+} */
+
+
+
+
+
+
 
 /* --------------------------------------------------------------------------------
 Button
@@ -60,7 +74,8 @@ Button
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
-.btn_asLink {
+/* BEN - Irrelevant */
+/* .btn_asLink {
   padding: 0;
   border-width: 0;
   border-bottom: 1px solid #444;
@@ -74,7 +89,7 @@ Button
   background-color: transparent;
   border-color: #008183;
   color: #008183;
-}
+} */
 
 /* --------------------------------------------------------------------------------
 Alert
@@ -95,7 +110,8 @@ Alert
 Form Treatment
 -------------------------------------------------------------------------------- */
 
-.formPanel {
+/* original css for login and register forms */
+/* .formPanel {
   box-sizing: border-box;
   width: 400px;
   max-width: 100%;
@@ -109,4 +125,4 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
-}
+} */
