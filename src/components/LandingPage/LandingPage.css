@@ -1,12 +1,49 @@
-.invisible {
-  display: none;
-}
-/* visible edit form */
-.visible {
+
+/* login page css */
+.landingPage {
+  border: 2px solid magenta;
+  background-image: url('../../Images/curtains.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 40px;
+
+  padding: 120px 0px;
+
 }
+
+.sixthLogo {
+  color: white;
+  /* border: 2px solid white; */
+  box-shadow: 0 0 25px #f4f5e3;
+  /* box-shadow: inset 0 0 10px white; */
+  background-color: #f4f5e355;
+  padding: 100px;
+  border-radius: 50%;
+  text-align: center;
+  position: relative;
+  bottom: 40px;
+  right: 30px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -15,31 +52,71 @@
 /* *** clapboard CSS */
 
 .clapboard {
-  border: 2px solid black;
-  background-color: black;
-  width: 800px;
-  height: 550px;
-  box-shadow: 0 0 5px black;
+  /* border: 2px solid white; */
+  background-color: #000000;
+  border-radius: 10px;
 
+  width: 500px;
+  /* height: 560px; */
+  box-shadow: 0 0 5px black;
+  color: white;
 }
 .clapTop {
-  border: 3px solid grey;
-  height: 125px;
+  border: 4px solid #4d4d4d;
+  border-radius: 10px 10px 10px 10px;
   box-shadow: 0 0 5px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  height: 110px;
 }
+    .clapStrip {
+      /* border: 3px solid green; */
+      margin-left: 95px;
+      margin-right: 10px;
+      display: flex;
+      flex-direction: row;
+      height: 50px;
+      gap: 25px;
+    }
+        .chevronUp {
+          width: 40px;
+          height: 48px;
+          transform: skew(40deg);
+          background: white;
+        }
+        .chevronDw {
+          width: 40px;
+          height: 48px;
+          transform: skew(-40deg);
+          background: white;
+        }
+        .blue {
+          background-color: #128bb5;
+        }
+        .red {
+          background-color: #de5722;
+        }
+        .yellow {
+          background-color: #deb522;
+        }
+        .white {
+          background-color: #838383;
+        }
 .clapBody {
   border-top: 1px solid white;
   border-bottom: 1px solid white;
   background-color: #80808033;
-  border-radius: 15px;
-  height: 380px;
+  /* border-radius: 15px; */
+  /* height: 380px; */
   /* margin-top: 30px; */
-  margin: 20px;
+  margin: 2px;
 }
     .clapRowOne {
       border-top: 1px solid white;
       border-bottom: 1px solid white;
-      border-radius: 15px 15px 0px 0px;
+      /* border-radius: 15px 15px 0px 0px; */
       height: 150px;
       display: flex;
       flex-direction: row;
@@ -81,7 +158,30 @@
     .clapRowThree {
       border-top: 1px solid white;
       border-bottom: 1px solid white;
-      border-radius: 0px 0px 15px 15px;
+      /* border-radius: 0px 0px 15px 15px; */
 
-      height: 80px;
+      height: 60px;
     }
+
+
+    /* allows registration and login to swap */
+    .invisible {
+      display: none;
+    }
+    /* visible edit form */
+    .visible {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    /* login and registration boxes */
+    .txtBox {
+      /* border: 2px solid blue; */
+      background-color: #80808044;
+      width: 200px;
+      height: 30px;
+      
+    }
+    
+    
