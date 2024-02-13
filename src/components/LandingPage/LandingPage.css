@@ -3,6 +3,7 @@
 .landingPage {
   border: 2px solid magenta;
   background-color: grey;
+  background-image: linear-gradient(to top, #242319, #dcdada);
   display: flex;
   flex-direction: column;
   /* justify-content: space-evenly; */
