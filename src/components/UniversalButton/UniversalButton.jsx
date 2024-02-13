@@ -1,14 +1,15 @@
 import React from 'react';
-
+import Button from '@mui/material/Button';
 
 // Reusable Button Component.
 
-function UniversalButton () {
+function UniversalButton ({text, onClick}) {
 
     return(
-        <button>
-            
-        </button>
+        <Button variant="contained"  onClick={onClick}>
+            {/* Example use --> text = "Hello" */}
+            {text}
+        </Button>
     )
 };
 
