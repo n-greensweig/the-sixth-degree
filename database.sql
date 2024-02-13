@@ -1,23 +1,11 @@
 -- User table and sample data
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "email" VARCHAR(120) UNIQUE,
+    "username" VARCHAR(120) UNIQUE,
    	"password" VARCHAR(1000),
 	"first_name" VARCHAR(120),
 	"last_name" VARCHAR(120),
 	"date_created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO "user" (
-"id", "email", "password", "first_name", "last_name")
-VALUES (
-1, 'ngreensweig@gmail.com', 'testpass', 'Noah', 'Greensweig'
-);
-
-INSERT INTO "user" (
-"id", "email", "password", "first_name", "last_name")
-VALUES (
-2, 'ngreensweig20@gmail.com', 'testpass', 'Noah', 'Solomon'
 );
 
 
