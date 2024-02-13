@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
 
 // login and registration
@@ -20,64 +20,38 @@ function LandingPage() {
   };
 
 
-  
-  return (
-    <div classNameName="container">
 
-      <h2>{heading}</h2>
+
+  return (
+    <div className="landingPage">
+
+      <div className='sixthLogo'>
+        <h2>The</h2>
+        <h2>Sixth</h2>
+        <h2>Degree</h2>
+      </div>
 
       <div>
-        <div classNameName={login ? 'visible' : 'invisible'}>
+        <div className={login ? 'visible' : 'invisible'}>
           <LoginForm />
         </div>
 
-        <div classNameName={login ? 'invisible' : 'visible'}>
+        <div className={login ? 'invisible' : 'visible'}>
           <RegisterForm />
         </div>
 
-        <div classNameName={login ? 'visible' : 'invisible'}>
-          <button classNameName="btn" onClick={loginOrRegister}>
+        <div className={login ? 'visible' : 'invisible'}>
+          <button className="btn" onClick={loginOrRegister}>
             Register
           </button>
         </div>
 
-        <div classNameName={login ? 'invisible' : 'visible'}>
-          <button classNameName="btn" onClick={loginOrRegister}>
+        <div className={login ? 'invisible' : 'visible'}>
+          <button className="btn" onClick={loginOrRegister}>
             Login
           </button>
         </div>
       </div>
-
-
-      {/* clapboard */}
-
-      <div className='clapboard'>
-
-        <div className='clapTop'></div>
-
-        <div className='clapBody'>
-
-          <div className='clapRowOne'>
-            <div className='clapBoxOne'></div>
-            <div className='clapBoxOne boxMid'></div>
-            <div className='clapBoxOne'></div>
-          </div>
-
-          <div className='clapRowTwo'>
-            <div className='clapLog'>
-              <div className='clapBoxLog boxTop'></div>
-              <div className='clapBoxLog'></div>
-            </div>
-            <div className='clapBoxTwo'></div>
-          </div>
-
-          <div className='clapRowThree'></div>
-
-
-        </div>
-
-      </div>
-
 
 
     </div>
