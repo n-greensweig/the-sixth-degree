@@ -2,33 +2,89 @@
 /* login page css */
 .landingPage {
   border: 2px solid magenta;
-  background-image: url('../../Images/curtains.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
+  background-color: grey;
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 40px;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
+  gap: 30px;
 
-  padding: 120px 0px;
+  padding: 150px;
 
 }
+    .chevDiv {
+      /* border: 2px solid blue; */
+      width: 100%;
+      height: 150px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+    .chevDivRev {
+      /* border: 2px solid blue; */
+      width: 100%;
+      height: 150px;
+
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+        .chevRow {
+          /* border: 2px solid red; */
+          width: 100%;
+          height: 70px;
+
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+
+        }
+            .chevTop {
+              width: 50px;
+              height: 70px;
+              transform: skew(-40deg);
+              background: white;   
+              box-shadow: 0 0 10px black; 
+            }
+            .chevBot {
+              width: 50px;
+              height: 70px;
+              transform: skew(40deg);
+              background: white;    
+              box-shadow: 0 0 10px black; 
+
+            }
+
+
+
+    .loginDiv {
+      /* border: 2px solid gold; */
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+
+
 
 .sixthLogo {
   color: white;
-  /* border: 2px solid white; */
-  box-shadow: 0 0 25px #f4f5e3;
+  border: 1px solid black;
+  /* box-shadow: 0 0 25px #f4f5e3; */
   /* box-shadow: inset 0 0 10px white; */
-  background-color: #f4f5e355;
+  /* background-color: #f4f5e355; */
   padding: 100px;
   border-radius: 50%;
   text-align: center;
-  position: relative;
+  /* position: relative;
   bottom: 40px;
-  right: 30px;
+  right: 30px; */
 
 }
 
@@ -53,13 +109,14 @@
 
 .clapboard {
   /* border: 2px solid white; */
-  background-color: #000000;
-  border-radius: 10px;
+  background-color: #414040;
+  /* border-radius: 10px; */
 
   width: 500px;
   /* height: 560px; */
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 10px black;
   color: white;
+  padding-bottom: 15px;
 }
 .clapTop {
   border: 4px solid #4d4d4d;
@@ -69,7 +126,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 5px;
-  height: 110px;
+  height: 70px;
 }
     .clapStrip {
       /* border: 3px solid green; */
@@ -77,14 +134,16 @@
       margin-right: 10px;
       display: flex;
       flex-direction: row;
-      height: 50px;
+      height: 70px;
       gap: 25px;
+      /* box-shadow: inset 0 0 15px black; */
+
     }
         .chevronUp {
           width: 40px;
-          height: 48px;
+          height: 60px;
           transform: skew(40deg);
-          background: white;
+          background: rgb(229, 229, 229)
         }
         .chevronDw {
           width: 40px;
@@ -111,7 +170,7 @@
   /* border-radius: 15px; */
   /* height: 380px; */
   /* margin-top: 30px; */
-  margin: 2px;
+  margin-top: 10px;
 }
     .clapRowOne {
       border-top: 1px solid white;
@@ -136,30 +195,36 @@
       height: 150px;
       display: flex;
       flex-direction: row;
+      /* box-shadow: inset 0 0 15px black; */
     }
         .clapBoxTwo {
           /* border: 2px solid white; */
           width: 350px;
+
         }
         .clapLog {
           border-right: 2px solid white;
           width: 440px;
           display: flex;
           flex-direction: column;
+
         } 
             .clapBoxLog {
               /* border: 2px solid white; */
               height: 75px;
+              /* box-shadow: inset 0 0 15px black; */
+
             }
             .boxTop {
               border-bottom: 2px solid white;
+
             }
     
     .clapRowThree {
-      border-top: 1px solid white;
+      border-top: 1px solid #ffffff;
       border-bottom: 1px solid white;
       /* border-radius: 0px 0px 15px 15px; */
-
+      /* box-shadow: inset 0 0 15px black; */
       height: 60px;
     }
 

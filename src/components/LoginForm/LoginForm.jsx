@@ -32,32 +32,32 @@ function LoginForm() {
 
         <div className='clapTop'>
           <div className='clapStrip'>
-            <div className='chevronUp yellow'></div>
-            <div className='chevronUp red'></div>
-            <div className='chevronUp blue'></div>
             <div className='chevronUp'></div>
-            <div className='chevronUp white'></div>
+            <div className='chevronUp'></div>
+            <div className='chevronUp'></div>
+            <div className='chevronUp'></div>
+            <div className='chevronUp'></div>
             <div className='chevronUp'></div>
           </div>
-          <div className='clapStrip'>
-            <div className='chevronDw yellow'></div>
-            <div className='chevronDw red'></div>
-            <div className='chevronDw blue'></div>
+          {/* <div className='clapStrip'>
             <div className='chevronDw'></div>
-            <div className='chevronDw white'></div>
             <div className='chevronDw'></div>
-          </div>
+            <div className='chevronDw'></div>
+            <div className='chevronDw'></div>
+            <div className='chevronDw'></div>
+            <div className='chevronDw'></div>
+          </div> */}
         </div>
 
 
         <div className='clapBody'>
-          <div className='clapRowOne'>
+          {/* <div className='clapRowOne'>
             <div className='clapBoxOne'>
               <h2>Login</h2>
             </div>
             <div className='clapBoxOne boxMid'></div>
             <div className='clapBoxOne'></div>
-          </div>
+          </div> */}
 
           <div className='clapRowTwo'>
             <div className='clapLog'>
