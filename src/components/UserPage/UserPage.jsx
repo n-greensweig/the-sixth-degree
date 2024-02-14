@@ -1,21 +1,33 @@
 import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { TextField, Button, Grid, Container, Card, CardContent, Paper, Box } from "@mui/material";
 
 function UserPage() {
-  // this component doesn't do much to start, just renders some user reducer info to the DOM
+
+  let history = useHistory();
   const user = useSelector((store) => store.user);
+
+  const goToCreateGamePage = (event) => {
+    event.preventDefault();
+    console.log("going to create game page");
+    
+    history.push('/create-game');
+}
+
   return (
     <div className="container">
       <h1>Welcome, {user.first_name}!</h1>
       <p>Your ID is: {user.id}</p>
       <Button
         variant='outlined'
+        onClick={goToCreateGamePage}
         >Create Game</Button>
       
 
       <h2>Now Playing:</h2>
+      
       <h3>Actor</h3>
           <Card>
                 <CardContent>
@@ -27,6 +39,7 @@ function UserPage() {
                     <Button variant='outlined'>play</Button>                 
                 </CardContent>
           </Card>
+
       <h3>Director</h3>
           <Card>
             <CardContent>
