@@ -126,5 +126,3 @@ CREATE TABLE "guess" (
 INSERT INTO "guess" (
 "id", "guesser_id", "script_id", "game_id")
 VALUES (1, 2, 1, 1);
-
--- test
