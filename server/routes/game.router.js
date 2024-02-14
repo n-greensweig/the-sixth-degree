@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     let queryText = `SELECT "winner_id", "date_created" FROM "game" WHERE "player_one_id" = $1;`;
     pool.query(queryText, [req.user.id])
         .then((result) => {
-            res.send(result.rows[0]);
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log('Error in game.router GET', error);
