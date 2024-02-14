@@ -13,7 +13,7 @@ function UserPage() {
     event.preventDefault();
     console.log("going to create game page");
     
-    history.push('/create-game');
+    history.push('/new-game');
 }
 
   return (
@@ -27,7 +27,7 @@ function UserPage() {
       
 
       <h2>Now Playing:</h2>
-      
+
       <h3>Actor</h3>
           <Card>
                 <CardContent>
