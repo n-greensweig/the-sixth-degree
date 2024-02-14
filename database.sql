@@ -9,8 +9,8 @@ CREATE TABLE "user" (
 );
 
 -- ! Sample user data
--- ! Register one account with email/username 'ngreensweig@gmail.com' and password 'testpass'
--- ! Register a second account with email/username 'ngreensweig20@gmail.com' and password 'testpass'
+-- Register one account with email/username 'ngreensweig@gmail.com' and password 'testpass'
+-- Register a second account with email/username 'ngreensweig20@gmail.com' and password 'testpass'
 
 -- Game table and sample data
 CREATE TABLE "game" (
