@@ -19,8 +19,12 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import NewScript from '../NewScript3/NewScript3';
 
 import './App.css';
+
+// import for CreateGame
+import NewGame from '../NewGame/NewGame';
 
 function App() {
   const dispatch = useDispatch();
@@ -66,6 +70,14 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/new-game"
+          >
+            <NewGame />
           </ProtectedRoute>
 
           <Route
