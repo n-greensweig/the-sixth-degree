@@ -26,6 +26,7 @@ function LoginForm() {
 
   return (
 
+
     <div className='clapboard'>
 
       <form onSubmit={login}>
@@ -92,6 +93,9 @@ function LoginForm() {
       </form>
 
     </div>
+
+
+  
 
   );
 }

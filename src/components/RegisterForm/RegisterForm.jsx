@@ -21,6 +21,7 @@ function RegisterForm() {
 
   return (
 
+
     <div className='clapboard'>
 
       <form onSubmit={registerUser}>
@@ -95,6 +96,7 @@ function RegisterForm() {
       </form>
 
     </div>
+
 
   );
 }
