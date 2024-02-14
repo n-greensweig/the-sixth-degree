@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+
+import { useSelector, useDispatch } from 'react-redux';
+
+
+
 import { TextField, Button, Grid, Container, Card, CardContent, Paper, Box } from "@mui/material";
 // imported useHistory for the buttons
 import { useHistory } from 'react-router-dom';
+
 function UserPage() {
   // added for CreateGame button
   const history =useHistory();
@@ -12,10 +17,31 @@ function UserPage() {
   }
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
+  const games = useSelector((store) => store.gameReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_GAME', payload: user.id });
+  }, []);
+
   return (
     <div className="container">
       <h1>Welcome, {user.first_name}!</h1>
       <p>Your ID is: {user.id}</p>
+
+      <LogOutButton className="btn" />
+
+      {games?.map(game => {
+        return (
+          <div key={game.id}>
+            <p>Winner: {game.winner_id === null ? 'Noah' : 'no one'}</p>
+            <p>Date: {game.date_created}</p>
+          </div>
+        );
+      })}
+
+
       <Button
         variant='outlined'
         onClick={handleClick}
@@ -50,6 +76,7 @@ function UserPage() {
 
       <h2>Filmography:</h2>
       
+
     </div>
   );
 }
