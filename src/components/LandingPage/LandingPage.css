@@ -1,17 +1,19 @@
 /* login page css */
 .landingPage {
   /* border: 2px solid magenta; */
-  background-color: grey;
+  /* background-color: grey; */
   background-image: linear-gradient(to top, #242319, #dcdada);
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 25px 0px;
 }
 
 .chevDiv {
+  /* border: 2px solid yellow; */
   width: 100%;
-  height: 150px;
+  height: 90px;
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-evenly;
@@ -20,7 +22,7 @@
 .chevRow {
   /* border: 2px solid red; */
   width: 100%;
-  height: 70px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -29,32 +31,33 @@
 
 .chevTop {
   width: 50px;
-  height: 65px;
+  height: 35px;
   transform: skew(-40deg);
   background: white;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 5px black;
 }
 
 .chevBot {
   width: 50px;
-  height: 65px;
+  height: 35px;
   transform: skew(40deg);
   background: white;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 5px black;
 }
 
 .loginDiv {
   /* border: 2px solid gold; */
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 40px;
+  width: 100%;
+  /* gap: 5%; */
 }
 
 .sixthLogo {
   color: white;
-  border: 1px solid darkred;
+  border: 2px solid darkred;
   padding: 100px;
   border-radius: 50%;
   text-align: center;
@@ -64,23 +67,27 @@
 /* *** clapboard CSS */
 
 .clapboard {
-  /* border: 2px solid gold; */
-  min-width: 400px;
-  width: 475px;
+  /* border: 2px solid magenta; */
+  /* max-width: 500px; */
+  width: 430px;
+  /* min-width: 400px; */
+
   color: white;
   display: flex;
   flex-direction: column;
+  flex-basis: 100%;
+
 }
 
 .clapTop {
-  /* border: 3px solid #4d4d4d; */
+  /* border: 3px solid maroon; */
   border-radius: 5px;
   box-shadow: 0 0 5px black;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  /* gap: 5px; */
   height: 70px;
   background-color: #242319;
 }
@@ -91,18 +98,19 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  /* margin-right: 20px; */
 }
 
 .clapStrip {
   /* border: 3px solid green; */
-  margin-left: 55px;
+  margin-left: 50px;
   margin-right: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 70px;
-  gap: 25px;
+  gap: 24px;
 }
 
 .chevronUp {
@@ -185,7 +193,6 @@
 .invisible {
   display: none;
 }
-
 /* visible edit form */
 .visible {
   display: flex;
@@ -196,7 +203,7 @@
 /* login and registration boxes */
 .txtBox {
   /* border: 2px solid blue; */
-  width: 250px;
+  width: 200px;
   height: 30px;
   background-color: transparent;
   border: none;
@@ -204,3 +211,44 @@
   text-align: center;
   font-size: 16px;
 }
+
+
+/* BEGIN MEDIA QUERIES */
+
+@media (max-width: 425px) {
+
+  /* Chevrons FLEX */
+  .chevDiv {
+    width: 90%;
+    height: 90px;
+  }
+  .chevTop {
+    width: 50px;
+    height: 35px;
+    box-shadow: 0 0 3px black;
+  }
+  .chevBot {
+    width: 50px;
+    height: 35px;
+    box-shadow: 0 0 3px black;
+  }
+  
+  /* LOGIN FLEX */
+  .loginDiv {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .sixthLogo{
+    padding: 70px;
+  }
+  .clapboard {
+    width: 360px;
+  }
+  .target {
+    display: none;
+  }
+  .chevronUp {
+    width: 30px;
+  }
+}
+

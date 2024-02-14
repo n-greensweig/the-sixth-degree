@@ -32,7 +32,7 @@ function RegisterForm() {
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
-            <div className='chevronUp'></div>
+            <div className='chevronUp target'></div>
           </div>
         </div>
 

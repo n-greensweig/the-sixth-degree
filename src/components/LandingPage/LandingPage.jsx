@@ -67,7 +67,7 @@ function LandingPage() {
         <p>Don't have an Account yet?</p>
       </div>
       <div className={login ? 'visible' : 'invisible'}>
-        <button className="btn" onClick={loginOrRegister}>
+        <button className="btn btn_sm" onClick={loginOrRegister}>
           Register
         </button>
       </div>
@@ -75,7 +75,7 @@ function LandingPage() {
         <p>Already have an Account?</p>
       </div>
       <div className={login ? 'invisible' : 'visible'}>
-        <button className="btn" onClick={loginOrRegister}>
+        <button className="btn btn_sm" onClick={loginOrRegister}>
           Login
         </button>
       </div>
