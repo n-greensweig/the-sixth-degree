@@ -27,26 +27,24 @@ function LandingPage() {
 
       <div className='chevDiv'>
         <div className='chevRow'>
+          <div className='chevTop yellow'></div>
+          <div className='chevTop red'></div>
+          <div className='chevTop blue'></div>
           <div className='chevTop'></div>
           <div className='chevTop white'></div>
           <div className='chevTop'></div>
-          <div className='chevTop blue'></div>
-          <div className='chevTop red'></div>
-          <div className='chevTop yellow'></div>
         </div>
         <div className='chevRow'>
-          <div className='chevBot'></div>
-          <div className='chevBot white'></div>
-          <div className='chevBot'></div>
-          <div className='chevBot blue'></div>
-          <div className='chevBot red'></div>
           <div className='chevBot yellow'></div>
+          <div className='chevBot red'></div>
+          <div className='chevBot blue'></div>
+          <div className='chevBot '></div>
+          <div className='chevBot white'></div>
+          <div className='chevBot '></div>
         </div>
       </div>
 
 
-
-{/* meat of the page */}
       <div className='loginDiv'>
         <div className='sixthLogo'>
           <h2>The</h2>
@@ -61,41 +59,26 @@ function LandingPage() {
           <div className={login ? 'invisible' : 'visible'}>
             <RegisterForm />
           </div>
-          <div className={login ? 'visible' : 'invisible'}>
-            <button className="btn" onClick={loginOrRegister}>
-              Register
-            </button>
-          </div>
-          <div className={login ? 'invisible' : 'visible'}>
-            <button className="btn" onClick={loginOrRegister}>
-              Login
-            </button>
-          </div>
-        </div>
-      </div>
-{/* meat of the page */}
 
-
-
-<div className='chevDivRev'>
-        <div className='chevRow'>
-          <div className='chevTop yellow'></div>
-          <div className='chevTop red'></div>
-          <div className='chevTop blue'></div>
-          <div className='chevTop'></div>
-          <div className='chevTop white'></div>
-          <div className='chevTop'></div>
-        </div>
-        <div className='chevRow'>
-          <div className='chevBot yellow'></div>
-          <div className='chevBot red'></div>
-          <div className='chevBot blue'></div>
-          <div className='chevBot'></div>
-          <div className='chevBot white'></div>
-          <div className='chevBot'></div>
         </div>
       </div>
 
+      <div className={login ? 'visible' : 'invisible'}>
+        <p>Don't have an Account yet?</p>
+      </div>
+      <div className={login ? 'visible' : 'invisible'}>
+        <button className="btn" onClick={loginOrRegister}>
+          Register
+        </button>
+      </div>
+      <div className={login ? 'invisible' : 'visible'}>
+        <p>Already have an Account?</p>
+      </div>
+      <div className={login ? 'invisible' : 'visible'}>
+        <button className="btn" onClick={loginOrRegister}>
+          Login
+        </button>
+      </div>
 
 
     </div>

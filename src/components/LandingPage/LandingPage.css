@@ -1,253 +1,206 @@
-
 /* login page css */
 .landingPage {
-  border: 2px solid magenta;
+  /* border: 2px solid magenta; */
   background-color: grey;
   background-image: linear-gradient(to top, #242319, #dcdada);
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
-  /* align-items: center; */
   gap: 30px;
-
-  padding: 150px;
-
+  padding: 20px;
 }
-    .chevDiv {
-      /* border: 2px solid blue; */
-      width: 100%;
-      height: 150px;
 
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+.chevDiv {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.chevRow {
+  /* border: 2px solid red; */
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
 
-    }
-    .chevDivRev {
-      /* border: 2px solid blue; */
-      width: 100%;
-      height: 150px;
+.chevTop {
+  width: 50px;
+  height: 65px;
+  transform: skew(-40deg);
+  background: white;
+  box-shadow: 0 0 10px black;
+}
 
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: space-between;
-      align-items: center;
+.chevBot {
+  width: 50px;
+  height: 65px;
+  transform: skew(40deg);
+  background: white;
+  box-shadow: 0 0 10px black;
+}
 
-    }
-        .chevRow {
-          /* border: 2px solid red; */
-          width: 100%;
-          height: 70px;
-
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-
-        }
-            .chevTop {
-              width: 50px;
-              height: 70px;
-              transform: skew(-40deg);
-              background: white;   
-              box-shadow: 0 0 10px black; 
-            }
-            .chevBot {
-              width: 50px;
-              height: 70px;
-              transform: skew(40deg);
-              background: white;    
-              box-shadow: 0 0 10px black; 
-
-            }
-
-
-
-    .loginDiv {
-      /* border: 2px solid gold; */
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-    }
-
-
+.loginDiv {
+  /* border: 2px solid gold; */
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
 
 .sixthLogo {
   color: white;
-  border: 1px solid black;
-  /* box-shadow: 0 0 25px #f4f5e3; */
-  /* box-shadow: inset 0 0 10px white; */
-  /* background-color: #f4f5e355; */
+  border: 1px solid darkred;
   padding: 100px;
   border-radius: 50%;
   text-align: center;
-  /* position: relative;
-  bottom: 40px;
-  right: 30px; */
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* *** clapboard CSS */
 
 .clapboard {
-  /* border: 2px solid white; */
-  background-color: #414040;
-  /* border-radius: 10px; */
-
-  width: 500px;
-  /* height: 560px; */
-  box-shadow: 0 0 10px black;
+  /* border: 2px solid gold; */
+  min-width: 400px;
+  width: 475px;
   color: white;
-  padding-bottom: 15px;
-}
-.clapTop {
-  border: 4px solid #4d4d4d;
-  border-radius: 10px 10px 10px 10px;
-  box-shadow: 0 0 5px black;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+.clapTop {
+  /* border: 3px solid #4d4d4d; */
+  border-radius: 5px;
+  box-shadow: 0 0 5px black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
   height: 70px;
+  background-color: #242319;
 }
-    .clapStrip {
-      /* border: 3px solid green; */
-      margin-left: 95px;
-      margin-right: 10px;
-      display: flex;
-      flex-direction: row;
-      height: 70px;
-      gap: 25px;
-      /* box-shadow: inset 0 0 15px black; */
 
-    }
-        .chevronUp {
-          width: 40px;
-          height: 60px;
-          transform: skew(40deg);
-          background: rgb(229, 229, 229)
-        }
-        .chevronDw {
-          width: 40px;
-          height: 48px;
-          transform: skew(-40deg);
-          background: white;
-        }
-        .blue {
-          background-color: #128bb5;
-        }
-        .red {
-          background-color: #de5722;
-        }
-        .yellow {
-          background-color: #deb522;
-        }
-        .white {
-          background-color: #838383;
-        }
+.clapHinge {
+  border: 2px solid silver;
+  background-color: #909090;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.clapStrip {
+  /* border: 3px solid green; */
+  margin-left: 55px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  gap: 25px;
+}
+
+.chevronUp {
+  width: 40px;
+  height: 58px;
+  transform: skew(40deg);
+  background: #e5e5e5
+}
+
+.blue {
+  background-color: #128bb5;
+}
+
+.red {
+  background-color: #de5722;
+}
+
+.yellow {
+  background-color: #deb522;
+}
+
+.white {
+  background-color: #838383;
+}
+
 .clapBody {
   border-top: 1px solid white;
   border-bottom: 1px solid white;
-  background-color: #80808033;
-  /* border-radius: 15px; */
-  /* height: 380px; */
-  /* margin-top: 30px; */
-  margin-top: 10px;
+  margin: 5px;
+  box-shadow: 0 0 10px black;
 }
-    .clapRowOne {
-      border-top: 1px solid white;
-      border-bottom: 1px solid white;
-      /* border-radius: 15px 15px 0px 0px; */
-      height: 150px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
-        .clapBoxOne {
-          /* border: 2px solid white; */
-          width: 280px;
-        }
-        .boxMid {
-          border-left: 2px solid white;
-          border-right: 2px solid white;
-        }
-    .clapRowTwo {
-      border-top: 1px solid white;
-      border-bottom: 1px solid white;
-      height: 150px;
-      display: flex;
-      flex-direction: row;
-      /* box-shadow: inset 0 0 15px black; */
-    }
-        .clapBoxTwo {
-          /* border: 2px solid white; */
-          width: 350px;
 
-        }
-        .clapLog {
-          border-right: 2px solid white;
-          width: 440px;
-          display: flex;
-          flex-direction: column;
+.clapRowTwo {
+  border-top: 2px solid white;
+  border-bottom: 1px solid white;
+  /* height: 150px; */
+  display: flex;
+  flex-direction: row;
+}
 
-        } 
-            .clapBoxLog {
-              /* border: 2px solid white; */
-              height: 75px;
-              /* box-shadow: inset 0 0 15px black; */
+.clapBoxTwo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 33%;
+  /* width: 100px; */
+}
 
-            }
-            .boxTop {
-              border-bottom: 2px solid white;
+.clapLog {
+  border-right: 2px solid white;
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 66%;
+}
 
-            }
-    
-    .clapRowThree {
-      border-top: 1px solid #ffffff;
-      border-bottom: 1px solid white;
-      /* border-radius: 0px 0px 15px 15px; */
-      /* box-shadow: inset 0 0 15px black; */
-      height: 60px;
-    }
+.clapBoxLog {
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 2px solid red; */
+  font-size: 18px;
+}
+
+.boxTop {
+  border-bottom: 2px solid white;
+}
+
+.clapRowThree {
+  border-top: 1px solid #ffffff;
+  border-bottom: 2px solid white;
+  height: 70px;
+  padding: 10px;
+}
 
 
-    /* allows registration and login to swap */
-    .invisible {
-      display: none;
-    }
-    /* visible edit form */
-    .visible {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
+/* allows registration and login to swap */
+.invisible {
+  display: none;
+}
 
-    /* login and registration boxes */
-    .txtBox {
-      /* border: 2px solid blue; */
-      background-color: #80808044;
-      width: 200px;
-      height: 30px;
-      
-    }
-    
-    
+/* visible edit form */
+.visible {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* login and registration boxes */
+.txtBox {
+  /* border: 2px solid blue; */
+  width: 250px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+}

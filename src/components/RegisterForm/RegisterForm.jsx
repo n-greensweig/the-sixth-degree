@@ -26,41 +26,32 @@ function RegisterForm() {
       <form onSubmit={registerUser}>
 
       <div className='clapTop'>
+          <div className='clapHinge'></div>
           <div className='clapStrip'>
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
             <div className='chevronUp'></div>
-            <div className='chevronUp'></div>
-          </div>
-          <div className='clapStrip'>
-            <div className='chevronDw'></div>
-            <div className='chevronDw'></div>
-            <div className='chevronDw'></div>
-            <div className='chevronDw'></div>
-            <div className='chevronDw'></div>
-            <div className='chevronDw'></div>
           </div>
         </div>
 
 
         <div className='clapBody'>
-          <div className='clapRowOne'>
+          {/* <div className='clapRowOne'>
             <div className='clapBoxOne'>
               <h2>Register User</h2>
             </div>
             <div className='clapBoxOne boxMid'></div>
             <div className='clapBoxOne'></div>
-          </div>
+          </div> */}
 
 
           <div className='clapRowTwo'>
             <div className='clapLog'>
               <div className='clapBoxLog boxTop'>
+              <h5>Email</h5>
                 <label htmlFor="username">
-                  E-mail:
-                  <br />
                   <input
                     type="text"
                     name="username"
@@ -72,9 +63,8 @@ function RegisterForm() {
                 </label>
               </div>
               <div className='clapBoxLog'>
+              <h5>Password</h5>
                 <label htmlFor="password">
-                  Password:
-                  <br />
                   <input
                     type="password"
                     name="password"
