@@ -1,10 +1,10 @@
-const gameReducer = (state = {}, action) => {
+const gameReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_GAME':
         console.log(action.payload);
         return action.payload;
       case 'UNSET_GAME':
-        return {};
+        return [];
       default:
         return state;
     }
