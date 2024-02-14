@@ -19,8 +19,7 @@ function UserPage() {
       <p>Your ID is: {user.id}</p>
       <LogOutButton className="btn" />
 
-      <h2>{games.date_created}</h2>
-      {games.map(game => {
+      {games?.map(game => {
         return (
           <div key={game.id}>
             <p>Winner: {game.winner_id === null ? 'Noah' : 'no one'}</p>
