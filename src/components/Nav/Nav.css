@@ -1,99 +1,107 @@
 .nav {
-  /* flex box layout */
+  border-bottom: 2px solid #242319;
+  height: 100px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  background-color: #00acb0;
+  /* background-color: #242319; */
+  background-image: linear-gradient(to bottom, #242319, #dcdada);
   /* overflow: hidden; */
 }
-
 .nav a {
   text-decoration: none;
+  color: black;
 }
-
+/* todo this might be a logo?? */
 .nav-title {
-  font-size: 24px;
-  font-weight: 700;
+  /* border: 2px solid yellow; */
+  font-size: 36px;
+  font-weight: 100;
   color: #f2f2f2;
   padding-left: 10px;
-  margin: 0;
 }
-
-.navLink {
-  display: inline-block;
+/* .navLink {
   color: #f2f2f2;
   background-color: #00acb0;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
   border: none;
   cursor: pointer;
   outline: 0;
-}
-
-.navLink:hover {
-  background-color: #008183;
-}
+} */
 
 /* DROPDOWN MENU */
 
 .menuTrigger {
-  width: 60px;
-  height: 60px;
+  border: 1px solid #242319;
+  position: relative;
+  top: 145px;
+  left: 130px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background-color: blue;
+  background-color: #deb522;
+  box-shadow: 0 0 5px black;
   overflow: hidden;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  transform: rotate(30deg);
+  transition: 1s;
 }
-
+.menuTrigger:hover {
+  transform: rotate(180deg);
+}
 .dropdownMenu {
-  background-color: lightblue;
+  position: relative;
+  top: 170px;
+  left: 65px;
+  border: 2px solid #242319;
+  background-color: #dcdada;
+  box-shadow: 0 0 10px black;
   border-radius: 20px;
   padding: 10px 20px;
   width: 200px;
 }
-.dropdownMenu::before {
+/* .dropdownMenu::before {
   content: '';
   background-color: lightblue;
   transform: rotate(45deg);
-}
+} */
 .dropdownMenu.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
   transition: 0.3s;
 }
 .dropdownMenu.inactive {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-50);
   transition: 0.3s;
 }
 
-h3 {
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  line-height: 1.2rem;
-}
-
 .dropdownMenu ul div {
-  padding: 10px 0;
-  border-top: 1px solid black;
+  padding: 10px;
+  border-bottom: 1px solid black;
 }
-.dropdownMenu ul div:hover {
-  color: white;
-  cursor: pointer;
-}
-
 .dropdownItem {
   display: flex;
-  /* opacity: 0.5; */
+  flex-direction: row;
+  align-items: center;
+  font-size: 30px;
   transition: 0.5s;
 }
+.dropdownMenu ul div:hover {
+  color: #128bb5;
+}
+
+.menuWord {
+  margin-left: 20px;
+}
+
 
 

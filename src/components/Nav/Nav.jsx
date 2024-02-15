@@ -9,10 +9,11 @@ import DropdownItem from './DropdownItem/DropdownItem';
 
 // react icons
 import { FaTheaterMasks } from "react-icons/fa";
-import { MdOutlineMovieFilter } from "react-icons/md";
-import { RiMovie2Line } from "react-icons/ri";
-import { BiCameraMovie } from "react-icons/bi";
-
+import { PiFilmSlateLight } from "react-icons/pi";
+import { GiFilmProjector } from "react-icons/gi";
+import { GiFilmSpool } from "react-icons/gi";
+import { VscMegaphone } from "react-icons/vsc";
+import { IoMdFilm } from "react-icons/io";
 
 
 
@@ -31,10 +32,11 @@ function Nav() {
         <h2 className="nav-title">The 6th Degree</h2>
       </Link>
 
+
       {/* dropdown menu */}
       <div className='menuContainer'>
         <div className='menuTrigger' onClick={() => setMenu(!menu)}>
-          {/* This is your clickable div or picture */}
+          <IoMdFilm />
         </div>
         <div className={`dropdownMenu ${menu ? 'active' : 'inactive'}`}>
           {/* <h3>The Sixth Degree</h3> */}
@@ -44,70 +46,45 @@ function Nav() {
             <DropdownItem title={'Info'} text={"/info"} /> */}
 
             <Link to={"/user"}>
-              <div className='dropdownItem'>
+              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
                 <FaTheaterMasks />
-                <h2>Home</h2>
+                <span className='menuWord'><h6>Home</h6></span>
               </div>
             </Link>
 
             <Link to={"/info"}>
-              <div className='dropdownItem'>
-                <MdOutlineMovieFilter />
-                <h2>Info</h2>
+              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
+                <PiFilmSlateLight />
+                <span className='menuWord'><h6>Info</h6></span>
               </div>
             </Link>
 
             <Link to={""}>
-              <div className='dropdownItem'>
-                <RiMovie2Line />
-                <h2>Stats</h2>
+              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
+                <GiFilmSpool />
+                <span className='menuWord'><h6>Stats</h6></span>
               </div>
             </Link>
 
             <Link to={""}>
-              <div className='dropdownItem'>
-                <BiCameraMovie />
-                <h2>Scripts</h2>
+              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
+                <GiFilmProjector />
+                <span className='menuWord'><h6>Scripts</h6></span>
               </div>
             </Link>
 
+            <Link to={""}>
+              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
+                <VscMegaphone />
+                <span className='menuWord'><h6>Log Out</h6></span>
+              </div>
+            </Link>
 
           </ul>
         </div>
       </div>
-      {/* dropdown menu */}
 
 
-
-
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            {/* <Link className="navLink" to="/user">
-              Home
-            </Link> */}
-
-            {/* <Link className="navLink" to="/info">
-              Info Page
-            </Link> */}
-
-            {/* <LogOutButton className="navLink" /> */}
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
-      </div>
     </div>
   );
 }
