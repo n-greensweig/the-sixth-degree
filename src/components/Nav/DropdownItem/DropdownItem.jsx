@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// react icons
-import { FaTheaterMasks } from "react-icons/fa";
-
 
 // these are your dropdown menu items
 const DropdownItem = (props) => {
@@ -11,7 +8,7 @@ const DropdownItem = (props) => {
         <Link to={props.text}>
             <div className='dropdownItem'>
                 {props.icon}
-                <h2>{props.title}</h2>
+                <span className='menuWord'><h6>{props.title}</h6></span>
             </div>
         </Link>
     );

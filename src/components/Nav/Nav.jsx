@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // components
 import DropdownItem from './DropdownItem/DropdownItem';
+import TheSixthLogo from '../../images/t6d.png';
+
 
 // react icons
 import { FaTheaterMasks } from "react-icons/fa";
@@ -21,17 +24,57 @@ import { IoMdFilm } from "react-icons/io";
 function Nav() {
 
   const user = useSelector((store) => store.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  // const location = useLocation();
 
-  // menu variable
-  const [menu, setMenu] = useState(false);
+  // variables
+  const [menu, setMenu] = useState(false); // menu display toggle
+  // const [pageTitle, setPageTitle] = useState('');
+
+
+  // toggle menu closed when clicking a page or outside
+  useEffect(() => {
+    let handler = () => {
+      setMenu(false);
+    };
+    document.addEventListener('mousedown', handler);
+  }, []);
+
+  // ?? This is the Code to automatically update your page title
+  // ?? Based on the pathname of the document
+  // // console logs the location pathname of the dom
+  // useEffect(() => {
+  //   console.log(`location.pathname`, location.pathname);
+  //   namePage(location.pathname);
+  // }, [location]);
+
+  // // function to define Page Title
+  // function namePage(pagePath) {
+  //   // console.log('pagePath', pagePath);
+  //   // ! may not be supported by some browsers??
+  //   let titleArray = pagePath.substr(1, pagePath.length);
+  //   // console.log(titleArray);
+  //   setPageTitle(titleArray);
+  // }
+
+
+  // logo takes user to home page
+  function toHomePage() {
+    history.push('/home');
+  }
 
 
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">The 6th Degree</h2>
-      </Link>
 
+      <div onClick={toHomePage}>
+        <img src={TheSixthLogo} className='navLogo' alt='t6d-logo' />
+      </div>
+
+    {/* ! This is the extra code for a pageTitle based on pathname */}
+      {/* <p>{location.pathname}</p> */}
+      {/* <h2 className='navTitle'>{pageTitle}</h2> */}
 
       {/* dropdown menu */}
       <div className='menuContainer'>
@@ -39,48 +82,23 @@ function Nav() {
           <IoMdFilm />
         </div>
         <div className={`dropdownMenu ${menu ? 'active' : 'inactive'}`}>
-          {/* <h3>The Sixth Degree</h3> */}
+          
           <ul>
-            {/* <DropdownItem title={'Home'} text={"/user"} />
-            <DropdownItem title={'Scripts'} text={""} />
-            <DropdownItem title={'Info'} text={"/info"} /> */}
+            <DropdownItem title={'Rules'} text={"/user"} icon={<FaTheaterMasks />} />
+            <DropdownItem title={'Scripts'} text={"/info"} icon={<PiFilmSlateLight />} />
+            <DropdownItem title={'Stats'} text={""} icon={<GiFilmSpool />} />
+            <DropdownItem title={'Account'} text={""} icon={<GiFilmProjector />} />
 
-            <Link to={"/user"}>
-              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
-                <FaTheaterMasks />
-                <span className='menuWord'><h6>Home</h6></span>
-              </div>
-            </Link>
-
-            <Link to={"/info"}>
-              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
-                <PiFilmSlateLight />
-                <span className='menuWord'><h6>Info</h6></span>
-              </div>
-            </Link>
-
-            <Link to={""}>
-              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
-                <GiFilmSpool />
-                <span className='menuWord'><h6>Stats</h6></span>
-              </div>
-            </Link>
-
-            <Link to={""}>
-              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
-                <GiFilmProjector />
-                <span className='menuWord'><h6>Scripts</h6></span>
-              </div>
-            </Link>
-
-            <Link to={""}>
-              <div className='dropdownItem' onClick={() => setMenu(!menu)}>
-                <VscMegaphone />
-                <span className='menuWord'><h6>Log Out</h6></span>
-              </div>
-            </Link>
-
+            {/* LOG OUT BUTTON */}
+            <div
+              className='dropdownItem'
+              onClick={() => dispatch({ type: 'LOGOUT' })}
+            >
+              <VscMegaphone />
+              <span className='menuWord'><h6>Log Out</h6></span>
+            </div>
           </ul>
+
         </div>
       </div>
 
