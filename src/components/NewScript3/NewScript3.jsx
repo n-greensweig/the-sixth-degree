@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, CardContent, Grid, Paper } from '@mui/material';
 import UniversalButton from '../UniversalButton/UniversalButton';
+import axios from 'axios';
 
-
-// This module is responsible for the input feilds that allows the player to create a new script.
+// This module is responsible for the input fields that allows the player to create a new script.
 // New scripts will be visible in saved scripts page.
 function NewScript() {
 
@@ -31,105 +31,57 @@ function NewScript() {
         });
     };
 
+    useEffect(() => {
+        // Function to fetch data from TMDB API based on search query
+        const fetchData = async (query) => {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=30c198675e2638514ba7c9dc7212193c&query=${query}`);
+                console.log(response.data.results); // Handle response data as per requirement
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        // Fetch data whenever input values change
+        for (const key in formData) {
+            if (formData[key]) {
+                fetchData(formData[key]);
+            }
+        }
+    }, [formData]);
 
     // Returns the 6 input fields for the actor & movie appearance.
     return (
         <>
-        <form>
-            <label >
-                Who:
-                <input type="text" name="FirstActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label >
-                Is In:
-                <input type="text" name="FirstAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
+            <form>
+                {/* Input fields for actor and movie appearance */}
+                {[...Array(6)].map((_, index) => (
+                    <React.Fragment key={index}>
+                        <label>
+                            Who:
+                            <input type="text" name={`actor${index}`} value={formData[`actor${index}`]} onChange={handleChange} />
+                        </label>
+                        <br />
+                        <label>
+                            Is In:
+                            <input type="text" name={`appearance${index}`} value={formData[`appearance${index}`]} onChange={handleChange} />
+                        </label>
+                        <br />
+                    </React.Fragment>
+                ))}
+            </form>
 
-
-
-            {/* Second Input Field */}
-            <label>
-            Who:
-                <input type="text" name="SecondActor" value={formData.secondActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="SecondAppearance" value={formData.secondAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Third Input Field */}
-            <label>
-            Who:
-                <input type="text" name="ThirdActor" value={formData.thirdActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="ThirdAppearance" value={formData.thirdAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Fourth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="FourthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="FourthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Fifth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="FifthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="FifthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Sixth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="SixthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="SixthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-        </form>
-
-        <div>
-            <br></br>
             {/* Imported the Reusable Button to use for submission */}
-        <UniversalButton  text="Submit" color="primary"></UniversalButton>
-        </div>
+            <div>
+                <br></br>
+                <UniversalButton text="Submit" color="primary"></UniversalButton>
+            </div>
         </>
     );
-
-
-
 };
 
-
 export default NewScript;
+
+
+
 
