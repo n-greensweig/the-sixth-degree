@@ -38,46 +38,33 @@ function ActiveGame() {
           required
           fullWidth
         />
-        <TextField label="Who is in:" color="secondary" required fullWidth />
+        <TextField label="Who is in:" required fullWidth />
         <TextField
+          className="p3"
           label="With:"
           id="outlined-start-adornment"
-          color="secondary"
+          color="success"
           required
           fullWidth
         />
         <TextField
           label="Who is in:"
           id="outlined-start-adornment"
-          color="secondary"
+          color="success"
           required
           fullWidth
         />
         <TextField
           label="With:"
           id="outlined-start-adornment"
-          color="secondary"
+          color="warning"
           required
           fullWidth
         />
         <TextField
           label="Who is in:"
           id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-        />
-        <TextField
-          label="With:"
-          id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-        />
-        <TextField
-          label="Who is in:"
-          id="outlined-start-adornment"
-          color="secondary"
+          color="warning"
           required
           fullWidth
         />
@@ -98,7 +85,20 @@ function ActiveGame() {
         <TextField
           label="With:"
           id="outlined-start-adornment"
-          color="secondary"
+          color="error"
+          required
+          fullWidth
+        />
+        <TextField
+          label="Who is in:"
+          id="outlined-start-adornment"
+          color="error"
+          required
+          fullWidth
+        />
+        <TextField
+          label="With:"
+          id="outlined-start-adornment"
           required
           fullWidth
         />
