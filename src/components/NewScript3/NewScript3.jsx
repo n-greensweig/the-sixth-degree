@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import axios from 'axios';
+import UniversalButton from '../UniversalButton/UniversalButton';
+import Button from '@mui/material/Button';
 
 
 
 
 function NewScript() {
+
+
+    const dispatch = useDispatch();
+    const [script, setScript] = useState({});
+
+    const handleSubmit = () => {
+        dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the DB
+    };
+
+
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
@@ -30,7 +43,7 @@ function NewScript() {
 
 
 
-   //// For input field changes
+    //// For input field changes
     const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -73,7 +86,7 @@ function NewScript() {
 
 
 
-     // This handler is for selecting an actor from the suggestions
+    // This handler is for selecting an actor from the suggestions
     const handleActorSelect = (actor) => {
         setSelectedActor(actor);
         setFormData({
@@ -85,7 +98,7 @@ function NewScript() {
 
 
 
- // This handler is for selecting a movie from the suggestions.
+    // This handler is for selecting a movie from the suggestions.
     const handleMovieSelect = (movie) => {
         setSelectedMovie(movie);
         setFormData({
@@ -133,6 +146,10 @@ function NewScript() {
                 </label>
                 <br />
             </form>
+
+            {/* Will Submit Completed Form to Database */}
+            <Button variant='contained'>Submit</Button>
+
         </>
     );
 }
