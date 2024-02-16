@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import NewScript3 from '../NewScript3/NewScript3';
+import SavedScript6 from '../SavedScript6/SavedScript6';
 
 import './App.css';
 
@@ -86,6 +87,14 @@ function App() {
             path="/new-script"
           >
             <NewScript3 />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/saved-scripts"
+          >
+            <SavedScript6 />
           </ProtectedRoute>
 
           <Route
