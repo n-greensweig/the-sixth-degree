@@ -1,49 +1,108 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+
+// components
+import DropdownItem from './DropdownItem/DropdownItem';
+import TheSixthLogo from '../../images/t6d.png';
+
+
+// react icons
+import { FaTheaterMasks } from "react-icons/fa";
+import { PiFilmSlateLight } from "react-icons/pi";
+import { GiFilmProjector } from "react-icons/gi";
+import { GiFilmSpool } from "react-icons/gi";
+import { VscMegaphone } from "react-icons/vsc";
+import { IoMdFilm } from "react-icons/io";
+
+
+
 
 function Nav() {
+
   const user = useSelector((store) => store.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  // const location = useLocation();
+
+  // variables
+  const [menu, setMenu] = useState(false); // menu display toggle
+  // const [pageTitle, setPageTitle] = useState('');
+
+
+  // toggle menu closed when clicking a page or outside
+  useEffect(() => {
+    let handler = () => {
+      setMenu(false);
+    };
+    document.addEventListener('mousedown', handler);
+  }, []);
+
+  // ?? This is the Code to automatically update your page title
+  // ?? Based on the pathname of the document
+  // // console logs the location pathname of the dom
+  // useEffect(() => {
+  //   console.log(`location.pathname`, location.pathname);
+  //   namePage(location.pathname);
+  // }, [location]);
+
+  // // function to define Page Title
+  // function namePage(pagePath) {
+  //   // console.log('pagePath', pagePath);
+  //   // ! may not be supported by some browsers??
+  //   let titleArray = pagePath.substr(1, pagePath.length);
+  //   // console.log(titleArray);
+  //   setPageTitle(titleArray);
+  // }
+
+
+  // logo takes user to home page
+  function toHomePage() {
+    history.push('/home');
+  }
+
 
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
-      </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
 
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            <Link className="navLink" to="/activeGame/:id">
-              Active Game
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
+      <div onClick={toHomePage}>
+        <img src={TheSixthLogo} className='navLogo' alt='t6d-logo' />
       </div>
+
+    {/* ! This is the extra code for a pageTitle based on pathname */}
+      {/* <p>{location.pathname}</p> */}
+      {/* <h2 className='navTitle'>{pageTitle}</h2> */}
+
+      {/* dropdown menu */}
+      <div className='menuContainer'>
+        <div className='menuTrigger' onClick={() => setMenu(!menu)}>
+          <IoMdFilm />
+        </div>
+        <div className={`dropdownMenu ${menu ? 'active' : 'inactive'}`}>
+          
+          <ul>
+            <DropdownItem title={'Rules'} text={"/user"} icon={<FaTheaterMasks />} />
+            <DropdownItem title={'Scripts'} text={"/info"} icon={<PiFilmSlateLight />} />
+            <DropdownItem title={'Stats'} text={""} icon={<GiFilmSpool />} />
+            <DropdownItem title={'Account'} text={""} icon={<GiFilmProjector />} />
+
+            {/* LOG OUT BUTTON */}
+            <div
+              className='dropdownItem'
+              onClick={() => dispatch({ type: 'LOGOUT' })}
+            >
+              <VscMegaphone />
+              <span className='menuWord'><h6>Log Out</h6></span>
+            </div>
+          </ul>
+
+        </div>
+      </div>
+
+
     </div>
   );
 }
