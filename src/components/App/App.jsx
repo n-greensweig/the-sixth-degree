@@ -19,8 +19,8 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import NewScript3 from '../NewScript3/NewScript3';
-import SavedScript6 from '../SavedScript6/SavedScript6';
+import SavedScript from '../SavedScript6/SavedScript6';
+import NewScript from '../NewScript3/NewScript3';
 
 import './App.css';
 
@@ -50,7 +50,7 @@ function App() {
             exact
             path="/about"
           >
-            <AboutPage />
+            <NewScript />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
@@ -86,7 +86,7 @@ function App() {
             exact
             path="/new-script"
           >
-            <NewScript3 />
+            <NewScript />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -94,7 +94,7 @@ function App() {
             exact
             path="/saved-scripts"
           >
-            <SavedScript6 />
+            <SavedScript />
           </ProtectedRoute>
 
           <Route
