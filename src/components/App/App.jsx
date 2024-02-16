@@ -13,15 +13,21 @@ import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
+
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import NewScript from '../NewScript3/NewScript3';
+
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
+
+// import for CreateGame
+import NewGame from '../NewGame/NewGame';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +52,7 @@ function App() {
             exact
             path="/about"
           >
-            <AboutPage />
+            <NewScript />
           </Route>
 
           <ProtectedRoute exact path="/activeGame/:id">
@@ -73,9 +79,23 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route exact path="/login">
-            {user.id ? (
-              // If the user is already logged in,
+
+=======
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/new-game"
+          >
+            <NewGame />
+          </ProtectedRoute>
+
+          <Route
+            exact
+            path="/login"
+          >
+            {user.id ?
+              // If the user is already logged in, 
+
               // redirect to the /user page
               <Redirect to="/user" />
             ) : (
