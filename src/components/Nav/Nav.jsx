@@ -28,6 +28,10 @@ function Nav() {
               Home
             </Link>
 
+            <Link className="navLink" to="/activeGame/:id">
+              Active Game
+            </Link>
+
             <Link className="navLink" to="/info">
               Info Page
             </Link>
