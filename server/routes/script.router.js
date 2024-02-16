@@ -37,4 +37,32 @@ router.get('/', (req, res) => {
     });
 });
 
+// POST new script from new-script view
+router.post('/', (req, res) => {
+  const queryText = `
+  INSERT INTO "script" (
+  "script_creator_id",
+  "first_actor", "first_appearance", "second_actor", "second_appearance",
+  "third_actor", "third_appearance", "fourth_actor", "fourth_appearance",
+  "fifth_actor", "fifth_appearance", "sixth_actor", "sixth_appearance",
+  "seventh_actor")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);
+  `;
+  pool.query(queryText, [
+    req.user.id,
+    req.body.first_actor, req.body.first_appearance, req.body.second_actor, req.body.second_appearance,
+    req.body.third_actor, req.body.third_appearance, req.body.fourth_actor, req.body.fourth_appearance,
+    req.body.fifth_actor, req.body.fifth_appearance, req.body.sixth_actor, req.body.sixth_appearance,
+    req.body.seventh_actor
+  ])
+    .then(() => {
+      console.log('Script posted');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('Error posting script', error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

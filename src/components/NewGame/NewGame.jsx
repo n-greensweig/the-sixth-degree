@@ -21,10 +21,11 @@ function NewGame() {
   return (
     <body>
       <h1>Pick 3 Scripts!</h1>
-      {/* Map over the scripts */}
+      {/* Map over the scripts to display on the DOM */}
       {scripts?.map(script => (
         <p>{script.first_actor} to {script.seventh_actor}</p>
         ))}
+
       <button className="create-game-btn" onClick={e => handleClick(e)}> Create Game </button>
 
       <li className="container">Jennifer Aniston to Ben Stiller

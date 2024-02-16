@@ -10,8 +10,18 @@ function* getScripts() {
   }
 }
 
+function* postScript(action) {
+  try {
+    yield axios.post('/api/script', action.payload);
+    yield put({ type: 'SEND_SCRIPT' });
+  } catch (error) {
+    console.log('Script POST request failed', error);
+  }
+}
+
 function* scriptSaga() {
   yield takeLatest('FETCH_SCRIPTS', getScripts);
+  yield takeLatest('POST_SCRIPT', postScript);
 }
 
 export default scriptSaga;

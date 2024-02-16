@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import NewScript3 from '../NewScript3/NewScript3';
 
 import './App.css';
 
@@ -77,6 +78,14 @@ function App() {
             path="/new-game"
           >
             <NewGame />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/new-script"
+          >
+            <NewScript3 />
           </ProtectedRoute>
 
           <Route
