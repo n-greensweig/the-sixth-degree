@@ -1,61 +1,72 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 function NewGame() {
 
   const dispatch = useDispatch();
 
+  // GET request to display user's scripts on the DOM
+  const scripts = useSelector((store) => store.scriptReducer);
 
   const handleClick = (e) => {
     e.preventDefault();
-    
+
     // Create new game in DB
     dispatch({ type: 'CREATE_GAME' });
   };
 
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SCRIPTS' });
+  }, []);
+
   return (
     <body>
       <h1>Pick 3 Scripts!</h1>
-      <button classname="create-game-btn" onClick={e => handleClick(e)}> Create Game </button>
+      {/* Map over the scripts */}
+      {scripts?.map(script => (
+        <p>{script.first_actor} to {script.seventh_actor}</p>
+        ))}
+      <button className="create-game-btn" onClick={e => handleClick(e)}> Create Game </button>
 
-      <li class="container">Jennifer Aniston to Ben Stiller
+      <li className="container">Jennifer Aniston to Ben Stiller
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <li class="container">Dwayne Johnson to Jennifer Lopez
+      <li className="container">Dwayne Johnson to Jennifer Lopez
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <li class="container">Ryan Reynolds to Queen Latifah
+      <li className="container">Ryan Reynolds to Queen Latifah
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <li class="container">Shaq to Brad Pitt
+      <li className="container">Shaq to Brad Pitt
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
-      <li class="container">George Clooney to Robert Downey Jr
+      <li className="container">George Clooney to Robert Downey Jr
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
-      </li>
-
-      <li class="container">Tyler Perry to Merryll Streep
-        <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <li class="container">Ryan Gosling to Matthew McConaughey
+      <li className="container">Tyler Perry to Merryll Streep
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <li class="container">Margot Robbie to Arnold Schwarzenegger
+      <li className="container">Ryan Gosling to Matthew McConaughey
         <input type="checkbox"></input>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </li>
 
-      <button classname="create-script-btn"> Create New Script </button>
+      <li className="container">Margot Robbie to Arnold Schwarzenegger
+        <input type="checkbox"></input>
+        <span className="checkmark"></span>
+      </li>
+
+      <button className="create-script-btn"> Create New Script </button>
     </body>
   )
 }
