@@ -8,6 +8,7 @@ import UniversalButton from '../UniversalButton/UniversalButton';
 function NewScript() {
 
     const [formData, setFormData] = useState({
+        // Clears form on submission
         firstActor: '',
         firstAppearance: '',
         secondActor: '',
@@ -33,83 +34,96 @@ function NewScript() {
 
     // Returns the 6 input fields for the actor & movie appearance.
     return (
+        <>
         <form>
-            <label>
-                First Actor:
+            <label >
+                Who:
                 <input type="text" name="FirstActor" value={formData.firstActor} onChange={handleChange} />
             </label>
             <br />
-            <label>
-                First Appearance:
+            <label >
+                Is In:
                 <input type="text" name="FirstAppearance" value={formData.firstAppearance} onChange={handleChange} />
             </label>
             <br />
 
 
 
+            {/* Second Input Field */}
             <label>
-                Second Actor:
+            Who:
                 <input type="text" name="SecondActor" value={formData.secondActor} onChange={handleChange} />
             </label>
             <br />
             <label>
-                Second Appearance:
+            Is In:
                 <input type="text" name="SecondAppearance" value={formData.secondAppearance} onChange={handleChange} />
             </label>
             <br />
 
 
 
+            {/* Third Input Field */}
             <label>
-                Third Actor:
+            Who:
                 <input type="text" name="ThirdActor" value={formData.thirdActor} onChange={handleChange} />
             </label>
             <br />
             <label>
-                Third Appearance:
+            Is In:
                 <input type="text" name="ThirdAppearance" value={formData.thirdAppearance} onChange={handleChange} />
             </label>
             <br />
 
 
 
+            {/* Fourth Input Field */}
             <label>
-                Fourth Actor:
+            Who:
                 <input type="text" name="FourthActor" value={formData.firstActor} onChange={handleChange} />
             </label>
             <br />
             <label>
-                Fourth Appearance:
+            Is In:
                 <input type="text" name="FourthAppearance" value={formData.firstAppearance} onChange={handleChange} />
             </label>
             <br />
 
 
 
+            {/* Fifth Input Field */}
             <label>
-                Fifth Actor:
+            Who:
                 <input type="text" name="FifthActor" value={formData.firstActor} onChange={handleChange} />
             </label>
             <br />
             <label>
-                Fifth Appearance:
+            Is In:
                 <input type="text" name="FifthAppearance" value={formData.firstAppearance} onChange={handleChange} />
             </label>
             <br />
 
 
 
+            {/* Sixth Input Field */}
             <label>
-                Sixth Actor:
+            Who:
                 <input type="text" name="SixthActor" value={formData.firstActor} onChange={handleChange} />
             </label>
             <br />
             <label>
-                Sixth Appearance:
+            Is In:
                 <input type="text" name="SixthAppearance" value={formData.firstAppearance} onChange={handleChange} />
             </label>
             <br />
         </form>
+
+        <div>
+            <br></br>
+            {/* Imported the Reusable Button to use for submission */}
+        <UniversalButton  text="Submit" color="primary"></UniversalButton>
+        </div>
+        </>
     );
 
 
