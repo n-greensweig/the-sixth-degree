@@ -42,7 +42,38 @@ function NewScript() {
     return (
         <>
             <form>
-
+            <label>
+                    Who:
+                    <input
+                        type="text"
+                        name="firstActor"
+                        value={formData.firstActor}
+                        onChange={handleChange}
+                    />
+                    {/* Display actor suggestions */}
+                    <ul>
+                        {actorSuggestions.map(actor => (
+                            <li key={actor.id}>{actor.name}</li>
+                        ))}
+                    </ul>
+                </label>
+                <br />
+                <label>
+                    Is In:
+                    <input
+                        type="text"
+                        name="firstAppearance"
+                        value={formData.firstAppearance}
+                        onChange={handleChange}
+                    />
+                    {/* Display movie suggestions */}
+                    <ul>
+                        {movieSuggestions.map(movie => (
+                            <li key={movie.id}>{movie.title}</li>
+                        ))}
+                    </ul>
+                </label>
+                <br />
                 
             </form>
         </>
