@@ -1,87 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Button, CardContent, Grid, Paper } from '@mui/material';
-import UniversalButton from '../UniversalButton/UniversalButton';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-// This module is responsible for the input fields that allows the player to create a new script.
-// New scripts will be visible in saved scripts page.
 function NewScript() {
-
     const [formData, setFormData] = useState({
-        // Clears form on submission
         firstActor: '',
         firstAppearance: '',
-        secondActor: '',
-        secondAppearance: '',
-        thirdActor: '',
-        thirdAppearance: '',
-        fourthActor: '',
-        fourthAppearance: '',
-        fifthActor: '',
-        fifthAppearance: '',
-        sixthActor: '',
-        sixthAppearance: ''
+        // Other form data...
     });
+    const [actorSuggestions, setActorSuggestions] = useState([]);
+    const [movieSuggestions, setMovieSuggestions] = useState([]);
+    const apiKey = '30c198675e2638514ba7c9dc7212193c'; //My API Key
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
-    };
 
-    useEffect(() => {
-        // Function to fetch data from TMDB API based on search query
-        const fetchData = async (query) => {
+        // Fetching actor suggestions
+        if (name === 'firstActor') {
             try {
-                const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=30c198675e2638514ba7c9dc7212193c&query=${query}`);
-                console.log(response.data.results); // Handle response data as per requirement
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setActorSuggestions(response.data.results);
             } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        // Fetch data whenever input values change
-        for (const key in formData) {
-            if (formData[key]) {
-                fetchData(formData[key]);
+                console.error('Error fetching actor suggestions:', error);
             }
         }
-    }, [formData]);
 
-    // Returns the 6 input fields for the actor & movie appearance.
+        // Fetching movie suggestions
+        if (name === 'firstAppearance') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${value}&api_key=${apiKey}`);
+                setMovieSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+    };
+
     return (
         <>
             <form>
-                {/* Input fields for actor and movie appearance */}
-                {[...Array(6)].map((_, index) => (
-                    <React.Fragment key={index}>
-                        <label>
-                            Who:
-                            <input type="text" name={`actor${index}`} value={formData[`actor${index}`]} onChange={handleChange} />
-                        </label>
-                        <br />
-                        <label>
-                            Is In:
-                            <input type="text" name={`appearance${index}`} value={formData[`appearance${index}`]} onChange={handleChange} />
-                        </label>
-                        <br />
-                    </React.Fragment>
-                ))}
-            </form>
 
-            {/* Imported the Reusable Button to use for submission */}
-            <div>
-                <br></br>
-                <UniversalButton text="Submit" color="primary"></UniversalButton>
-            </div>
+                
+            </form>
         </>
     );
-};
+}
 
 export default NewScript;
-
-
-
 
