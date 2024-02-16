@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
+
 function NewScript() {
-    
-    
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
+        // Will add the other input fields later
     });
 
 
+
+
+
+
+    //holds actor suggestions
     const [actorSuggestions, setActorSuggestions] = useState([]);
     const [movieSuggestions, setMovieSuggestions] = useState([]);
-    
-    
-    const apiKey = '30c198675e2638514ba7c9dc7212193c'; //My API Key
+    //holds selected actor
+    const [selectedActor, setSelectedActor] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
-    
-    
+
+
+    // Jama's API Key
+    const apiKey = '30c198675e2638514ba7c9dc7212193c';
+
+
+
+   //// For input field changes
     const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -27,8 +40,7 @@ function NewScript() {
 
 
 
-
-        // Fetching actor suggestions
+        // Uses API to fetch actor suggestions as I type
         if (name === 'firstActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
@@ -39,11 +51,12 @@ function NewScript() {
         }
 
 
-        // Fetching movie suggestions
+
+        // Uses API to fetch movie suggestions as I type
         if (name === 'firstAppearance') {
             try {
-                // Fetch movies for the selected actor
-                const actorId = actorSuggestions.find(actor => actor.name === formData.firstActor)?.id;
+                // Only suggests movies the selected actor was in.
+                const actorId = selectedActor ? selectedActor.id : null;
                 if (actorId) {
                     const response = await axios.get(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${apiKey}`);
                     const moviesForActor = response.data.cast.map(movie => ({
@@ -60,6 +73,29 @@ function NewScript() {
 
 
 
+     // This handler is for selecting an actor from the suggestions
+    const handleActorSelect = (actor) => {
+        setSelectedActor(actor);
+        setFormData({
+            ...formData,
+            firstActor: actor.name
+        });
+        setActorSuggestions([]); // Clears input field after actor is selected.
+    };
+
+
+
+ // This handler is for selecting a movie from the suggestions.
+    const handleMovieSelect = (movie) => {
+        setSelectedMovie(movie);
+        setFormData({
+            ...formData,
+            firstAppearance: movie.title
+        });
+        setMovieSuggestions([]); // Clears input field after movie is selected.
+    };
+
+
 
     return (
         <>
@@ -72,10 +108,10 @@ function NewScript() {
                         value={formData.firstActor}
                         onChange={handleChange}
                     />
-                    {/* Display actor suggestions */}
+                    {/* Uses API to display actor suggestions */}
                     <ul>
                         {actorSuggestions.map(actor => (
-                            <li key={actor.id}>{actor.name}</li>
+                            <li key={actor.id} onClick={() => handleActorSelect(actor)}>{actor.name}</li>
                         ))}
                     </ul>
                 </label>
@@ -88,10 +124,10 @@ function NewScript() {
                         value={formData.firstAppearance}
                         onChange={handleChange}
                     />
-                    {/* Display movie suggestions */}
+                    {/* Uses API to display movie suggestions */}
                     <ul>
                         {movieSuggestions.map(movie => (
-                            <li key={movie.id}>{movie.title}</li>
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie)}>{movie.title}</li>
                         ))}
                     </ul>
                 </label>
@@ -103,7 +139,7 @@ function NewScript() {
 
 
 
-
 export default NewScript;
+
 
 
