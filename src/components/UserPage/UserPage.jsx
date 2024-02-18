@@ -25,19 +25,11 @@ function UserPage() {
 
   return (
     <div className="container">
+      <LogOutButton>log out</LogOutButton>
       <h1>Welcome, {user.first_name}!</h1>
       <p>Your ID is: {user.id}</p>
 
-      <LogOutButton className="btn" />
-
-      {games?.map(game => {
-        return (
-          <div key={game.id}>
-            <p>Winner: {game.winner_id === null ? 'Noah' : 'no one'}</p>
-            <p>Date: {game.date_created}</p>
-          </div>
-        );
-      })}
+    
 
 
       <Button
@@ -48,35 +40,91 @@ function UserPage() {
 
       <h2>Now Playing:</h2>
 
-      <h3>Actor</h3>
-          <Card>
-                <CardContent>
-                    <h4>TITLE: Pitt-Jolie</h4>
-                    <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-                    <h4>SCENE: active_scene</h4>
-                    <h4>SCORE: shows up when you're on scene 2?</h4>
-                    <h4>STATUS: You're wanted on set!</h4>
-                    <Button variant='outlined'>play</Button>                 
-                </CardContent>
-          </Card>
+      {games.length > 0 ?
+        <div>
+          {games.map(game => {
+              if (game.is_ongoing && game.active_respondent_id === user.id) {
+                return (
+                  <>
+                    <h3>Actor</h3>
+                      <Card>
+                        <CardContent>
+                            <h4>game ID: {game.id}</h4>
+                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
+                            <h4>SCENE: active_scene</h4>
+                            <h4>SCORE: shows up when you're on scene 2?</h4>
+                            <h4>STATUS: You're wanted on set!</h4>
+                            <Button variant='outlined'>play</Button>                 
+                        </CardContent>
+                      </Card>
+                  </>
+                )
+              } else if (game.is_ongoing && game.active_respondent_id !== user.id) {
+                  return (
+                    <>
+                      <h3>Director</h3>
+                        <Card>
+                          <CardContent>
+                              <h4>game ID: {game.id}</h4>
+                              <h4>TITLE: Pitt-Jolie</h4>
+                              <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
+                              <h4>SCENE: active_scene</h4>
+                              <h4>SCORE: shows up when you're on scene 2?</h4>
+                              <h4>STATUS: Waiting for your actor...</h4>
+                              <Button variant='outlined'>play</Button>                 
+                          </CardContent>
+                        </Card>
+                    </>
+                  )
+              } 
+          })}
+        </div>
 
-      <h3>Director</h3>
-          <Card>
-            <CardContent>
+        :
 
-                <h4>TITLE: Cruz-Aniston</h4>
-                <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-                <h4>SCENE: active_scene</h4>
-                <h4>SCORE:</h4>
-                <h4>STATUS: Waiting on your actor...</h4>
-                <Button variant='outlined'>view sent scripts</Button>
+        <div>
+            <h3 id="no-games">No games to display!</h3>
+        </div>
+      }
 
-            </CardContent>
-          </Card>
+    
 
       <h2>Filmography:</h2>
+
       
 
+      {games.length > 0 ? 
+        <div>
+          {games.map(game => {
+            if (!game.is_ongoing) {
+              return (
+                <>
+                  <Card>
+                    <CardContent>
+                        <h4>game ID: {game.id}</h4>
+                        <h4>TITLE: Pitt-Jolie</h4>
+                        <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
+                        <h4>SCENE: active_scene</h4>
+                        <h4>SCORE: shows up when you're on scene 2?</h4>
+                        <h4>STATUS: Waiting for your actor...</h4>
+                        <Button variant='outlined'>play</Button>                 
+                    </CardContent>
+                  </Card>
+                </>
+              )
+            } 
+          })}
+        </div>
+
+        :
+
+        <div>
+          <h4>No game history yet!</h4>
+        </div>
+
+    }
+  
     </div>
   );
 }
