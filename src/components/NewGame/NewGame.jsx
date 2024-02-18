@@ -5,7 +5,83 @@ import { useDispatch, useSelector } from "react-redux";
 import UniversalButton from "../UniversalButton/UniversalButton"; //For implementation in create new script button.
 import { useHistory } from 'react-router-dom';
 
+import './NewGame.css'
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+
+//FOR PICK SCRIPTS DROPDOWN
+
+// import * as React from 'react';
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+// import FormControl from '@mui/material/FormControl';
+// import ListItemText from '@mui/material/ListItemText';
+// import Select from '@mui/material/Select';
+// import Checkbox from '@mui/material/Checkbox';
+
+// FOR PICK SCRIPTS DROPDOWN
+
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
+
+// const names = [
+//   'Dwayne Johnson to Jennifer Lopez',
+//   'Ryan Reynolds to Queen Latifah',
+//   'Shaq to Brad Pitt',
+//   'George Clooney to Robert Downey Jr',
+//   'Tyler Perry to Merryll Streep',
+//   'Ryan Gosling to Matthew McConaughey',
+//   'Margot Robbie to Arnold Schwarzenegger',
+// ];
+
+
 function NewGame() {
+  
+  //FOR PICK SCRIPTS DROPDOWN
+        // const [personName, setPersonName] = React.useState([]);
+      
+        // const handleChange = (event) => {
+        //   const {
+        //     target: { value },
+        //   } = event;
+        //   setPersonName(
+        //     // On autofill we get a stringified value.
+        //     typeof value === 'string' ? value.split(',') : value,
+        //   );
+        // };
+        // return (
+        //     <div>
+        //       <FormControl sx={{ m: 1, width: 300 }}>
+        //         <InputLabel id="demo-multiple-checkbox-label">Pick 3 Scripts!</InputLabel>
+        //         <Select
+        //           labelId="demo-multiple-checkbox-label"
+        //           id="demo-multiple-checkbox"
+        //           multiple
+        //           value={personName}
+        //           onChange={handleChange}
+        //           input={<OutlinedInput label="pick-3-scripts!" />}
+        //           renderValue={(selected) => selected.join(', ')}
+        //           MenuProps={MenuProps}
+        //         >
+        //           {names.map((name) => (
+        //             <MenuItem key={name} value={name} > 
+        //               <Checkbox checked={personName.indexOf(name) > -1} />
+        //               <ListItemText primary={name} />
+        //             </MenuItem>
+        //           ))}
+        //         </Select>
+        //       </FormControl>
+        //     </div>
+        //   );}
 
   const dispatch = useDispatch();
 
@@ -31,60 +107,58 @@ const NewScriptNavigater = () => {
   }, []);
 
   return (
-    <body>
-      <h1>Pick 3 Scripts!</h1>
-      {/* Map over the scripts to display on the DOM */}
-      {scripts?.map(script => (
+    <div>
+            <h1>Pick 3 Scripts!</h1>
+            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
+{scripts?.map(script => (
         <p>{script.first_actor} to {script.seventh_actor}</p>
         ))}
+<Paper elevation={24} id="scriptGame-list">
+        <label class="container">Jennifer Aniston to Ben Stiller
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <button className="create-game-btn" onClick={e => handleClick(e)}> Create Game </button>
+<label class="container">Dwayne Johnson to Jennifer Lopez
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Jennifer Aniston to Ben Stiller
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
+<label class="container">Ryan Reynolds to Queen Latifah
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Dwayne Johnson to Jennifer Lopez
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
+<label class="container">Shaq to Brad Pitt
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
+<label class="container">George Clooney to Robert Downey Jr
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Ryan Reynolds to Queen Latifah
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
+<label class="container">Tyler Perry to Merryll Streep
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Shaq to Brad Pitt
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
-      <li className="container">George Clooney to Robert Downey Jr
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
+<label class="container">Ryan Gosling to Matthew McConaughey
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Tyler Perry to Merryll Streep
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
+<label class="container">Margot Robbie to Arnold Schwarzenegger
+  <input type="checkbox"></input>
+  <span class="checkmark"></span>
+</label>
 
-      <li className="container">Ryan Gosling to Matthew McConaughey
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
-
-      <li className="container">Margot Robbie to Arnold Schwarzenegger
-        <input type="checkbox"></input>
-        <span className="checkmark"></span>
-      </li>
-
-      {/* Create New Script Button Below! */}
-<UniversalButton color="primary" onClick={NewScriptNavigater}>Create New Script?</UniversalButton>
-        </body>
-    </body>
+        <h2 id="gameLinkHeader">Game Link:</h2>
+        <li id="gameLink">url@url.com</li>
+</Paper>
+<Button variant="contained" id="createScriptBtn" onClick={NewScriptNavigater}> Create New Script </Button> 
+        </div>
   )
 }
-
 
 export default NewGame;
