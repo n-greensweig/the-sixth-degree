@@ -11,7 +11,7 @@ function NewScript() {
     const [script, setScript] = useState({});
 
     const handleSubmit = () => {
-        dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the DB
+        dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the Database.
     };
 
     // return (
