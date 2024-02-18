@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
 
 // login and registration
 import LoginForm from '../LoginForm/LoginForm';
 import RegisterForm from '../RegisterForm/RegisterForm';
+
+// logo import
+import TheSixthLogo from '../../images/t6d.png';
+
 
 
 function LandingPage() {
@@ -46,11 +49,7 @@ function LandingPage() {
 
 
       <div className='loginDiv'>
-        <div className='sixthLogo'>
-          <h2>The</h2>
-          <h2>Sixth</h2>
-          <h2>Degree</h2>
-        </div>
+        <img src={TheSixthLogo} className='sixthLogo' alt='t6d-logo' />
 
         <div>
           <div className={login ? 'visible' : 'invisible'}>
