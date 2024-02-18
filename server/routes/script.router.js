@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
   AND "id" = $2;`;
   pool.query(queryText, [req.user.id, req.params.id])
     .then((result) => {
-      res.send(result.rows);
+      res.send(result.rows[0]);
     })
     .catch((error) => {
       console.log('Error getting scripts', error);
