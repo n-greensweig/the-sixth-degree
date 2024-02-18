@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import NewScript from '../NewScript3/NewScript3';
+import SavedScript from '../SavedScript6/SavedScript6';
 
 import './App.css';
 
@@ -49,7 +50,7 @@ function App() {
             exact
             path="/about"
           >
-            <NewScript />
+            <SavedScript />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

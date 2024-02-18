@@ -5,20 +5,28 @@ import UniversalButton from '../UniversalButton/UniversalButton';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 
+
+
 function NewScript() {
     const dispatch = useDispatch();
     const [script, setScript] = useState({});
+
+
 
     const handleSubmit = () => {
         dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the Database.
         closeModal(); // Close the modal after submitting
     };
 
+
+
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
         // Will add the other input fields later
     });
+
+
 
     // Holds actor suggestions
     const [actorSuggestions, setActorSuggestions] = useState([]);
@@ -27,11 +35,17 @@ function NewScript() {
     const [selectedActor, setSelectedActor] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
 
+
+
     // Modal state
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
+
+
     // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
+
+
 
     //// For input field changes
     const handleChange = async (e) => {
@@ -40,6 +54,8 @@ function NewScript() {
             ...formData,
             [name]: value
         });
+
+
 
         // Uses API to fetch actor suggestions as I type
         if (name === 'firstActor') {
@@ -50,6 +66,8 @@ function NewScript() {
                 console.error('Error fetching actor suggestions:', error);
             }
         }
+
+
 
         // Uses API to fetch movie suggestions as I type
         if (name === 'firstAppearance') {
@@ -71,6 +89,8 @@ function NewScript() {
         }
     };
 
+
+
     // This handler is for selecting an actor from the suggestions
     const handleActorSelect = (actor) => {
         setSelectedActor(actor);
@@ -80,6 +100,8 @@ function NewScript() {
         });
         setActorSuggestions([]); // Clears input field after actor is selected.
     };
+
+
 
     // This handler is for selecting a movie from the suggestions.
     const handleMovieSelect = (movie) => {
@@ -91,6 +113,8 @@ function NewScript() {
         setMovieSuggestions([]); // Clears input field after movie is selected.
     };
 
+
+
     // Modal open/close functions
     const openModal = () => {
         setModalIsOpen(true);
@@ -99,6 +123,8 @@ function NewScript() {
     const closeModal = () => {
         setModalIsOpen(false);
     };
+
+
 
     return (
         <>
@@ -155,6 +181,8 @@ function NewScript() {
         </>
     );
 }
+
+
 
 export default NewScript;
 
