@@ -114,43 +114,43 @@ const NewScriptNavigater = () => {
         <p>{script.first_actor} to {script.seventh_actor}</p>
         ))}
 <Paper elevation={24} id="scriptGame-list">
-        <label class="container">Jennifer Aniston to Ben Stiller
+        <label className="container">Jennifer Aniston to Ben Stiller
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
 
-<label class="container">Dwayne Johnson to Jennifer Lopez
+<label className="container">Dwayne Johnson to Jennifer Lopez
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
 
-<label class="container">Ryan Reynolds to Queen Latifah
+<label className="container">Ryan Reynolds to Queen Latifah
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
 
-<label class="container">Shaq to Brad Pitt
+<label className="container">Shaq to Brad Pitt
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
-<label class="container">George Clooney to Robert Downey Jr
+<label className="container">George Clooney to Robert Downey Jr
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
-</label>
-
-<label class="container">Tyler Perry to Merryll Streep
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
 
-<label class="container">Ryan Gosling to Matthew McConaughey
+<label className="container">Tyler Perry to Merryll Streep
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
 </label>
 
-<label class="container">Margot Robbie to Arnold Schwarzenegger
+<label className="container">Ryan Gosling to Matthew McConaughey
   <input type="checkbox"></input>
-  <span class="checkmark"></span>
+  <span className="checkmark"></span>
+</label>
+
+<label className="container">Margot Robbie to Arnold Schwarzenegger
+  <input type="checkbox"></input>
+  <span className="checkmark"></span>
 </label>
 
         <h2 id="gameLinkHeader">Game Link:</h2>
