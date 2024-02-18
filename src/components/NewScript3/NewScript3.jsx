@@ -11,6 +11,7 @@ function NewScript() {
 
     const handleSubmit = () => {
         dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the Database.
+        closeModal(); // Close the modal after submitting
     };
 
     const [formData, setFormData] = useState({
@@ -25,6 +26,9 @@ function NewScript() {
     // Holds selected actor
     const [selectedActor, setSelectedActor] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
+
+    // Modal state
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
@@ -87,60 +91,72 @@ function NewScript() {
         setMovieSuggestions([]); // Clears input field after movie is selected.
     };
 
+    // Modal open/close functions
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
     return (
         <>
-            <form>
-                <label>
-                    Who:
-                    <input
-                        type="text"
-                        name="firstActor"
-                        value={formData.firstActor}
-                        onChange={handleChange}
-                    />
-                    {/* Uses API to display actor suggestions */}
-                    <ul>
-                        {actorSuggestions.map(actor => (
-                            <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                {actor.name}
-                            </li>
-                        ))}
-                    </ul>
-                </label>
-                <br />
-                <label>
-                    Is In:
-                    <input
-                        type="text"
-                        name="firstAppearance"
-                        value={formData.firstAppearance}
-                        onChange={handleChange}
-                    />
-                    {/* Uses API to display movie suggestions */}
-                    <ul>
-                        {movieSuggestions.map(movie => (
-                            <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
-                                <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                {movie.title}
-                            </li>
-                        ))}
-                    </ul>
-                </label>
-                <br />
+            <Button variant='contained' onClick={openModal}>Post New Script</Button>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="New Script Modal"
+            >
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="firstActor"
+                            value={formData.firstActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="firstAppearance"
+                            value={formData.firstAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
 
-                {/* Will Submit Completed Form to Database */}
-                <Button variant='contained' onClick={handleSubmit}>Submit</Button>
-            </form>
+                    {/* Will Submit Completed Form to Database */}
+                    <Button variant='contained' onClick={handleSubmit}>Submit</Button>
+                </form>
+            </Modal>
         </>
     );
 }
 
 export default NewScript;
-
-
-
-
 
 
 
