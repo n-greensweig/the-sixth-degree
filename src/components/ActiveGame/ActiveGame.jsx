@@ -2,7 +2,23 @@ import { Box, FormControl, TextField, Button } from "@mui/material";
 import React from "react";
 import "./ActiveGame.css";
 
+import { useEffect } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+
 function ActiveGame() {
+
+  const dispatch = useDispatch();
+
+  // GET request to display user's scripts on the DOM
+  const scripts = useSelector((store) => store.scriptReducer);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ACTIVE_SCRIPT', payload: id });
+  }, []);
+
   return (
     <Box
       component="form"
@@ -16,6 +32,9 @@ function ActiveGame() {
       }}
     >
       <h2>Active game</h2>
+      {scripts?.map(script => (
+        <p>{script.first_actor} to {script.seventh_actor}</p>
+      ))}
       <br />
       <FormControl>
         <TextField

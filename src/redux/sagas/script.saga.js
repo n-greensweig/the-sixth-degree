@@ -10,6 +10,16 @@ function* getScripts() {
   }
 }
 
+function* getActiveScript(action) {
+  const id = action.payload;
+  try {
+    const response = yield axios.get(`/api/script/${id}`);
+    yield put({ type: 'GET_ACTIVE_SCRIPT', payload: response.data });
+  } catch (error) {
+    console.log('Script GET request failed', error);
+  }
+}
+
 function* postScript(action) {
   try {
     yield axios.post('/api/script', action.payload);
@@ -21,6 +31,7 @@ function* postScript(action) {
 
 function* scriptSaga() {
   yield takeLatest('FETCH_SCRIPTS', getScripts);
+  yield takeLatest('FETCH_ACTIVE_SCRIPT', getActiveScript);
   yield takeLatest('POST_SCRIPT', postScript);
 }
 
