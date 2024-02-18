@@ -18,7 +18,7 @@ function ActiveGame() {
   const handleSubmit = () => dispatch({ type: 'SUBMIT_GUESS', payload: { guess, id } }); // POST request to submit user's guess
 
   // Save user's guess for later
-  const handleSave = () => dispatch({ type: 'SAVE_GUESS', payload: guess }); // POST request to save user's guess without submitting
+  const handleSave = () => dispatch({ type: 'SAVE_GUESS', payload: { guess, id } }); // POST request to save user's guess without submitting
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ACTIVE_SCRIPT', payload: id });
