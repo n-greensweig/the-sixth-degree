@@ -2,7 +2,7 @@
 .landingPage {
   /* border: 2px solid magenta; */
   /* background-color: grey; */
-  background-image: linear-gradient(to top, #242319, #dcdada);
+  background-image: linear-gradient(to top, #242319, 30%, #dcdada);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,14 +52,17 @@
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
+  margin: 10px 0px;
   /* gap: 5%; */
 }
 
 .sixthLogo {
   color: white;
-  border: 2px solid darkred;
-  padding: 100px;
-  border-radius: 50%;
+  /* border: 2px solid darkred; */
+  width: 340px;
+  height: auto;
+  /* padding: 100px; */
+  /* border-radius: 50%; */
   text-align: center;
 }
 
@@ -217,6 +220,10 @@
 
 @media (max-width: 425px) {
 
+  .landingPage {
+    padding: 15px 0px;
+  }
+
   /* Chevrons FLEX */
   .chevDiv {
     width: 90%;
@@ -237,9 +244,11 @@
   .loginDiv {
     flex-direction: column;
     gap: 15px;
+    margin: 0px;
   }
   .sixthLogo{
-    padding: 70px;
+    padding: 0px;
+    width: 300px;
   }
   .clapboard {
     width: 360px;
@@ -249,6 +258,9 @@
   }
   .chevronUp {
     width: 30px;
+  }
+  .clapRowThree {
+    display: none;
   }
 }
 

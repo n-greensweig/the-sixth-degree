@@ -1,11 +1,23 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+// Importing Reusable Button
+import UniversalButton from "../UniversalButton/UniversalButton"; //For implementation in create new script button.
+import { useHistory } from 'react-router-dom';
+
 function NewGame() {
 
   const dispatch = useDispatch();
 
   // GET request to display user's scripts on the DOM
   const scripts = useSelector((store) => store.scriptReducer);
+  
+  // Function that navigates to New Script page 3.0 once button is clicked
+const NewScriptNavigater = () => {
+  const history = useHistory();
+  history.push('/NewScript'); //NewScript is the placeholder for the actual path, yet to be implemented.
+};
+
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -67,7 +79,9 @@ function NewGame() {
         <span className="checkmark"></span>
       </li>
 
-      <button className="create-script-btn"> Create New Script </button>
+      {/* Create New Script Button Below! */}
+<UniversalButton color="primary" onClick={NewScriptNavigater}>Create New Script?</UniversalButton>
+        </body>
     </body>
   )
 }

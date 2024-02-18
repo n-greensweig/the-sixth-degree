@@ -3,10 +3,12 @@ import UniversalButton from "../UniversalButton/UniversalButton";
 import { useState } from "react";
 import { Card, Button, CardContent, Grid, Paper } from '@mui/material';
 
-// This module is responsible for the input feilds that allows the player to create a new script.
-// New scripts will be visible in saved scripts page.
-function NewScript() {
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import axios from 'axios';
 
+function NewScript() {
+  
     const dispatch = useDispatch();
     const [script, setScript] = useState({});
 
@@ -41,128 +43,133 @@ function NewScript() {
     // );
 
     const [formData, setFormData] = useState({
-        // Clears form on submission
         firstActor: '',
         firstAppearance: '',
-        secondActor: '',
-        secondAppearance: '',
-        thirdActor: '',
-        thirdAppearance: '',
-        fourthActor: '',
-        fourthAppearance: '',
-        fifthActor: '',
-        fifthAppearance: '',
-        sixthActor: '',
-        sixthAppearance: ''
+        // Will add the other input fields later
     });
 
-    const handleChange = (e) => {
+
+    //holds actor suggestions
+    const [actorSuggestions, setActorSuggestions] = useState([]);
+    const [movieSuggestions, setMovieSuggestions] = useState([]);
+    //holds selected actor
+    const [selectedActor, setSelectedActor] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
+
+    //// For input field changes
+    const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
         });
+
+
+
+        // Uses API to fetch actor suggestions as I type
+        if (name === 'firstActor') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+
+
+        // Uses API to fetch movie suggestions as I type
+        if (name === 'firstAppearance') {
+            try {
+                // Only suggests movies the selected actor was in.
+                const actorId = selectedActor ? selectedActor.id : null;
+                if (actorId) {
+                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${apiKey}`);
+                    const moviesForActor = response.data.cast.map(movie => ({
+                        id: movie.id,
+                        title: movie.title
+                    }));
+                    setMovieSuggestions(moviesForActor);
+                }
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
     };
 
 
-    // Returns the 6 input fields for the actor & movie appearance.
+
+    // This handler is for selecting an actor from the suggestions
+    const handleActorSelect = (actor) => {
+        setSelectedActor(actor);
+        setFormData({
+            ...formData,
+            firstActor: actor.name
+        });
+        setActorSuggestions([]); // Clears input field after actor is selected.
+    };
+
+
+
+    // This handler is for selecting a movie from the suggestions.
+    const handleMovieSelect = (movie) => {
+        setSelectedMovie(movie);
+        setFormData({
+            ...formData,
+            firstAppearance: movie.title
+        });
+        setMovieSuggestions([]); // Clears input field after movie is selected.
+    };
+
+
+
     return (
         <>
-        <form>
-            <label >
-                Who:
-                <input type="text" name="FirstActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label >
-                Is In:
-                <input type="text" name="FirstAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
+            <form>
+                <label>
+                    Who:
+                    <input
+                        type="text"
+                        name="firstActor"
+                        value={formData.firstActor}
+                        onChange={handleChange}
+                    />
+                    {/* Uses API to display actor suggestions */}
+                    <ul>
+                        {actorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor)}>{actor.name}</li>
+                        ))}
+                    </ul>
+                </label>
+                <br />
+                <label>
+                    Is In:
+                    <input
+                        type="text"
+                        name="firstAppearance"
+                        value={formData.firstAppearance}
+                        onChange={handleChange}
+                    />
+                    {/* Uses API to display movie suggestions */}
+                    <ul>
+                        {movieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie)}>{movie.title}</li>
+                        ))}
+                    </ul>
+                </label>
+                <br />
+            </form>
 
+            {/* Will Submit Completed Form to Database */}
+            <Button variant='contained'>Submit</Button>
 
-
-            {/* Second Input Field */}
-            <label>
-            Who:
-                <input type="text" name="SecondActor" value={formData.secondActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="SecondAppearance" value={formData.secondAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Third Input Field */}
-            <label>
-            Who:
-                <input type="text" name="ThirdActor" value={formData.thirdActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="ThirdAppearance" value={formData.thirdAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Fourth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="FourthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="FourthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Fifth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="FifthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="FifthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-
-
-
-            {/* Sixth Input Field */}
-            <label>
-            Who:
-                <input type="text" name="SixthActor" value={formData.firstActor} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
-            Is In:
-                <input type="text" name="SixthAppearance" value={formData.firstAppearance} onChange={handleChange} />
-            </label>
-            <br />
-        </form>
-
-        <div>
-            <br></br>
-            {/* Imported the Reusable Button to use for submission */}
-        <UniversalButton  text="Submit" color="primary"></UniversalButton>
-        </div>
         </>
     );
+}
 
-
-
-};
 
 
 export default NewScript;
+
+
 
