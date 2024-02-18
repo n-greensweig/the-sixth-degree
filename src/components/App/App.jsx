@@ -73,7 +73,7 @@ function App() {
           >
             <InfoPage />
           </ProtectedRoute>
-          =======
+
           <ProtectedRoute
             //  logged in shows the Creategame page
             exact
@@ -81,12 +81,9 @@ function App() {
           >
             <NewGame />
           </ProtectedRoute>
-          <Route exact path="/login">
-            {user.id ? (
-              // If the user is already logged in,
+
 
           <ProtectedRoute
-            //  logged in shows the Creategame page
             exact
             path="/new-script"
           >
@@ -109,10 +106,10 @@ function App() {
               // If the user is already logged in, 
               // redirect to the /user page
               <Redirect to="/user" />
-            ) : (
+              :
               // Otherwise, show the login page
               <LoginPage />
-            )}
+            }
           </Route>
           <Route exact path="/registration">
             {user.id ? (
