@@ -43,39 +43,38 @@ function UserPage() {
       <Button
         variant='outlined'
         onClick={handleClick}
-        >Create Game</Button>
-      
+      >Create Game</Button>
+
 
       <h2>Now Playing:</h2>
 
       <h3>Actor</h3>
-          <Card>
-                <CardContent>
-                    <h4>TITLE: Pitt-Jolie</h4>
-                    <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-                    <h4>SCENE: active_scene</h4>
-                    <h4>SCORE: shows up when you're on scene 2?</h4>
-                    <h4>STATUS: You're wanted on set!</h4>
-                    <Button variant='outlined'>play</Button>                 
-                </CardContent>
-          </Card>
-
+      <Card>
+        <CardContent>
+          <h4>TITLE: Pitt-Jolie</h4>
+          <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
+          <h4>SCENE: active_scene</h4>
+          <h4>SCORE: shows up when you're on scene 2?</h4>
+          <h4>STATUS: You're wanted on set!</h4>
+          <Button variant='outlined'>play</Button>
+        </CardContent>
+      </Card>
       <h3>Director</h3>
-          <Card>
-            <CardContent>
+      <Card>
+        <CardContent>
 
-                <h4>TITLE: Cruz-Aniston</h4>
-                <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-                <h4>SCENE: active_scene</h4>
-                <h4>SCORE:</h4>
-                <h4>STATUS: Waiting on your actor...</h4>
-                <Button variant='outlined'>view sent scripts</Button>
+          <h4>TITLE: Cruz-Aniston</h4>
+          <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
+          <h4>SCENE: active_scene</h4>
+          <h4>SCORE:</h4>
+          <h4>STATUS: Waiting on your actor...</h4>
+          <Button variant='outlined'>view sent scripts</Button>
 
-            </CardContent>
-          </Card>
+        </CardContent>
+      </Card>
 
       <h2>Filmography:</h2>
-      
+
 
     </div>
   );

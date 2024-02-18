@@ -13,13 +13,14 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import NewScript from "../NewScript3/NewScript3";
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import SavedScript from '../SavedScript6/SavedScript6';
+import NewScript from '../NewScript3/NewScript3';
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
@@ -84,6 +85,28 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
 
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/new-script"
+          >
+            <NewScript />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/saved-scripts"
+          >
+            <SavedScript />
+          </ProtectedRoute>
+
+          <Route
+            exact
+            path="/login"
+          >
+            {user.id ?
+              // If the user is already logged in, 
               // redirect to the /user page
               <Redirect to="/user" />
             ) : (
