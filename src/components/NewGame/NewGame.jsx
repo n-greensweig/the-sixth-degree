@@ -1,3 +1,10 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// Importing Reusable Button
+import UniversalButton from "../UniversalButton/UniversalButton"; //For implementation in create new script button.
+import { useHistory } from 'react-router-dom';
+
 import './NewGame.css'
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -36,9 +43,10 @@ import Button from '@mui/material/Button';
 //   'Margot Robbie to Arnold Schwarzenegger',
 // ];
 
-function NewGame() {
 
-    //FOR PICK SCRIPTS DROPDOWN
+function NewGame() {
+  
+  //FOR PICK SCRIPTS DROPDOWN
         // const [personName, setPersonName] = React.useState([]);
       
         // const handleChange = (event) => {
@@ -75,10 +83,36 @@ function NewGame() {
         //     </div>
         //   );}
 
-     return (
-        <div>
+  const dispatch = useDispatch();
+
+  // GET request to display user's scripts on the DOM
+  const scripts = useSelector((store) => store.scriptReducer);
+  
+  // Function that navigates to New Script page 3.0 once button is clicked
+const NewScriptNavigater = () => {
+  const history = useHistory();
+  history.push('/NewScript'); //NewScript is the placeholder for the actual path, yet to be implemented.
+};
+
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    // Create new game in DB
+    dispatch({ type: 'CREATE_GAME' });
+  };
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SCRIPTS' });
+  }, []);
+
+  return (
+    <div>
             <h1>Pick 3 Scripts!</h1>
-            <Button variant="contained" id="createGameBtn"> Create Game </Button> 
+            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
+{scripts?.map(script => (
+        <p>{script.first_actor} to {script.seventh_actor}</p>
+        ))}
 <Paper elevation={24} id="scriptGame-list">
         <label class="container">Jennifer Aniston to Ben Stiller
   <input type="checkbox"></input>
@@ -122,10 +156,9 @@ function NewGame() {
         <h2 id="gameLinkHeader">Game Link:</h2>
         <li id="gameLink">url@url.com</li>
 </Paper>
-<Button variant="contained" id="createScriptBtn"> Create New Script </Button> 
+<Button variant="contained" id="createScriptBtn" onClick={NewScriptNavigater}> Create New Script </Button> 
         </div>
-     )}
- 
-
+  )
+}
 
 export default NewGame;
