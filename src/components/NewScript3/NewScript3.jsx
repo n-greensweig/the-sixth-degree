@@ -102,7 +102,7 @@ function NewScript() {
 
     return (
         <>
-            <Button variant='contained' onClick={openModal}>Post New Script</Button>
+            <Button variant='contained' onClick={openModal}>Create New Script</Button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

@@ -1,67 +1,71 @@
-// Importing Reusable Button
-import UniversalButton from "../UniversalButton/UniversalButton"; //For implementation in create new script button.
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
+import NewScript from '../NewScript3/NewScript3';
+import Button from '@mui/material/Button';
 
 function NewGame() {
+    const [modalIsOpen, setModalIsOpen] = useState(false); // State for (Create New Script) modal visibility
 
+    const toggleModal = () => {
+        console.log('Toggle modal');
+        setModalIsOpen(!modalIsOpen); // Toggle (Create New Script) modal visibility
+    };
 
-// Function that navigates to New Script page 3.0 once button is clicked
-const NewScriptNavigater = () => {
-  const history = useHistory();
-  history.push('/NewScript'); //NewScript is the placeholder for the actual path, yet to be implemented.
-};
+    console.log('modalIsOpen:', modalIsOpen); // Log the modalIsOpen state
 
-
-     return (
+    return (
         <body>
             <h1>Pick 3 Scripts!</h1>
-            <button classname="create-game-btn"> Create Game </button> 
+            <button className="create-game-btn"> Create Game </button>
 
-        <li class="container">Jennifer Aniston to Ben Stiller
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
+            <ul>
+                     <li class="container">Jennifer Aniston to Ben Stiller
+   <input type="checkbox"></input>
+   <span class="checkmark"></span>
 </li>
 
-<li class="container">Dwayne Johnson to Jennifer Lopez
-  <input type="checkbox"></input>
+ <li class="container">Dwayne Johnson to Jennifer Lopez
+   <input type="checkbox"></input>
   <span class="checkmark"></span>
-</li>
+ </li>
 
-<li class="container">Ryan Reynolds to Queen Latifah
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
-</li>
+ <li class="container">Ryan Reynolds to Queen Latifah
+   <input type="checkbox"></input>
+   <span class="checkmark"></span>
+ </li>
 
-<li class="container">Shaq to Brad Pitt
+ <li class="container">Shaq to Brad Pitt
   <input type="checkbox"></input>
   <span class="checkmark"></span>
-</li>
-<li class="container">George Clooney to Robert Downey Jr
-  <input type="checkbox"></input>
+ </li>
+ <li class="container">George Clooney to Robert Downey Jr
+   <input type="checkbox"></input>
   <span class="checkmark"></span>
-</li>
+ </li>
+ <li class="container">Tyler Perry to Merryll Streep
+  <input type="checkbox"></input>
+   <span class="checkmark"></span>
+ </li>
 
-<li class="container">Tyler Perry to Merryll Streep
-  <input type="checkbox"></input>
+ <li class="container">Ryan Gosling to Matthew McConaughey
+   <input type="checkbox"></input>
   <span class="checkmark"></span>
-</li>
+ </li>
 
-<li class="container">Ryan Gosling to Matthew McConaughey
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
-</li>
+ <li class="container">Margot Robbie to Arnold Schwarzenegger
+   <input type="checkbox"></input>
+ <span class="checkmark"></span>
+ </li>
+            </ul>
 
-<li class="container">Margot Robbie to Arnold Schwarzenegger
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
-</li>
 
-                {/* Create New Script Button Below! */}
-<UniversalButton color="primary" onClick={NewScriptNavigater}>Create New Script?</UniversalButton>
+            {/* Modal for creating new script */}
+            {<NewScript />}
+
         </body>
-     )
+    )
 }
 
-
 export default NewGame;
+
+
