@@ -3,13 +3,9 @@ import { useDispatch } from "react-redux";
 import axios from 'axios';
 import UniversalButton from '../UniversalButton/UniversalButton';
 import Button from '@mui/material/Button';
-
-
-
+import Modal from 'react-modal';
 
 function NewScript() {
-
-
     const dispatch = useDispatch();
     const [script, setScript] = useState({});
 
@@ -17,31 +13,21 @@ function NewScript() {
         dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the Database.
     };
 
-
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
         // Will add the other input fields later
     });
 
-
-
-
-
-
-    //holds actor suggestions
+    // Holds actor suggestions
     const [actorSuggestions, setActorSuggestions] = useState([]);
     const [movieSuggestions, setMovieSuggestions] = useState([]);
-    //holds selected actor
+    // Holds selected actor
     const [selectedActor, setSelectedActor] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
 
-
-
     // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
-
-
 
     //// For input field changes
     const handleChange = async (e) => {
@@ -50,8 +36,6 @@ function NewScript() {
             ...formData,
             [name]: value
         });
-
-
 
         // Uses API to fetch actor suggestions as I type
         if (name === 'firstActor') {
@@ -63,8 +47,6 @@ function NewScript() {
             }
         }
 
-
-
         // Uses API to fetch movie suggestions as I type
         if (name === 'firstAppearance') {
             try {
@@ -74,7 +56,8 @@ function NewScript() {
                     const response = await axios.get(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${apiKey}`);
                     const moviesForActor = response.data.cast.map(movie => ({
                         id: movie.id,
-                        title: movie.title
+                        title: movie.title,
+                        posterPath: movie.poster_path // Added poster path for each movie
                     }));
                     setMovieSuggestions(moviesForActor);
                 }
@@ -83,8 +66,6 @@ function NewScript() {
             }
         }
     };
-
-
 
     // This handler is for selecting an actor from the suggestions
     const handleActorSelect = (actor) => {
@@ -96,8 +77,6 @@ function NewScript() {
         setActorSuggestions([]); // Clears input field after actor is selected.
     };
 
-
-
     // This handler is for selecting a movie from the suggestions.
     const handleMovieSelect = (movie) => {
         setSelectedMovie(movie);
@@ -107,8 +86,6 @@ function NewScript() {
         });
         setMovieSuggestions([]); // Clears input field after movie is selected.
     };
-
-
 
     return (
         <>
@@ -124,7 +101,10 @@ function NewScript() {
                     {/* Uses API to display actor suggestions */}
                     <ul>
                         {actorSuggestions.map(actor => (
-                            <li key={actor.id} onClick={() => handleActorSelect(actor)}>{actor.name}</li>
+                            <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                {actor.name}
+                            </li>
                         ))}
                     </ul>
                 </label>
@@ -140,23 +120,68 @@ function NewScript() {
                     {/* Uses API to display movie suggestions */}
                     <ul>
                         {movieSuggestions.map(movie => (
-                            <li key={movie.id} onClick={() => handleMovieSelect(movie)}>{movie.title}</li>
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                {movie.title}
+                            </li>
                         ))}
                     </ul>
                 </label>
                 <br />
+
+                {/* Will Submit Completed Form to Database */}
+                <Button variant='contained' onClick={handleSubmit}>Submit</Button>
             </form>
-
-            {/* Will Submit Completed Form to Database */}
-            <Button variant='contained'>Submit</Button>
-
         </>
     );
 }
-
-
 
 export default NewScript;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // return (
+    //     <div>
+    //         <h1>New Script</h1>
+
+    //         {/* Input fields go here */}
+    //         <form onSubmit={handleSubmit}>
+    //             <input type="text" placeholder="First Actor" onChange={e => setScript({ ...script, first_actor: e.target.value })} />
+    //             <input type="text" placeholder="First Appearance" onChange={e => setScript({ ...script, first_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Second Actor" onChange={e => setScript({ ...script, second_actor: e.target.value })} />
+    //             <input type="text" placeholder="Second Appearance" onChange={e => setScript({ ...script, second_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Third Actor" onChange={e => setScript({ ...script, third_actor: e.target.value })} />
+    //             <input type="text" placeholder="Third Appearance" onChange={e => setScript({ ...script, third_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Fourth Actor" onChange={e => setScript({ ...script, fourth_actor: e.target.value })} />
+    //             <input type="text" placeholder="Fourth Appearance" onChange={e => setScript({ ...script, fourth_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Fifth Actor" onChange={e => setScript({ ...script, fifth_actor: e.target.value })} />
+    //             <input type="text" placeholder="Fifth Appearance" onChange={e => setScript({ ...script, fifth_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Sixth Actor" onChange={e => setScript({ ...script, sixth_actor: e.target.value })} />
+    //             <input type="text" placeholder="Sixth Appearance" onChange={e => setScript({ ...script, sixth_appearance: e.target.value })} />
+    //             <input type="text" placeholder="Seventh Actor" onChange={e => setScript({ ...script, seventh_actor: e.target.value })} />
+    //             <UniversalButton text="Save Script" onClick={handleSubmit} />
+    //         </form>
+
+
+    //     </div>
+    // );
