@@ -3,12 +3,12 @@ import Button from '@mui/material/Button';
 
 // Reusable Button Component.
 
-function UniversalButton ({text, onClick}) {
+function UniversalButton (props) {
 
     return(
-        <Button variant="contained"  onClick={onClick}>
+        <Button variant="contained"  onClick={props.onClick}>
             {/* Example use --> text = "Hello" */}
-            {text}
+            {props.text}
         </Button>
     )
 };
