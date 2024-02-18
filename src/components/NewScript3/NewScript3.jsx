@@ -1,10 +1,8 @@
 import { useDispatch } from "react-redux";
 import UniversalButton from "../UniversalButton/UniversalButton";
-import { useState } from "react";
 import { Card, Button, CardContent, Grid, Paper } from '@mui/material';
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from "react-redux";
 import axios from 'axios';
 
 function NewScript() {
