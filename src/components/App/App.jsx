@@ -21,7 +21,6 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import SavedScript from '../SavedScript6/SavedScript6';
 import NewScript from '../NewScript3/NewScript3';
-import SavedScript from '../SavedScript6/SavedScript6';
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
