@@ -229,7 +229,7 @@ function UserPage() {
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Pitt-Jolie</h4>
-                            <h4>STARRING: {user.first_name} & {game.player_two_first_name}</h4>
+                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             <h4>SCORE: shows up when you're on scene 2?</h4>
                             <h4>STATUS: You're wanted on set!</h4>
@@ -250,7 +250,7 @@ function UserPage() {
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Pitt-Jolie</h4>
-                            <h4>STARRING: {user.first_name} & {game.player_two_first_name}</h4>
+                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             <h4>SCORE: shows up when you're on scene 2?</h4>
                             <h4>STATUS: Waiting for your actor...</h4>
@@ -301,8 +301,8 @@ function UserPage() {
                       if (!game.is_ongoing) {
                         return (
                           <TableRow key={game.id}>
-                            <TableCell>{game.date_created}</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>id of {game.id}, {game.date_created}</TableCell>
+                            <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
                             <TableCell>{game.winner_id}</TableCell>
                             <TableCell>score</TableCell>
                           </TableRow>
