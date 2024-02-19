@@ -1,8 +1,15 @@
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./ActiveGame.css";
 
 function ActiveGame() {
+  const history = useHistory();
+
+  const click = () => {
+    history.push("/home");
+  };
+
   return (
     <Box
       component="form"
@@ -103,7 +110,7 @@ function ActiveGame() {
           fullWidth
         />
         <br />
-        <Button type="submit" variant="contained">
+        <Button onClick={click} type="submit" variant="contained">
           {" "}
           Sumbit{" "}
         </Button>
