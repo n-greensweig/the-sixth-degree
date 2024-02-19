@@ -231,7 +231,16 @@ function UserPage() {
                             <h4>TITLE: Pitt-Jolie</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
-                            <h4>SCORE: shows up when you're on scene 2?</h4>
+                            {game.active_scene > 1 ? 
+                            <div>
+                              <h4>SCORE: shows up when you're on scene 2</h4>
+                            </div>
+
+                            :
+
+                            <div>
+                            </div>  
+                            }                            
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined'>play</Button>                 
                         </CardContent>
@@ -252,9 +261,18 @@ function UserPage() {
                             <h4>TITLE: Pitt-Jolie</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
-                            <h4>SCORE: shows up when you're on scene 2?</h4>
+                            {game.active_scene > 1 ? 
+                            <div>
+                              <h4>SCORE: shows up when you're on scene 2</h4>
+                            </div>
+
+                            :
+
+                            <div>
+                            </div>  
+                            }  
                             <h4>STATUS: Waiting for your actor...</h4>
-                            <Button variant='outlined'>play</Button>                 
+                            <Button variant='outlined'>view sent scripts</Button>                 
                         </CardContent>
                       </Card>
                   </>
