@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import NewScript from '../NewScript3/NewScript3';
+
 
 function savedScripts() {
 
@@ -20,6 +22,8 @@ function savedScripts() {
     return (
         <div>
             <h2>My Scripts</h2>
+            <NewScript/>
+
             <ul>
                 {scripts?.map(script => {
                     return (

@@ -4,14 +4,6 @@ import NewScript from '../NewScript3/NewScript3';
 import Button from '@mui/material/Button';
 
 function NewGame() {
-    const [modalIsOpen, setModalIsOpen] = useState(false); // State for (Create New Script) modal visibility
-
-    const toggleModal = () => {
-        console.log('Toggle modal');
-        setModalIsOpen(!modalIsOpen); // Toggle (Create New Script) modal visibility
-    };
-
-    console.log('modalIsOpen:', modalIsOpen); // Log the modalIsOpen state
 
     return (
         <body>
@@ -59,7 +51,7 @@ function NewGame() {
             </ul>
 
 
-            {/* Modal for creating new script */}
+            {/* Modal for creating new script, appears as button */}
             {<NewScript />}
 
         </body>
