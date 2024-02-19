@@ -10,6 +10,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-weight: bold;
   }
   
   /* Hide the browser's default checkbox */
@@ -93,6 +94,7 @@
   } */
   #scriptGame-list{
    background-color: #128bb5  ;
+   
   }
  
   #gameLinkHeader{
@@ -102,6 +104,8 @@
        /* position: absolute; */
        /* z-index: 2;  */
        font-size: 40px; 
+        font-weight: bolder ;
+       
   }
   #gameLink{
      /* top:330px; */
