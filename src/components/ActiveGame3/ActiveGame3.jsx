@@ -2,11 +2,11 @@ import { Box, FormControl, TextField, Button } from "@mui/material";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function ActiveGame() {
+function ActiveGame3() {
   const history = useHistory();
 
   const click = () => {
-    history.push("/ActiveGame2/:id");
+    history.push("/home");
   };
 
   return (
@@ -21,7 +21,7 @@ function ActiveGame() {
         flexDirection: "column",
       }}
     >
-      <h2>Active game</h2>
+      <h2>Active game3</h2>
       <br />
       <FormControl>
         <TextField
@@ -118,4 +118,4 @@ function ActiveGame() {
   );
 }
 
-export default ActiveGame;
+export default ActiveGame3;
