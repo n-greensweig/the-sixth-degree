@@ -2,80 +2,48 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NewScript from '../NewScript3/NewScript3';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
-// const scripts = useSelector((store) => store.scriptReducer);
-
+import './NewGame.css'
 function NewGame() {
-    // const dispatch = useDispatch();
+const dispatch = useDispatch();
+const history = useHistory();
+// GET request to display user's scripts on the DOM
+const scripts = useSelector((store) => store.scriptReducer);
 
-
-    // const handleClick = (e) => {
-    //   e.preventDefault();
-  
-    //   // Create new game in DB
-    //   dispatch({ type: 'CREATE_GAME' });
-    // };
-
-    // useEffect(() => {
-    //     dispatch({ type: 'FETCH_SCRIPTS' });
-    //   }, []);
-
+const handleClick = (e) => {
+    e.preventDefault()
+    dispatch({ type: 'CREATE_GAME' });
+    history.push('/user')
+}
+useEffect(() => {
+    dispatch({ type: 'FETCH_SCRIPTS' });
+  }, []);
     return (
-       
         <body>
+             {/* {JSON.stringify(scripts)} */}
             <Nav/>
             <h1>Pick 3 Scripts!</h1>
-            <button className="create-game-btn" > Create Game </button>
-{/* Map over the scripts to display on the DOM */}
-      {/* {scripts?.map(script => (
-        <p>{script.first_actor} to {script.seventh_actor}</p>
-        ))} */}
+                <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
+               
             <ul>
-                     <li class="container">Jennifer Aniston to Ben Stiller
-   <input type="checkbox"></input>
-   <span class="checkmark"></span>
-</li>
-
- <li class="container">Dwayne Johnson to Jennifer Lopez
-   <input type="checkbox"></input>
-  <span class="checkmark"></span>
- </li>
-
- <li class="container">Ryan Reynolds to Queen Latifah
-   <input type="checkbox"></input>
-   <span class="checkmark"></span>
- </li>
-
- <li class="container">Shaq to Brad Pitt
-  <input type="checkbox"></input>
-  <span class="checkmark"></span>
- </li>
- <li class="container">George Clooney to Robert Downey Jr
-   <input type="checkbox"></input>
-  <span class="checkmark"></span>
- </li>
- <li class="container">Tyler Perry to Merryll Streep
-  <input type="checkbox"></input>
-   <span class="checkmark"></span>
- </li>
-
- <li class="container">Ryan Gosling to Matthew McConaughey
-   <input type="checkbox"></input>
-  <span class="checkmark"></span>
- </li>
-
- <li class="container">Margot Robbie to Arnold Schwarzenegger
-   <input type="checkbox"></input>
- <span class="checkmark"></span>
- </li>
+                {scripts?.map(script => (
+                 <li class="container">{script.first_actor} to {script.seventh_actor}
+                    <input type="checkbox"></input>
+                    <span class="checkmark"></span>
+                </li>
+                
+                ))}
+                
             </ul>
-
-
+            <h2 id="gameLinkHeader">Game Link:</h2>
+        <li id="gameLink">url@url.com</li>
+            
             {/* Modal for creating new script, appears as button */}
             {<NewScript />}
-
+            
         </body>
     )
 }
