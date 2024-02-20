@@ -14,13 +14,13 @@
   }
   
   /* Hide the browser's default checkbox */
-  .container input {
+  /* .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-  }
+  } */
   
   /* Create a custom checkbox */
   .checkmark {
@@ -93,7 +93,8 @@
     background-color: #deb522;
   } */
   #scriptGame-list{
-   background-color: #128bb5  ;
+    /* brought from Nav.css */
+    background-image: linear-gradient(to top, #242319, 1%, #dcdada);  
    
   }
  

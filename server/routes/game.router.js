@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
     // Info to GET from game table
     // ! May need to adjust req.params.id
-    let queryText = `SELECT "winner_id", "date_created" FROM "game" WHERE "player_one_id" = $1;`;
+    let queryText = `SELECT "winner_id", "date_created", "code" FROM "game" WHERE "player_one_id" = $1;`;
     pool.query(queryText, [req.user.id])
         .then((result) => {
             res.send(result.rows);
@@ -20,16 +20,25 @@ router.get('/', (req, res) => {
         });
 
 });
+const generateGameLink = () => {
+    const length = 4;
+    let otp = "";
 
+    for(let i = 0; i < length; i++){
+        otp += Math.floor(Math.random() * 10 );
+    }
+    return otp;
+}
 /**
  * POST route template
  */
 router.post('/', (req, res) => {
     // Info to POST to game table
-    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene") VALUES ($1, $2);`;
-    pool.query(queryText, [req.user.id, 1])
+    let code = generateGameLink()
+    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene","code") VALUES ($1, $2, $3);`;
+    pool.query(queryText, [req.user.id, 1, code])
         .then((result) => {
-            res.sendStatus(201);
+            res.status(201).send({code: code});
         })
         .catch((error) => {
             console.log('Error in game.router POST', error);
