@@ -36,4 +36,20 @@ router.get('/', (req, res) => {
 
 });
 
+/**
+ * POST route template
+ */
+router.post('/', (req, res) => {
+    // Info to POST to game table
+    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene") VALUES ($1, $2);`;
+    pool.query(queryText, [req.user.id, 1])
+        .then((result) => {
+            res.sendStatus(201);
+        })
+        .catch((error) => {
+            console.log('Error in game.router POST', error);
+            res.sendStatus(500);
+        });
+});
+
 module.exports = router;
