@@ -383,11 +383,45 @@ function NewScript() {
 
 
 
-    // Submit form
-    const handleSubmit = () => {
-        dispatch({ type: 'POST_SCRIPT', payload: formData });
-        closeModal();
+
+    const handleSubmit = async () => {
+        // Mapping formData to match database column names
+        const scriptData = {
+            first_actor: formData.firstActor,
+            first_appearance: formData.firstAppearance,
+            second_actor: formData.secondActor,
+            second_appearance: formData.secondAppearance,
+            third_actor: formData.thirdActor,
+            third_appearance: formData.thirdAppearance,
+            fourth_actor: formData.fourthActor,
+            fourth_appearance: formData.fourthAppearance,
+            fifth_actor: formData.fifthActor,
+            fifth_appearance: formData.fifthAppearance,
+            sixth_actor: formData.sixthActor,
+            sixth_appearance: formData.sixthAppearance,
+            seventh_actor: formData.seventhActor,
+            // Add other fields as necessary
+        };
+    
+        try {
+            const response = await axios.post('/api/script', scriptData);
+            console.log(response.data); // Handle the response as needed
+            closeModal(); // Closes the modal on successful submission
+        } catch (error) {
+            console.error('Error submitting script:', error);
+        }
     };
+    
+
+
+
+
+
+
+
+
+
+
 
     // Modal functions
     const openModal = () => setModalIsOpen(true);
@@ -640,6 +674,73 @@ export default NewScript;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// return (
+//     <div>
+//         <h1>New Script</h1>
+
+//         {/* Input fields go here */}
+//         <form onSubmit={handleSubmit}>
+//             <input type="text" placeholder="First Actor" onChange={e => setScript({ ...script, first_actor: e.target.value })} />
+//             <input type="text" placeholder="First Appearance" onChange={e => setScript({ ...script, first_appearance: e.target.value })} />
+//             <input type="text" placeholder="Second Actor" onChange={e => setScript({ ...script, second_actor: e.target.value })} />
+//             <input type="text" placeholder="Second Appearance" onChange={e => setScript({ ...script, second_appearance: e.target.value })} />
+//             <input type="text" placeholder="Third Actor" onChange={e => setScript({ ...script, third_actor: e.target.value })} />
+//             <input type="text" placeholder="Third Appearance" onChange={e => setScript({ ...script, third_appearance: e.target.value })} />
+//             <input type="text" placeholder="Fourth Actor" onChange={e => setScript({ ...script, fourth_actor: e.target.value })} />
+//             <input type="text" placeholder="Fourth Appearance" onChange={e => setScript({ ...script, fourth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Fifth Actor" onChange={e => setScript({ ...script, fifth_actor: e.target.value })} />
+//             <input type="text" placeholder="Fifth Appearance" onChange={e => setScript({ ...script, fifth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Sixth Actor" onChange={e => setScript({ ...script, sixth_actor: e.target.value })} />
+//             <input type="text" placeholder="Sixth Appearance" onChange={e => setScript({ ...script, sixth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Seventh Actor" onChange={e => setScript({ ...script, seventh_actor: e.target.value })} />
+//             <UniversalButton text="Save Script" onClick={handleSubmit} />
+//         </form>
+
+
+//     </div>
+// );
 
 
 
