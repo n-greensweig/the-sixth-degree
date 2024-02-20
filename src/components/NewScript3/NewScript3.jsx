@@ -1,40 +1,88 @@
-
-
-
-
-
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 
+
+
+
 function NewScript() {
+
     const dispatch = useDispatch();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
         secondActor: '',
         secondAppearance: '',
+        thirdActor: '',
+        thirdAppearance: '',
+        fourthActor: '',
+        fourthAppearance: '',
+        fifthActor: '',
+        fifthAppearance: '',
+        sixthActor: '',
+        sixthAppearance: '',
+        seventhActor: '',
     });
 
-    // Separate suggestions and selections for each actor and appearance
+
+
+    // Holds actor and movie suggestions separately for each input
     const [firstActorSuggestions, setFirstActorSuggestions] = useState([]);
     const [secondActorSuggestions, setSecondActorSuggestions] = useState([]);
-    const [firstMovieSuggestions, setFirstMovieSuggestions] = useState([]);
-    const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
+    const [thirdActorSuggestions, setThirdActorSuggestions] = useState([]);
+    const [fourthActorSuggestions, setFourthActorSuggestions] = useState([]);
+    const [fifthActorSuggestions, setFifthActorSuggestions] = useState([]);
+    const [sixthActorSuggestions, setSixthActorSuggestions] = useState([]);
+    const [seventhActorSuggestions, setSeventhActorSuggestions] = useState([]);
 
+
+
+    const [movieSuggestions, setMovieSuggestions] = useState([]);
+    const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
+    const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
+    const [fourthMovieSuggestions, setFourthMovieSuggestions] = useState([]);
+    const [fifthMovieSuggestions, setFifthMovieSuggestions] = useState([]);
+    const [sixthMovieSuggestions, setSixthMovieSuggestions] = useState([]);
+
+
+
+    // Holds selected actor
+    const [selectedActor, setSelectedActor] = useState(null);
+    const [selectedSecondActor, setSelectedSecondActor] = useState(null);
+    const [selectedThirdActor, setSelectedThirdActor] = useState(null);
+    const [selectedFourthActor, setSelectedFourthActor] = useState(null);
+    const [selectedFifthActor, setSelectedFifthActor] = useState(null);
+    const [selectedSixthActor, setSelectedSixthActor] = useState(null);
+    const [selectedSeventhActor, setSelectedSeventhActor] = useState(null);
+
+
+
+
+
+    // Modal state
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+
+    // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
+
+    // Handle input field changes
     const handleChange = async (e) => {
         const { name, value } = e.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
+        setFormData({
+            ...formData,
             [name]: value
-        }));
+        });
 
-        // Fetch actor suggestions for the first actor input
+
+
+ 
+
+        // Fetch first actor suggestions
         if (name === 'firstActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
@@ -44,7 +92,9 @@ function NewScript() {
             }
         }
 
-        // Fetch actor suggestions for the second actor input
+
+
+        // Fetch second actor suggestions
         if (name === 'secondActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
@@ -54,70 +104,275 @@ function NewScript() {
             }
         }
 
-        // Fetch movie suggestions for the first appearance input
-        if (name === 'firstAppearance' && formData.firstActor) {
+
+
+        // Fetch third actor suggestions
+        if (name === 'thirdActor') {
             try {
-                const actor = firstActorSuggestions.find(actor => actor.name === formData.firstActor);
-                if (actor) {
-                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actor.id}/movie_credits?api_key=${apiKey}`);
-                    setFirstMovieSuggestions(response.data.cast.map(movie => ({
-                        id: movie.id,
-                        title: movie.title,
-                        posterPath: movie.poster_path
-                    })));
-                }
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setThirdActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch fourth actor suggestions
+        if (name === 'fourthActor') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setFourthActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch fifth actor suggestions
+        if (name === 'fifthActor') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setFifthActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch sixth actor suggestions
+        if (name === 'sixthActor') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setSixthActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+
+
+
+
+        // Fetch first actor's movie suggestions
+        if (name === 'firstAppearance' && selectedActor) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedActor.id}/movie_credits?api_key=${apiKey}`);
+                setMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
             }
         }
 
-        // Fetch movie suggestions for the second appearance input
-        if (name === 'secondAppearance' && formData.secondActor) {
+
+
+        // Fetch second actor's movie suggestions
+        if (name === 'secondAppearance' && selectedSecondActor) {
             try {
-                const actor = secondActorSuggestions.find(actor => actor.name === formData.secondActor);
-                if (actor) {
-                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actor.id}/movie_credits?api_key=${apiKey}`);
-                    setSecondMovieSuggestions(response.data.cast.map(movie => ({
-                        id: movie.id,
-                        title: movie.title,
-                        posterPath: movie.poster_path
-                    })));
-                }
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedSecondActor.id}/movie_credits?api_key=${apiKey}`);
+                setSecondMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch third actor's movie suggestions
+        if (name === 'thirdAppearance' && selectedThirdActor) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedThirdActor.id}/movie_credits?api_key=${apiKey}`);
+                setThirdMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch fourth actor's movie suggestions
+        if (name === 'fourthAppearance' && selectedFourthActor) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedFourthActor.id}/movie_credits?api_key=${apiKey}`);
+                setFourthMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch fifth actor's movie suggestions
+        if (name === 'fifthAppearance' && selectedFifthActor) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedFifthActor.id}/movie_credits?api_key=${apiKey}`);
+                setFifthMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+
+
+
+        // Fetch sixth actor's movie suggestions
+        if (name === 'sicthAppearance' && selectedSixthActor) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedSixthActor.id}/movie_credits?api_key=${apiKey}`);
+                setSixthMovieSuggestions(response.data.cast.map(movie => ({
+                    id: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path
+                })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
             }
         }
     };
 
-    const handleActorSelect = (actor, actorType) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [actorType]: actor.name
-        }));
-        if (actorType === 'firstActor') {
+
+
+
+
+
+
+
+    // Select an actor from suggestions
+    const handleActorSelect = (actor, type) => {
+        if (type === 'first') {
+            setSelectedActor(actor);
+            setFormData({
+                ...formData,
+                firstActor: actor.name
+            });
             setFirstActorSuggestions([]);
-        } else if (actorType === 'secondActor') {
+        } else if (type === 'second') {
+            setSelectedSecondActor(actor);
+            setFormData({
+                ...formData,
+                secondActor: actor.name
+            });
             setSecondActorSuggestions([]);
         }
-    };
-
-    const handleMovieSelect = (movie, appearanceType) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [appearanceType]: movie.title
-        }));
-        if (appearanceType === 'firstAppearance') {
-            setFirstMovieSuggestions([]);
-        } else if (appearanceType === 'secondAppearance') {
-            setSecondMovieSuggestions([]);
+        else if (type === 'third') {
+            setSelectedThirdActor(actor);
+            setFormData({
+                ...formData,
+                thirdActor: actor.name
+            });
+            setThirdActorSuggestions([]);
+        }
+        else if (type === 'fourth') {
+            setSelectedFourthActor(actor);
+            setFormData({
+                ...formData,
+                fourthActor: actor.name
+            });
+            setFourthActorSuggestions([]);
+        }
+        else if (type === 'fifth') {
+            setSelectedFifthActor(actor);
+            setFormData({
+                ...formData,
+                fifthActor: actor.name
+            });
+            setFifthActorSuggestions([]);
+        }
+        else if (type === 'sixth') {
+            setSelectedSixthActor(actor);
+            setFormData({
+                ...formData,
+                sixthActor: actor.name
+            });
+            setSixthActorSuggestions([]);
         }
     };
 
+
+
+
+
+    // Select a movie from suggestions
+    const handleMovieSelect = (movie, type) => {
+        if (type === 'first') {
+            setFormData({
+                ...formData,
+                firstAppearance: movie.title
+            });
+            setMovieSuggestions([]);
+        } else if (type === 'second') {
+            setFormData({
+                ...formData,
+                secondAppearance: movie.title
+            });
+            setSecondMovieSuggestions([]);
+        }
+        else if (type === 'third') {
+            setFormData({
+                ...formData,
+                thirdAppearance: movie.title
+            });
+            setThirdMovieSuggestions([]);
+        }
+        else if (type === 'fourth') {
+            setFormData({
+                ...formData,
+                fourthAppearance: movie.title
+            });
+            setFourthMovieSuggestions([]);
+        }
+        else if (type === 'fifth') {
+            setFormData({
+                ...formData,
+                fifthAppearance: movie.title
+            });
+            setFifthMovieSuggestions([]);
+        }
+        else if (type === 'sixth') {
+            setFormData({
+                ...formData,
+                sixthAppearance: movie.title
+            });
+            setSixthMovieSuggestions([]);
+        }
+    };
+
+
+
+
+
+
+
+
+
+    // Submit form
     const handleSubmit = () => {
         dispatch({ type: 'POST_SCRIPT', payload: formData });
         closeModal();
     };
 
+    // Modal functions
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
@@ -126,63 +381,155 @@ function NewScript() {
             <Button variant='contained' onClick={openModal}>Create New Script</Button>
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
                 <form>
-                    {/* Actor and movie input fields for the first actor */}
-                    <div>
-                        <label>
-                            First Actor:
-                            <input type="text" name="firstActor" value={formData.firstActor} onChange={handleChange} />
-                        </label>
-                        <ul>
-                            {firstActorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor, 'firstActor')}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
+                    {/* First Actor and Appearance Input Fields */}
+                    <label>
+                        First Actor:
+                        <input type="text" name="firstActor" value={formData.firstActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {firstActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'first')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
 
-                        <label>
-                            First Appearance:
-                            <input type="text" name="firstAppearance" value={formData.firstAppearance} onChange={handleChange} />
-                        </label>
-                        <ul>
-                            {firstMovieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie, 'firstAppearance')}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <label>
+                        First Appearance:
+                        <input type="text" name="firstAppearance" value={formData.firstAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {movieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'first')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
 
-                    {/* Actor and movie input fields for the second actor */}
-                    <div>
-                        <label>
-                            Second Actor:
-                            <input type="text" name="secondActor" value={formData.secondActor} onChange={handleChange} />
-                        </label>
-                        <ul>
-                            {secondActorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor, 'secondActor')}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
+                    {/* Second Actor and Appearance Input Fields */}
+                    <label>
+                        Second Actor:
+                        <input type="text" name="secondActor" value={formData.secondActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {secondActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'second')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
 
-                        <label>
-                            Second Appearance:
-                            <input type="text" name="secondAppearance" value={formData.secondAppearance} onChange={handleChange} />
-                        </label>
-                        <ul>
-                            {secondMovieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie, 'secondAppearance')}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <label>
+                        Second Appearance:
+                        <input type="text" name="secondAppearance" value={formData.secondAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {secondMovieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'second')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Third Actor and Appearance Input Fields */}
+                    <label>
+                        Third Actor:
+                        <input type="text" name="thirdActor" value={formData.thirdActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {thirdActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'third')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <label>
+                        Third Appearance:
+                        <input type="text" name="thirdAppearance" value={formData.thirdAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {thirdMovieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'third')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Fourth Actor and Appearance Input Fields */}
+                    <label>
+                        Fourth Actor:
+                        <input type="text" name="fourthActor" value={formData.fourthActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {fourthActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'fourth')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <label>
+                        Fourth Appearance:
+                        <input type="text" name="FourthAppearance" value={formData.fourthAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {fourthMovieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fourth')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Fifth Actor and Appearance Input Fields */}
+                    <label>
+                        Fifth Actor:
+                        <input type="text" name="fifthActor" value={formData.fifthActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {fifthActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'fifth')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <label>
+                        Fifth Appearance:
+                        <input type="text" name="fifthAppearance" value={formData.fifthAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {fifthMovieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fifth')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Sixth Actor and Appearance Input Fields */}
+                    <label>
+                        Sixth Actor:
+                        <input type="text" name="sixthActor" value={formData.sixthActor} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {sixthActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'sixth')}>
+                                {actor.name}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <label>
+                        Sixth Appearance:
+                        <input type="text" name="sixthAppearance" value={formData.sixthAppearance} onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {sixthMovieSuggestions.map(movie => (
+                            <li key={movie.id} onClick={() => handleMovieSelect(movie, 'sixth')}>
+                                {movie.title}
+                            </li>
+                        ))}
+                    </ul>
 
                     <Button variant='contained' onClick={handleSubmit}>Submit</Button>
                 </form>
@@ -220,28 +567,48 @@ export default NewScript;
 
 
 
-    // return (
-    //     <div>
-    //         <h1>New Script</h1>
-
-    //         {/* Input fields go here */}
-    //         <form onSubmit={handleSubmit}>
-    //             <input type="text" placeholder="First Actor" onChange={e => setScript({ ...script, first_actor: e.target.value })} />
-    //             <input type="text" placeholder="First Appearance" onChange={e => setScript({ ...script, first_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Second Actor" onChange={e => setScript({ ...script, second_actor: e.target.value })} />
-    //             <input type="text" placeholder="Second Appearance" onChange={e => setScript({ ...script, second_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Third Actor" onChange={e => setScript({ ...script, third_actor: e.target.value })} />
-    //             <input type="text" placeholder="Third Appearance" onChange={e => setScript({ ...script, third_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Fourth Actor" onChange={e => setScript({ ...script, fourth_actor: e.target.value })} />
-    //             <input type="text" placeholder="Fourth Appearance" onChange={e => setScript({ ...script, fourth_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Fifth Actor" onChange={e => setScript({ ...script, fifth_actor: e.target.value })} />
-    //             <input type="text" placeholder="Fifth Appearance" onChange={e => setScript({ ...script, fifth_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Sixth Actor" onChange={e => setScript({ ...script, sixth_actor: e.target.value })} />
-    //             <input type="text" placeholder="Sixth Appearance" onChange={e => setScript({ ...script, sixth_appearance: e.target.value })} />
-    //             <input type="text" placeholder="Seventh Actor" onChange={e => setScript({ ...script, seventh_actor: e.target.value })} />
-    //             <UniversalButton text="Save Script" onClick={handleSubmit} />
-    //         </form>
 
 
-    //     </div>
-    // );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// return (
+//     <div>
+//         <h1>New Script</h1>
+
+//         {/* Input fields go here */}
+//         <form onSubmit={handleSubmit}>
+//             <input type="text" placeholder="First Actor" onChange={e => setScript({ ...script, first_actor: e.target.value })} />
+//             <input type="text" placeholder="First Appearance" onChange={e => setScript({ ...script, first_appearance: e.target.value })} />
+//             <input type="text" placeholder="Second Actor" onChange={e => setScript({ ...script, second_actor: e.target.value })} />
+//             <input type="text" placeholder="Second Appearance" onChange={e => setScript({ ...script, second_appearance: e.target.value })} />
+//             <input type="text" placeholder="Third Actor" onChange={e => setScript({ ...script, third_actor: e.target.value })} />
+//             <input type="text" placeholder="Third Appearance" onChange={e => setScript({ ...script, third_appearance: e.target.value })} />
+//             <input type="text" placeholder="Fourth Actor" onChange={e => setScript({ ...script, fourth_actor: e.target.value })} />
+//             <input type="text" placeholder="Fourth Appearance" onChange={e => setScript({ ...script, fourth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Fifth Actor" onChange={e => setScript({ ...script, fifth_actor: e.target.value })} />
+//             <input type="text" placeholder="Fifth Appearance" onChange={e => setScript({ ...script, fifth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Sixth Actor" onChange={e => setScript({ ...script, sixth_actor: e.target.value })} />
+//             <input type="text" placeholder="Sixth Appearance" onChange={e => setScript({ ...script, sixth_appearance: e.target.value })} />
+//             <input type="text" placeholder="Seventh Actor" onChange={e => setScript({ ...script, seventh_actor: e.target.value })} />
+//             <UniversalButton text="Save Script" onClick={handleSubmit} />
+//         </form>
+
+
+//     </div>
+// );
