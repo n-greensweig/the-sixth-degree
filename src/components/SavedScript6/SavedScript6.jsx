@@ -29,7 +29,7 @@ function savedScripts() {
                     return (
                         <li key={script.id}>
                             <p>{script.first_actor} - {script.seventh_actor}</p>
-                            <Button variant="text" onClick={e => toggleEditing(e)} startIcon={isEditing ? null : <EditIcon />}
+                            <Button variant="contained" onClick={e => toggleEditing(e)} startIcon={isEditing ? null : <EditIcon />}
                                 style={{
                                     borderColor: 'white', color: "gray",
                                 }}>{isEditing ? null : 'Edit script'}</Button>

@@ -23,7 +23,17 @@ function NewScript() {
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
-        // Will add the other input fields later
+        secondActor: '',
+        secondAppearance: '',
+        thirdActor: '',
+        thirdAppearance: '',
+        fourthActor: '',
+        fourthAppearance: '',
+        fifthActor: '',
+        fifthAppearance: '',
+        sixthActor: '',
+        sixthAppearance: '',
+        seventhActor: '',
     });
 
 
@@ -58,7 +68,7 @@ function NewScript() {
 
 
         // Uses API to fetch actor suggestions as I type
-        if (name === 'firstActor') {
+        if (name === 'firstActor' || 'secondActor' || 'thirdActor' || 'fourthActor' || 'fifthActor' || 'sixthActor' || 'seventhActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
                 setActorSuggestions(response.data.results);
@@ -70,7 +80,7 @@ function NewScript() {
 
 
         // Uses API to fetch movie suggestions as I type
-        if (name === 'firstAppearance') {
+        if (name === 'firstAppearance' || 'secondAppearance' || 'thirdAppearance' || 'fourthAppearance' || 'fifthAppearance' || 'sixthAppearance') {
             try {
                 // Only suggests movies the selected actor was in.
                 const actorId = selectedActor ? selectedActor.id : null;
@@ -96,7 +106,14 @@ function NewScript() {
         setSelectedActor(actor);
         setFormData({
             ...formData,
-            firstActor: actor.name
+            firstActor: actor.name,
+            secondActor: actor.name,
+            thirdActor: actor.name,
+            fourthActor: actor.name,
+            fifthActor: actor.name,
+            sixthActor: actor.name,
+            seventhActor: actor.name,
+
         });
         setActorSuggestions([]); // Clears input field after actor is selected.
     };
@@ -108,7 +125,12 @@ function NewScript() {
         setSelectedMovie(movie);
         setFormData({
             ...formData,
-            firstAppearance: movie.title
+            firstAppearance: movie.title,
+            secondAppearance: movie.title,
+            thirdAppearance: movie.title,
+            fourthAppearance: movie.title,
+            fifthAppearance: movie.title,
+            sixthAppearance: movie.title,
         });
         setMovieSuggestions([]); // Clears input field after movie is selected.
     };
@@ -134,14 +156,19 @@ function NewScript() {
                 onRequestClose={closeModal}
                 contentLabel="New Script Modal"
             >
-                <form>
+
+
+
+                <form onSubmit={handleSubmit}>
                     <label>
                         Who:
                         <input
                             type="text"
                             name="firstActor"
+                            placeholder="First Actor"
                             value={formData.firstActor}
                             onChange={handleChange}
+                            // onChange={e => setScript({ ...script, first_actor: e.target.value })}
                         />
                         {/* Uses API to display actor suggestions */}
                         <ul>
@@ -159,8 +186,10 @@ function NewScript() {
                         <input
                             type="text"
                             name="firstAppearance"
+                            placeholder="First Appearance"
                             value={formData.firstAppearance}
                             onChange={handleChange}
+                            // onChange={e => setScript({ ...script, first_appearance: e.target.value })}
                         />
                         {/* Uses API to display movie suggestions */}
                         <ul>
@@ -174,10 +203,261 @@ function NewScript() {
                     </label>
                     <br />
 
-                    {/* Will Submit Completed Form to Database */}
-                    <Button variant='contained' onClick={handleSubmit}>Submit</Button>
                 </form>
-            </Modal>
+
+
+
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="secondActor"
+                            placeholder="Second Actor"
+                            value={formData.secondActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="secondAppearance"
+                            placeholder="Second Appearance"
+                            value={formData.secondAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                </form>
+
+
+
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="thirdActor"
+                            placeholder="Third Actor"
+                            value={formData.thirdActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="thirdAppearance"
+                            placeholder="Third Appearance"
+                            value={formData.thirdAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                </form>
+
+
+
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="fourthActor"
+                            placeholder="Fourth Actor"
+                            value={formData.fourthActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="fourthAppearance"
+                            placeholder="Fourth Appearance"
+                            value={formData.fourthAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                </form>
+
+
+
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="fifthActor"
+                            placeholder="Fifth Actor"
+                            value={formData.fifthActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="fifthAppearance"
+                            placeholder="Fifth Appearance"
+                            value={formData.fifthAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                </form>
+
+
+
+                <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="sixthActor"
+                            placeholder="Sixth Actor"
+                            value={formData.sixthActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                    <label>
+                        Is In:
+                        <input
+                            type="text"
+                            name="sixthAppearance"
+                            placeholder="Sixth Appearance"
+                            value={formData.sixthAppearance}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display movie suggestions */}
+                        <ul>
+                            {movieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
+                                    {movie.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+                </form>
+
+
+
+            <form>
+                    <label>
+                        Who:
+                        <input
+                            type="text"
+                            name="seventhActor"
+                            placeholder="Seventh Actor"
+                            value={formData.seventhActor}
+                            onChange={handleChange}
+                        />
+                        {/* Uses API to display actor suggestions */}
+                        <ul>
+                            {actorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
+                                    {actor.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </label>
+                    <br />
+
+                {/* Will Submit Completed Form to Database */}
+                <Button variant='contained' onClick={handleSubmit}>Submit</Button>
+                     </form>
+                     </Modal>
         </>
     );
 }
@@ -185,10 +465,6 @@ function NewScript() {
 
 
 export default NewScript;
-
-
-
-
 
 
 
