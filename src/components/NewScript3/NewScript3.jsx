@@ -1,97 +1,87 @@
-import React, { useState, useEffect } from 'react';
+
+
+
+
+
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import axios from 'axios';
-import UniversalButton from '../UniversalButton/UniversalButton';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 
-
-
 function NewScript() {
     const dispatch = useDispatch();
-    const [script, setScript] = useState({});
-
-
-
-    const handleSubmit = () => {
-        dispatch({ type: 'POST_SCRIPT', payload: script }); // POST script to the Database.
-        closeModal(); // Close the modal after submitting
-    };
-
-
-
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
         secondActor: '',
         secondAppearance: '',
-        thirdActor: '',
-        thirdAppearance: '',
-        fourthActor: '',
-        fourthAppearance: '',
-        fifthActor: '',
-        fifthAppearance: '',
-        sixthActor: '',
-        sixthAppearance: '',
-        seventhActor: '',
     });
 
+    // Separate suggestions and selections for each actor and appearance
+    const [firstActorSuggestions, setFirstActorSuggestions] = useState([]);
+    const [secondActorSuggestions, setSecondActorSuggestions] = useState([]);
+    const [firstMovieSuggestions, setFirstMovieSuggestions] = useState([]);
+    const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
 
-
-    // Holds actor suggestions
-    const [actorSuggestions, setActorSuggestions] = useState([]);
-    const [movieSuggestions, setMovieSuggestions] = useState([]);
-    // Holds selected actor
-    const [selectedActor, setSelectedActor] = useState(null);
-    const [selectedMovie, setSelectedMovie] = useState(null);
-
-
-
-    // Modal state
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-
-
-
-    // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
-
-
-    //// For input field changes
     const handleChange = async (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData(prevFormData => ({
+            ...prevFormData,
             [name]: value
-        });
+        }));
 
-
-
-        // Uses API to fetch actor suggestions as I type
-        if (name === 'firstActor' || 'secondActor' || 'thirdActor' || 'fourthActor' || 'fifthActor' || 'sixthActor' || 'seventhActor') {
+        // Fetch actor suggestions for the first actor input
+        if (name === 'firstActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setActorSuggestions(response.data.results);
+                setFirstActorSuggestions(response.data.results);
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
         }
 
-
-
-        // Uses API to fetch movie suggestions as I type
-        if (name === 'firstAppearance' || 'secondAppearance' || 'thirdAppearance' || 'fourthAppearance' || 'fifthAppearance' || 'sixthAppearance') {
+        // Fetch actor suggestions for the second actor input
+        if (name === 'secondActor') {
             try {
-                // Only suggests movies the selected actor was in.
-                const actorId = selectedActor ? selectedActor.id : null;
-                if (actorId) {
-                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${apiKey}`);
-                    const moviesForActor = response.data.cast.map(movie => ({
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setSecondActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
+
+        // Fetch movie suggestions for the first appearance input
+        if (name === 'firstAppearance' && formData.firstActor) {
+            try {
+                const actor = firstActorSuggestions.find(actor => actor.name === formData.firstActor);
+                if (actor) {
+                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actor.id}/movie_credits?api_key=${apiKey}`);
+                    setFirstMovieSuggestions(response.data.cast.map(movie => ({
                         id: movie.id,
                         title: movie.title,
-                        posterPath: movie.poster_path // Added poster path for each movie
-                    }));
-                    setMovieSuggestions(moviesForActor);
+                        posterPath: movie.poster_path
+                    })));
+                }
+            } catch (error) {
+                console.error('Error fetching movie suggestions:', error);
+            }
+        }
+
+        // Fetch movie suggestions for the second appearance input
+        if (name === 'secondAppearance' && formData.secondActor) {
+            try {
+                const actor = secondActorSuggestions.find(actor => actor.name === formData.secondActor);
+                if (actor) {
+                    const response = await axios.get(`https://api.themoviedb.org/3/person/${actor.id}/movie_credits?api_key=${apiKey}`);
+                    setSecondMovieSuggestions(response.data.cast.map(movie => ({
+                        id: movie.id,
+                        title: movie.title,
+                        posterPath: movie.poster_path
+                    })));
                 }
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -99,372 +89,122 @@ function NewScript() {
         }
     };
 
-
-
-    // This handler is for selecting an actor from the suggestions
-    const handleActorSelect = (actor) => {
-        setSelectedActor(actor);
-        setFormData({
-            ...formData,
-            firstActor: actor.name,
-            secondActor: actor.name,
-            thirdActor: actor.name,
-            fourthActor: actor.name,
-            fifthActor: actor.name,
-            sixthActor: actor.name,
-            seventhActor: actor.name,
-
-        });
-        setActorSuggestions([]); // Clears input field after actor is selected.
+    const handleActorSelect = (actor, actorType) => {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [actorType]: actor.name
+        }));
+        if (actorType === 'firstActor') {
+            setFirstActorSuggestions([]);
+        } else if (actorType === 'secondActor') {
+            setSecondActorSuggestions([]);
+        }
     };
 
-
-
-    // This handler is for selecting a movie from the suggestions.
-    const handleMovieSelect = (movie) => {
-        setSelectedMovie(movie);
-        setFormData({
-            ...formData,
-            firstAppearance: movie.title,
-            secondAppearance: movie.title,
-            thirdAppearance: movie.title,
-            fourthAppearance: movie.title,
-            fifthAppearance: movie.title,
-            sixthAppearance: movie.title,
-        });
-        setMovieSuggestions([]); // Clears input field after movie is selected.
+    const handleMovieSelect = (movie, appearanceType) => {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [appearanceType]: movie.title
+        }));
+        if (appearanceType === 'firstAppearance') {
+            setFirstMovieSuggestions([]);
+        } else if (appearanceType === 'secondAppearance') {
+            setSecondMovieSuggestions([]);
+        }
     };
 
-
-
-    // Modal open/close functions
-    const openModal = () => {
-        setModalIsOpen(true);
+    const handleSubmit = () => {
+        dispatch({ type: 'POST_SCRIPT', payload: formData });
+        closeModal();
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
-
-
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false);
 
     return (
         <>
             <Button variant='contained' onClick={openModal}>Create New Script</Button>
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                contentLabel="New Script Modal"
-            >
-
-
-
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="firstActor"
-                            placeholder="First Actor"
-                            value={formData.firstActor}
-                            onChange={handleChange}
-                            // onChange={e => setScript({ ...script, first_actor: e.target.value })}
-                        />
-                        {/* Uses API to display actor suggestions */}
-                        <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="firstAppearance"
-                            placeholder="First Appearance"
-                            value={formData.firstAppearance}
-                            onChange={handleChange}
-                            // onChange={e => setScript({ ...script, first_appearance: e.target.value })}
-                        />
-                        {/* Uses API to display movie suggestions */}
-                        <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-
-                </form>
-
-
-
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
                 <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="secondActor"
-                            placeholder="Second Actor"
-                            value={formData.secondActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
+                    {/* Actor and movie input fields for the first actor */}
+                    <div>
+                        <label>
+                            First Actor:
+                            <input type="text" name="firstActor" value={formData.firstActor} onChange={handleChange} />
+                        </label>
                         <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                            {firstActorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor, 'firstActor')}>
                                     <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
                                     {actor.name}
                                 </li>
                             ))}
                         </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="secondAppearance"
-                            placeholder="Second Appearance"
-                            value={formData.secondAppearance}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display movie suggestions */}
+
+                        <label>
+                            First Appearance:
+                            <input type="text" name="firstAppearance" value={formData.firstAppearance} onChange={handleChange} />
+                        </label>
                         <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                            {firstMovieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie, 'firstAppearance')}>
                                     <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
                                     {movie.title}
                                 </li>
                             ))}
                         </ul>
-                    </label>
-                    <br />
-                </form>
+                    </div>
 
-
-
-                <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="thirdActor"
-                            placeholder="Third Actor"
-                            value={formData.thirdActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
+                    {/* Actor and movie input fields for the second actor */}
+                    <div>
+                        <label>
+                            Second Actor:
+                            <input type="text" name="secondActor" value={formData.secondActor} onChange={handleChange} />
+                        </label>
                         <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
+                            {secondActorSuggestions.map(actor => (
+                                <li key={actor.id} onClick={() => handleActorSelect(actor, 'secondActor')}>
                                     <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
                                     {actor.name}
                                 </li>
                             ))}
                         </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="thirdAppearance"
-                            placeholder="Third Appearance"
-                            value={formData.thirdAppearance}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display movie suggestions */}
+
+                        <label>
+                            Second Appearance:
+                            <input type="text" name="secondAppearance" value={formData.secondAppearance} onChange={handleChange} />
+                        </label>
                         <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
+                            {secondMovieSuggestions.map(movie => (
+                                <li key={movie.id} onClick={() => handleMovieSelect(movie, 'secondAppearance')}>
                                     <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
                                     {movie.title}
                                 </li>
                             ))}
                         </ul>
-                    </label>
-                    <br />
+                    </div>
+
+                    <Button variant='contained' onClick={handleSubmit}>Submit</Button>
                 </form>
-
-
-
-                <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="fourthActor"
-                            placeholder="Fourth Actor"
-                            value={formData.fourthActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
-                        <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="fourthAppearance"
-                            placeholder="Fourth Appearance"
-                            value={formData.fourthAppearance}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display movie suggestions */}
-                        <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                </form>
-
-
-
-                <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="fifthActor"
-                            placeholder="Fifth Actor"
-                            value={formData.fifthActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
-                        <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="fifthAppearance"
-                            placeholder="Fifth Appearance"
-                            value={formData.fifthAppearance}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display movie suggestions */}
-                        <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                </form>
-
-
-
-                <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="sixthActor"
-                            placeholder="Sixth Actor"
-                            value={formData.sixthActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
-                        <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                    <label>
-                        Is In:
-                        <input
-                            type="text"
-                            name="sixthAppearance"
-                            placeholder="Sixth Appearance"
-                            value={formData.sixthAppearance}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display movie suggestions */}
-                        <ul>
-                            {movieSuggestions.map(movie => (
-                                <li key={movie.id} onClick={() => handleMovieSelect(movie)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.posterPath}`} alt={movie.title} />
-                                    {movie.title}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-                </form>
-
-
-
-            <form>
-                    <label>
-                        Who:
-                        <input
-                            type="text"
-                            name="seventhActor"
-                            placeholder="Seventh Actor"
-                            value={formData.seventhActor}
-                            onChange={handleChange}
-                        />
-                        {/* Uses API to display actor suggestions */}
-                        <ul>
-                            {actorSuggestions.map(actor => (
-                                <li key={actor.id} onClick={() => handleActorSelect(actor)}>
-                                    <img src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`} alt={actor.name} />
-                                    {actor.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </label>
-                    <br />
-
-                {/* Will Submit Completed Form to Database */}
-                <Button variant='contained' onClick={handleSubmit}>Submit</Button>
-                     </form>
-                     </Modal>
+            </Modal>
         </>
     );
 }
 
-
-
 export default NewScript;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
