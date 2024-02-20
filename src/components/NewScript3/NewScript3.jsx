@@ -471,7 +471,7 @@ function NewScript() {
 
                     <label>
                         Fourth Appearance:
-                        <input type="text" name="FourthAppearance" value={formData.fourthAppearance} onChange={handleChange} />
+                        <input type="text" name="fourthAppearance" value={formData.fourthAppearance} onChange={handleChange} />
                     </label>
                     <ul>
                         {fourthMovieSuggestions.map(movie => (
