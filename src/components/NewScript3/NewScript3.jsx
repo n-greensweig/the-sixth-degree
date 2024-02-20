@@ -153,6 +153,15 @@ function NewScript() {
         }
 
 
+        // Fetch seventh actor suggestions
+        if (name === 'seventhActor') {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
+                setSeventhActorSuggestions(response.data.results);
+            } catch (error) {
+                console.error('Error fetching actor suggestions:', error);
+            }
+        }
 
 
 
@@ -307,6 +316,14 @@ function NewScript() {
             });
             setSixthActorSuggestions([]);
         }
+        else if (type === 'seventh') {
+            setSelectedSeventhActor(actor);
+            setFormData({
+                ...formData,
+                seventhActor: actor.name
+            });
+            setSeventhActorSuggestions([]);
+        }
     };
 
 
@@ -384,7 +401,12 @@ function NewScript() {
                     {/* First Actor and Appearance Input Fields */}
                     <label>
                         First Actor:
-                        <input type="text" name="firstActor" value={formData.firstActor} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder='First Actor'
+                        name="firstActor" 
+                        value={formData.firstActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {firstActorSuggestions.map(actor => (
@@ -396,7 +418,12 @@ function NewScript() {
 
                     <label>
                         First Appearance:
-                        <input type="text" name="firstAppearance" value={formData.firstAppearance} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder='First Appearance'
+                        name="firstAppearance" 
+                        value={formData.firstAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {movieSuggestions.map(movie => (
@@ -409,7 +436,12 @@ function NewScript() {
                     {/* Second Actor and Appearance Input Fields */}
                     <label>
                         Second Actor:
-                        <input type="text" name="secondActor" value={formData.secondActor} onChange={handleChange} />
+                        <input 
+                        type="text"
+                        placeholder="Second Actor" 
+                        name="secondActor" 
+                        value={formData.secondActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {secondActorSuggestions.map(actor => (
@@ -421,7 +453,12 @@ function NewScript() {
 
                     <label>
                         Second Appearance:
-                        <input type="text" name="secondAppearance" value={formData.secondAppearance} onChange={handleChange} />
+                        <input 
+                        type="text"
+                        placeholder="Second Appearance"
+                        name="secondAppearance" 
+                        value={formData.secondAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {secondMovieSuggestions.map(movie => (
@@ -434,7 +471,12 @@ function NewScript() {
                     {/* Third Actor and Appearance Input Fields */}
                     <label>
                         Third Actor:
-                        <input type="text" name="thirdActor" value={formData.thirdActor} onChange={handleChange} />
+                        <input 
+                        type="text"
+                        placeholder="Third Actor" 
+                        name="thirdActor" 
+                        value={formData.thirdActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {thirdActorSuggestions.map(actor => (
@@ -446,7 +488,12 @@ function NewScript() {
 
                     <label>
                         Third Appearance:
-                        <input type="text" name="thirdAppearance" value={formData.thirdAppearance} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Third Appearance"
+                        name="thirdAppearance" 
+                        value={formData.thirdAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {thirdMovieSuggestions.map(movie => (
@@ -459,7 +506,12 @@ function NewScript() {
                     {/* Fourth Actor and Appearance Input Fields */}
                     <label>
                         Fourth Actor:
-                        <input type="text" name="fourthActor" value={formData.fourthActor} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Fourth Actor"
+                        name="fourthActor" 
+                        value={formData.fourthActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {fourthActorSuggestions.map(actor => (
@@ -471,7 +523,12 @@ function NewScript() {
 
                     <label>
                         Fourth Appearance:
-                        <input type="text" name="fourthAppearance" value={formData.fourthAppearance} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Fourth Appearance"
+                        name="fourthAppearance" 
+                        value={formData.fourthAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {fourthMovieSuggestions.map(movie => (
@@ -484,7 +541,12 @@ function NewScript() {
                     {/* Fifth Actor and Appearance Input Fields */}
                     <label>
                         Fifth Actor:
-                        <input type="text" name="fifthActor" value={formData.fifthActor} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Fifth Actor"
+                        name="fifthActor" 
+                        value={formData.fifthActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {fifthActorSuggestions.map(actor => (
@@ -496,7 +558,12 @@ function NewScript() {
 
                     <label>
                         Fifth Appearance:
-                        <input type="text" name="fifthAppearance" value={formData.fifthAppearance} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Fifth Appearance"
+                        name="fifthAppearance" 
+                        value={formData.fifthAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {fifthMovieSuggestions.map(movie => (
@@ -509,7 +576,12 @@ function NewScript() {
                     {/* Sixth Actor and Appearance Input Fields */}
                     <label>
                         Sixth Actor:
-                        <input type="text" name="sixthActor" value={formData.sixthActor} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Sixth Actor"
+                        name="sixthActor" 
+                        value={formData.sixthActor} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {sixthActorSuggestions.map(actor => (
@@ -521,12 +593,35 @@ function NewScript() {
 
                     <label>
                         Sixth Appearance:
-                        <input type="text" name="sixthAppearance" value={formData.sixthAppearance} onChange={handleChange} />
+                        <input 
+                        type="text" 
+                        placeholder="Sixth Appearance"
+                        name="sixthAppearance" 
+                        value={formData.sixthAppearance} 
+                        onChange={handleChange} />
                     </label>
                     <ul>
                         {sixthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'sixth')}>
                                 {movie.title}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Seventh Actor Input Field */}
+                    <label>
+                        Seventh Actor:
+                        <input 
+                        type="text" 
+                        placeholder="Seventh Actor"
+                        name="seventhActor" 
+                        value={formData.seventhActor} 
+                        onChange={handleChange} />
+                    </label>
+                    <ul>
+                        {seventhActorSuggestions.map(actor => (
+                            <li key={actor.id} onClick={() => handleActorSelect(actor, 'seventh')}>
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
