@@ -3,6 +3,13 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextField, Button, Grid, Container, Card, CardContent, Paper, Box } from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import FormControl from '@mui/material/FormControl';
 
 
 function UserPage() {
@@ -22,60 +29,158 @@ function UserPage() {
   }, []);
 
   
+  const sendScriptsBack = () => {
+    console.log("in sendScriptsBack");
+  }
+
+  const playScripts = () => {
+    console.log("in playScripts");
+  }
+
+  const viewSentScripts = () => {
+    console.log("in viewSentScripts");
+  }
+
+
 
   return (
     <div className="container">
+
+      <LogOutButton>log out</LogOutButton>
+
+      <Grid>
+      <Container sx={{justifyContent: "center"}}>
+        
       <h1>Welcome, {user.first_name}!</h1>
-      <p>Your ID is: {user.id}</p>
+      {/* <p>Your ID is: {user.id}</p> */}
 
-      <LogOutButton className="btn" />
-
-      {games?.map(game => {
-        return (
-          <div key={game.id}>
-            <p>Winner: {game.winner_id === null ? 'Noah' : 'no one'}</p>
-            <p>Date: {game.date_created}</p>
-          </div>
-        );
-      })}
-
-
+      
       <Button
         variant='outlined'
         onClick={handleClick}
-      >Create Game</Button>
-
-
+        >Create Game</Button>
+      
+      
       <h2>Now Playing:</h2>
 
-      <h3>Actor</h3>
-      <Card>
-        <CardContent>
-          <h4>TITLE: Pitt-Jolie</h4>
-          <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-          <h4>SCENE: active_scene</h4>
-          <h4>SCORE: shows up when you're on scene 2?</h4>
-          <h4>STATUS: You're wanted on set!</h4>
-          <Button variant='outlined'>play</Button>
-        </CardContent>
-      </Card>
-      <h3>Director</h3>
-      <Card>
-        <CardContent>
+      {games.length > 0 ?
+        <div>
+          <h3>Actor</h3>
+          {games.map(game => {
+              if (game.is_ongoing && game.active_respondent_id === user.id) {
+                return (
+                  <>                    
+                      <Card key={game.id}>
+                        <CardContent>
+                            <h4>game ID: {game.id}</h4>
+                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
+                            <h4>SCENE: {game.active_scene}</h4>
+                            {game.active_scene > 1 ? 
+                            <div>
+                              <h4>SCORE: shows up when you're on scene 2</h4>
+                            </div>
 
-          <h4>TITLE: Cruz-Aniston</h4>
-          <h4>STARRING: {user.first_name} & Friend name based on ID</h4>
-          <h4>SCENE: active_scene</h4>
-          <h4>SCORE:</h4>
-          <h4>STATUS: Waiting on your actor...</h4>
-          <Button variant='outlined'>view sent scripts</Button>
+                            :
 
-        </CardContent>
-      </Card>
+                            <div>
+                            </div>  
+                            }                            
+                            <h4>STATUS: You're wanted on set!</h4>
+                            <Button variant='outlined' onClick={sendScriptsBack}>send scripts back</Button>
+                            <Button variant='outlined' onClick={playScripts}>play</Button>                                             
+                        </CardContent>
+                      </Card>
+                  </>
+                )
+              } 
+            })}   
+              
+          <h3>Director</h3>
+          {games.map(game => {
+              if (game.is_ongoing && game.active_respondent_id !== user.id) {
+                return (
+                  <>  
+                      <Card key={game.id}>
+                        <CardContent>
+                            <h4>game ID: {game.id}</h4>
+                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
+                            <h4>SCENE: {game.active_scene}</h4>
+                            {game.active_scene > 1 ? 
+                            <div>
+                              <h4>SCORE: shows up when you're on scene 2</h4>
+                            </div>
+
+                            :
+
+                            <div>
+                            </div>  
+                            }  
+                            <h4>STATUS: Waiting for your actor...</h4>
+                            <Button variant='outlined' onClick={viewSentScripts}>view sent scripts</Button>                 
+                        </CardContent>
+                      </Card>
+                  </>
+                )
+            }             
+          })}          
+        </div>
+
+        :
+
+        <div>
+            <h3 id="no-games">No games to display!</h3>
+        </div>
+      }
+
+
+
+
+
 
       <h2>Filmography:</h2>
+        {games.length === 0 ?
+          <div>
+            <h4>No game history yet!</h4>
+          </div>
 
+          :
 
+          <div>
+            <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Release Date</TableCell>
+                      <TableCell>Starring</TableCell>
+                      <TableCell>Winner</TableCell>
+                      <TableCell>Score</TableCell>
+                    </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {games.map((game) => {
+                      if (!game.is_ongoing) {
+                        return (
+                          <TableRow key={game.id}>
+                            <TableCell>id of {game.id}, {game.date_created}</TableCell>
+                            <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
+                            <TableCell>{game.winner_id}</TableCell>
+                            <TableCell>score</TableCell>
+                          </TableRow>
+                        )
+                      }
+                    })}
+                  </TableBody>
+                </Table>
+            </TableContainer>
+          </div>
+        }
+    {/* ^^ this isn't working quite as expected.... I still want the Filmography: no game history yet! to show up if all the games
+    you are in are active */}
+    </Container>
+    </Grid>
     </div>
   );
 }
