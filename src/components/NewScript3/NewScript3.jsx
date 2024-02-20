@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
+// import './NewScript3.css';
 
 
 
@@ -430,8 +431,8 @@ function NewScript() {
     return (
         <>
             <Button variant='contained' onClick={openModal}>Create New Script</Button>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
-                <form>
+            <Modal  isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
+                <form className='inputForm'>
                     {/* First Actor and Appearance Input Fields */}
                     <label>
                         First Actor:

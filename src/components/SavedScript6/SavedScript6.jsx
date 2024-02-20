@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import NewScript from '../NewScript3/NewScript3';
+import Nav from "../Nav/Nav";
 
 
 function savedScripts() {
@@ -21,6 +22,8 @@ function savedScripts() {
 
     return (
         <div>
+            <Nav/>
+            
             <h2>My Scripts</h2>
             <NewScript/>
 
