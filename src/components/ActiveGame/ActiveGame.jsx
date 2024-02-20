@@ -4,9 +4,11 @@ import "./ActiveGame.css";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function ActiveGame() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // GET request to display user's active script to guess on the DOM
   const activeScriptToGuess = useSelector((store) => store.scriptReducer);
@@ -17,9 +19,10 @@ function ActiveGame() {
   const { id } = useParams();
 
   // Submit user's guess
-  const handleSubmit = () =>
-    dispatch({ type: "SUBMIT_GUESS", payload: { guess, id } }); // POST request to submit user's guess
-
+  const handleSubmit = () => {
+    dispatch({ type: "SUBMIT_GUESS", payload: { guess, id } });
+    history.push("/activeGame2/:id"); // POST request to submit user's guess
+  };
   // Save user's guess for later
   const handleSave = () =>
     dispatch({ type: "SAVE_GUESS", payload: { guess, id } }); // POST request to save user's guess without submitting
