@@ -237,7 +237,7 @@ function NewScript() {
 
 
         // Fetch sixth actor's movie suggestions
-        if (name === 'sicthAppearance' && selectedSixthActor) {
+        if (name === 'sixthAppearance' && selectedSixthActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedSixthActor.id}/movie_credits?api_key=${apiKey}`);
                 setSixthMovieSuggestions(response.data.cast.map(movie => ({
