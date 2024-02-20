@@ -10,6 +10,6 @@ const gameReducer = (state = [], action) => {
     }
   };
   
-  // user will be on the redux state at:
-  // state.user
+  // game will be on the redux state at:
+  // state.game
   export default gameReducer;

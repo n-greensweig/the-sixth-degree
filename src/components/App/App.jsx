@@ -8,18 +8,19 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
+// import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import NewScript from "../NewScript3/NewScript3";
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import SavedScript from '../SavedScript6/SavedScript6';
+import NewScript from '../NewScript3/NewScript3';
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
@@ -41,7 +42,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           {/* Visiting localhost:5173 will redirect to localhost:5173/home */}
           <Redirect exact from="/" to="/home" />
@@ -51,7 +52,7 @@ function App() {
             exact
             path="/about"
           >
-            <NewScript />
+            <SavedScript />
           </Route>
           <ProtectedRoute exact path="/activeGame/:id">
             <ActiveGame />
@@ -81,7 +82,7 @@ function App() {
           >
             <InfoPage />
           </ProtectedRoute>
-          =======
+
           <ProtectedRoute
             //  logged in shows the Creategame page
             exact
@@ -89,16 +90,35 @@ function App() {
           >
             <NewGame />
           </ProtectedRoute>
-          <Route exact path="/login">
-            {user.id ? (
-              // If the user is already logged in,
 
+
+          <ProtectedRoute
+            exact
+            path="/new-script"
+          >
+            <NewScript />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //  logged in shows the Creategame page
+            exact
+            path="/saved-scripts"
+          >
+            <SavedScript />
+          </ProtectedRoute>
+
+          <Route
+            exact
+            path="/login"
+          >
+            {user.id ?
+              // If the user is already logged in, 
               // redirect to the /user page
               <Redirect to="/user" />
-            ) : (
+              :
               // Otherwise, show the login page
               <LoginPage />
-            )}
+            }
           </Route>
           <Route exact path="/registration">
             {user.id ? (
