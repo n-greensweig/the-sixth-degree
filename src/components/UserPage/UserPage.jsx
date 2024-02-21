@@ -96,7 +96,7 @@ function UserPage() {
             >Join Game</Button>
       
       
-      <h2 id="nowplaying-line">Now Playing:</h2>
+      <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
       {games.length > 0 ?
         <div>
@@ -139,7 +139,7 @@ function UserPage() {
                       <Card key={game.id}>
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
-                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>TITLE: Cruz-Stone</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             {game.active_scene > 1 ? 
@@ -175,7 +175,7 @@ function UserPage() {
 
 
 
-      <h2 id="filmography-line">Filmography:</h2>
+      <h2 id="filmography-line">FILMOGRAPHY:</h2>
         {games.length === 0 ?
           <div>
             <h4>No game history yet!</h4>
