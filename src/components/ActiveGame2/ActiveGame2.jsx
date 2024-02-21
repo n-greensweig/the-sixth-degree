@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Nav from "../Nav/Nav.jsx";
 
 function ActiveGame2() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function ActiveGame2() {
         flexDirection: "column",
       }}
     >
+      <Nav />
       <h2>Active Game2</h2>
       <br />
       <FormControl>
