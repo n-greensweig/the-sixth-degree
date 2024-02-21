@@ -82,7 +82,9 @@ function UserPage() {
               float: 'right',
               height: '50px',
               marginTop: '30px',
-              marginRight: '5%'          
+              marginRight: '5%',
+              border: '2px black solid',
+              color: 'black',          
               }}
             >Create Game</Button>
 
@@ -91,7 +93,9 @@ function UserPage() {
             onClick={joinGame}
             sx={{               
               padding: 1,
-              marginLeft: '11%'
+              marginLeft: '11%',
+              border: '2px black solid',
+              color: 'black',
               }}
             >Join Game</Button>
       
@@ -122,8 +126,23 @@ function UserPage() {
                             </div>  
                             }                            
                             <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined' onClick={sendScriptsBack}>send scripts back</Button>
-                            <Button variant='outlined' onClick={playScripts}>play</Button>                                             
+                            <Button variant='outlined' 
+                            onClick={sendScriptsBack}
+                            sx={{               
+                              margin: '2%',
+                              border: '2px black solid',
+                              color: 'black',          
+                              }}
+                            >send scripts back</Button>
+
+                            <Button variant='outlined' 
+                            onClick={playScripts}
+                            sx={{               
+                              margin: '2%',
+                              border: '2px black solid',
+                              color: 'black',          
+                              }}
+                            >play</Button>                                             
                         </CardContent>
                       </Card>
                   </>
