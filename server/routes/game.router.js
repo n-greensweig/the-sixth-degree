@@ -50,19 +50,17 @@ const generateGameLink = () => {
  * POST route template
  */
 router.post('/', (req, res) => {
+
     // Info to POST to game table
     let code = generateGameLink();
+    let selectedScripts = req.body;
+
     let queryText = `INSERT INTO "game" ("player_one_id", "active_scene","code") VALUES ($1, $2, $3)
     RETURNING "id";`;
 
     let firstGuessQueryText = `
     INSERT INTO "guess" ("script_id", "game_id", "first_actor_guess", "seventh_actor_guess")
     VALUES ($1, $2, $3, $4);`;
-
-    console.log('hey', req.body);
-
-    // Log the payload from the saga
-    console.log('Saga payload:', req.body);
 
     let gameId;
 
@@ -71,10 +69,18 @@ router.post('/', (req, res) => {
 
             gameId = result.rows[0].id;
 
+            selectedScripts.map((script, i) => {
 
-            // pool.query(firstGuessQueryText, [req.body[0], gameId,])
-
-            res.status(201).send({ code: code });
+                pool.query(firstGuessQueryText, [req.body[i], gameId, 'Ashley', 'Ben'])
+                    .then((result) => {
+                        console.log('Guess inserted');
+                        // res.status(201).send({ code: code });
+                    })
+                    .catch((error) => {
+                        console.log('Error in game.router POST', error);
+                        res.sendStatus(500);
+                    });
+            });
         })
         .catch((error) => {
             console.log('Error in game.router POST', error);
