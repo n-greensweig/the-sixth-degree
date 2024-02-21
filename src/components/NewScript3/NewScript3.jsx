@@ -91,10 +91,11 @@ function NewScript() {
         if (name === 'firstActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFirstActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setFirstActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -107,10 +108,11 @@ function NewScript() {
         if (name === 'secondActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSecondActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setSecondActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -123,10 +125,11 @@ function NewScript() {
         if (name === 'thirdActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setThirdActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setThirdActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -139,10 +142,11 @@ function NewScript() {
         if (name === 'fourthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFourthActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setFourthActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -155,10 +159,11 @@ function NewScript() {
         if (name === 'fifthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFifthActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setFifthActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -171,10 +176,11 @@ function NewScript() {
         if (name === 'sixthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSixthActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setSixthActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -186,10 +192,11 @@ function NewScript() {
         if (name === 'seventhActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSeventhActorSuggestions(response.data.results.map(actor => ({
+                let filteredResults = response.data.results.filter(actor => actor.profile_path !== null);
+                setSeventhActorSuggestions(filteredResults.map(actor => ({
                     id: actor.id,
                     name: actor.name,
-                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null,
                 })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
@@ -198,14 +205,22 @@ function NewScript() {
 
 
 
-        // Fetch first actor's movie suggestions
+
+
+
+
+
+
+        // Fetch first actor's movie suggestions     
+        // filtered out movies that don't have poster images, will implement to the others later!
         if (name === 'firstAppearance' && selectedActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedActor.id}/movie_credits?api_key=${apiKey}`);
-                setMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -218,10 +233,11 @@ function NewScript() {
         if (name === 'secondAppearance' && selectedSecondActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedSecondActor.id}/movie_credits?api_key=${apiKey}`);
-                setSecondMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setSecondMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -234,10 +250,11 @@ function NewScript() {
         if (name === 'thirdAppearance' && selectedThirdActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedThirdActor.id}/movie_credits?api_key=${apiKey}`);
-                setThirdMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setThirdMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -250,10 +267,11 @@ function NewScript() {
         if (name === 'fourthAppearance' && selectedFourthActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedFourthActor.id}/movie_credits?api_key=${apiKey}`);
-                setFourthMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setFourthMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -266,10 +284,11 @@ function NewScript() {
         if (name === 'fifthAppearance' && selectedFifthActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedFifthActor.id}/movie_credits?api_key=${apiKey}`);
-                setFifthMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setFifthMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -282,10 +301,11 @@ function NewScript() {
         if (name === 'sixthAppearance' && selectedSixthActor) {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedSixthActor.id}/movie_credits?api_key=${apiKey}`);
-                setSixthMovieSuggestions(response.data.cast.map(movie => ({
+                let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
+                setSixthMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
