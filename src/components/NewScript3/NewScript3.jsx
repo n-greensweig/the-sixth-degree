@@ -10,9 +10,9 @@ import './NewScript3.css';
 
 function NewScript() {
 
-    const dispatch = useDispatch();
+    let dispatch = useDispatch();
 
-    const [formData, setFormData] = useState({
+    let [formData, setFormData] = useState({
         firstActor: '',
         firstAppearance: '',
         secondActor: '',
@@ -64,20 +64,20 @@ function NewScript() {
 
 
     // Modal state
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    let [modalIsOpen, setModalIsOpen] = useState(false);
 
 
     // variable URL for TMDB images
-    const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+    let IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 
     // Jama's API Key
-    const apiKey = '30c198675e2638514ba7c9dc7212193c';
+    let apiKey = '30c198675e2638514ba7c9dc7212193c';
 
 
     // Handle input field changes
     const handleChange = async (e) => {
-        const { name, value } = e.target;
+        let { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value
@@ -439,7 +439,7 @@ function NewScript() {
 
     const handleSubmit = async () => {
         // Mapping formData to match database column names
-        const scriptData = {
+        let scriptData = {
             first_actor: formData.firstActor,
             first_appearance: formData.firstAppearance,
             second_actor: formData.secondActor,
@@ -477,8 +477,8 @@ function NewScript() {
 
 
     // Modal functions
-    const openModal = () => setModalIsOpen(true);
-    const closeModal = () => setModalIsOpen(false);
+    let openModal = () => setModalIsOpen(true);
+    let closeModal = () => setModalIsOpen(false);
 
     
     return (
