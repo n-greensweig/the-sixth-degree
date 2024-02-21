@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
-// import './NewScript3.css';
+import './NewScript3.css';
 
 
 
@@ -428,10 +428,11 @@ function NewScript() {
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
+    
     return (
         <>
             <Button variant='contained' onClick={openModal}>Create New Script</Button>
-            <Modal  isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
+            <Modal className='Modal' isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
                 <form className='inputForm'>
                     {/* First Actor and Appearance Input Fields */}
                     <label>
@@ -716,30 +717,4 @@ export default NewScript;
 
 
 
-
-// return (
-//     <div>
-//         <h1>New Script</h1>
-
-//         {/* Input fields go here */}
-//         <form onSubmit={handleSubmit}>
-//             <input type="text" placeholder="First Actor" onChange={e => setScript({ ...script, first_actor: e.target.value })} />
-//             <input type="text" placeholder="First Appearance" onChange={e => setScript({ ...script, first_appearance: e.target.value })} />
-//             <input type="text" placeholder="Second Actor" onChange={e => setScript({ ...script, second_actor: e.target.value })} />
-//             <input type="text" placeholder="Second Appearance" onChange={e => setScript({ ...script, second_appearance: e.target.value })} />
-//             <input type="text" placeholder="Third Actor" onChange={e => setScript({ ...script, third_actor: e.target.value })} />
-//             <input type="text" placeholder="Third Appearance" onChange={e => setScript({ ...script, third_appearance: e.target.value })} />
-//             <input type="text" placeholder="Fourth Actor" onChange={e => setScript({ ...script, fourth_actor: e.target.value })} />
-//             <input type="text" placeholder="Fourth Appearance" onChange={e => setScript({ ...script, fourth_appearance: e.target.value })} />
-//             <input type="text" placeholder="Fifth Actor" onChange={e => setScript({ ...script, fifth_actor: e.target.value })} />
-//             <input type="text" placeholder="Fifth Appearance" onChange={e => setScript({ ...script, fifth_appearance: e.target.value })} />
-//             <input type="text" placeholder="Sixth Actor" onChange={e => setScript({ ...script, sixth_actor: e.target.value })} />
-//             <input type="text" placeholder="Sixth Appearance" onChange={e => setScript({ ...script, sixth_appearance: e.target.value })} />
-//             <input type="text" placeholder="Seventh Actor" onChange={e => setScript({ ...script, seventh_actor: e.target.value })} />
-//             <UniversalButton text="Save Script" onClick={handleSubmit} />
-//         </form>
-
-
-//     </div>
-// );
 

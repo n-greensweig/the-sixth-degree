@@ -1,5 +1,33 @@
+/* Lost the ability to close the modal by clicking outside it, to be resolved */
+
+.Modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /*issue with opacity */
+  }
+  
+  .inputForm {
+    color: black;
+    background-color: white; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 90px;
+    border-radius: 8px; 
+    max-width: 600px; 
+    width: 90%; 
+  }
+  
 
 
-
+  .inputForm input {
+    margin-bottom: 20px;
+  }
 
 
