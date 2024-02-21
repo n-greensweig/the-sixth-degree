@@ -32,7 +32,7 @@ useEffect(() => {
             <Nav/>
             <h1>Pick 3 Scripts!</h1>
             <div class="container">
-                Test <input type="checkbox" />
+                {/* Test <input type="checkbox" /> */}
             </div>
            
                 <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
