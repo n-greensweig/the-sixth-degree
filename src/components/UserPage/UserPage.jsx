@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import Nav from '../Nav/Nav';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextField, Button, Grid, Container, Card, CardContent, Paper, Box } from "@mui/material";
@@ -10,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import FormControl from '@mui/material/FormControl';
+import './UserPage.css';
 
 
 function UserPage() {
@@ -28,7 +30,11 @@ function UserPage() {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
   }, []);
 
-  
+  const joinGame = () => {
+    console.log("in joinGame");
+  }
+
+
   const sendScriptsBack = () => {
     console.log("in sendScriptsBack");
   }
@@ -44,24 +50,57 @@ function UserPage() {
 
 
   return (
-    <div className="container">
-
-      <LogOutButton>log out</LogOutButton>
+    <div>
+      <Box>  
+      <Nav></Nav>
 
       <Grid>
-      <Container sx={{justifyContent: "center"}}>
-        
-      <h1>Welcome, {user.first_name}!</h1>
-      {/* <p>Your ID is: {user.id}</p> */}
+      <Container >  
+          <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
+          {/* <p>Your ID is: {user.id}</p> */}
 
+          
+          <TextField
+            id="access-code-textfield"
+            required
+            name="access_code"
+            placeholder="Access Code"
+            variant="outlined"
+            // defaultValue=
+            sx={{               
+                width: '40%',
+                padding: '1%',
+                marginLeft: '5%'
+                }}
+          />
+          
+                     
+          <Button
+            variant='outlined'
+            onClick={handleClick}
+            sx={{               
+              float: 'right',
+              height: '50px',
+              marginTop: '30px',
+              marginRight: '5%',
+              border: '2px black solid',
+              color: 'black',          
+              }}
+            >Create Game</Button>
+
+          <Button
+            variant='outlined'
+            onClick={joinGame}
+            sx={{               
+              padding: 1,
+              marginLeft: '11%',
+              border: '2px black solid',
+              color: 'black',
+              }}
+            >Join Game</Button>
       
-      <Button
-        variant='outlined'
-        onClick={handleClick}
-        >Create Game</Button>
       
-      
-      <h2>Now Playing:</h2>
+      <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
       {games.length > 0 ?
         <div>
@@ -87,8 +126,23 @@ function UserPage() {
                             </div>  
                             }                            
                             <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined' onClick={sendScriptsBack}>send scripts back</Button>
-                            <Button variant='outlined' onClick={playScripts}>play</Button>                                             
+                            <Button variant='outlined' 
+                            onClick={sendScriptsBack}
+                            sx={{               
+                              margin: '2%',
+                              border: '2px black solid',
+                              color: 'black',          
+                              }}
+                            >send scripts back</Button>
+
+                            <Button variant='outlined' 
+                            onClick={playScripts}
+                            sx={{               
+                              margin: '2%',
+                              border: '2px black solid',
+                              color: 'black',          
+                              }}
+                            >play</Button>                                             
                         </CardContent>
                       </Card>
                   </>
@@ -104,7 +158,7 @@ function UserPage() {
                       <Card key={game.id}>
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
-                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>TITLE: Cruz-Stone</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             {game.active_scene > 1 ? 
@@ -118,7 +172,8 @@ function UserPage() {
                             </div>  
                             }  
                             <h4>STATUS: Waiting for your actor...</h4>
-                            <Button variant='outlined' onClick={viewSentScripts}>view sent scripts</Button>                 
+                            {/* <Button variant='outlined' onClick={viewSentScripts}>view sent scripts</Button> */}
+                            {/* ^^ changing this to a stretch goal */}
                         </CardContent>
                       </Card>
                   </>
@@ -139,7 +194,7 @@ function UserPage() {
 
 
 
-      <h2>Filmography:</h2>
+      <h2 id="filmography-line">FILMOGRAPHY:</h2>
         {games.length === 0 ?
           <div>
             <h4>No game history yet!</h4>
@@ -181,6 +236,7 @@ function UserPage() {
     you are in are active */}
     </Container>
     </Grid>
+    </Box>
     </div>
   );
 }
