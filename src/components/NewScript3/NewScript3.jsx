@@ -41,7 +41,7 @@ function NewScript() {
 
 
 
-    const [movieSuggestions, setMovieSuggestions] = useState([]);
+    const [FirstMovieSuggestions, setFirstMovieSuggestions] = useState([]);
     const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
     const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
     const [fourthMovieSuggestions, setFourthMovieSuggestions] = useState([]);
@@ -217,7 +217,7 @@ function NewScript() {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/person/${selectedActor.id}/movie_credits?api_key=${apiKey}`);
                 let filteredMovies = response.data.cast.filter(movie => movie.poster_path !== null);
-                setMovieSuggestions(filteredMovies.map(movie => ({
+                setFirstMovieSuggestions(filteredMovies.map(movie => ({
                     id: movie.id,
                     title: movie.title,
                     posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`
@@ -390,7 +390,7 @@ function NewScript() {
                 ...formData,
                 firstAppearance: movie.title
             });
-            setMovieSuggestions([]);
+            setFirstMovieSuggestions([]);
         } else if (type === 'second') {
             setFormData({
                 ...formData,
@@ -515,7 +515,7 @@ function NewScript() {
                         onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
-                        {movieSuggestions.map(movie => (
+                        {FirstMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'first')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
                             {movie.title}
