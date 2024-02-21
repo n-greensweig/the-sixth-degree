@@ -46,6 +46,34 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $
 
 });
 
+// POST route to submit user's guess
+router.post('/:id', (req, res) => {
+
+  const guess = req.body.guess;
+
+  const queryText = `
+  INSERT INTO "guess" (
+    "script_id",
+    "game_id",
+    "first_actor_guess",
+    "seventh_actor_guess",
+  )
+VALUES ($1, $2, $3, $4); 
+  `;
+  pool.query(queryText, [
+    guess.first_actor, guess.seventh_actor
+  ])
+    .then(() => {
+      console.log('Guess submitted');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('Error submitting guess', error);
+      res.sendStatus(500);
+    });
+
+});
+
 // POST route to save user's guess without submitting
 // Perhaps should be a PUT request instead to allow for multiple saves?
 router.post('/save/:id', (req, res) => {

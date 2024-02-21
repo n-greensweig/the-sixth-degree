@@ -25,7 +25,7 @@ const router = express.Router();
 // GET all scripts for /new-game view
 router.get('/', (req, res) => {
   const queryText = `
-  SELECT "first_actor", "seventh_actor" FROM "script" WHERE "script_creator_id" = $1;
+  SELECT "first_actor", "seventh_actor", "id" FROM "script" WHERE "script_creator_id" = $1;
   `;
   pool.query(queryText, [req.user.id])
     .then((result) => {
