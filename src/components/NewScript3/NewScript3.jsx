@@ -476,7 +476,7 @@ function NewScript() {
                         value={formData.firstActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {firstActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'first')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -494,7 +494,7 @@ function NewScript() {
                         value={formData.firstAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {movieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'first')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -513,7 +513,7 @@ function NewScript() {
                         value={formData.secondActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {secondActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'second')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -531,7 +531,7 @@ function NewScript() {
                         value={formData.secondAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {secondMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'second')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -550,7 +550,7 @@ function NewScript() {
                         value={formData.thirdActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {thirdActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'third')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -568,7 +568,7 @@ function NewScript() {
                         value={formData.thirdAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {thirdMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'third')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -587,7 +587,7 @@ function NewScript() {
                         value={formData.fourthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fourthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fourth')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -605,7 +605,7 @@ function NewScript() {
                         value={formData.fourthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fourthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fourth')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -624,7 +624,7 @@ function NewScript() {
                         value={formData.fifthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fifthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fifth')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -642,7 +642,7 @@ function NewScript() {
                         value={formData.fifthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fifthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fifth')}>
                             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -661,7 +661,7 @@ function NewScript() {
                         value={formData.sixthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {sixthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'sixth')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
@@ -679,7 +679,7 @@ function NewScript() {
                         value={formData.sixthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {sixthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'sixth')}>
             {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
@@ -698,7 +698,7 @@ function NewScript() {
                         value={formData.seventhActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {seventhActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'seventh')}>
                             {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
