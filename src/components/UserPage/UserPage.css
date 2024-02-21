@@ -1,0 +1,48 @@
+#welcome-line {
+    text-align: center;
+    padding: 3%;   
+    font-family: "Limelight", sans-serif;
+    font-size: 45px;
+    font-weight: 400;
+    font-style: normal;
+    color: #128bb5;
+      
+      
+}
+
+#access-code-textfield {
+    height: 1em;
+}
+
+#nowplaying-line {
+    text-align: center;
+    padding: 3%;
+    font-family: "Limelight", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: underline;
+    color: #c74e1e;
+}
+
+#filmography-line {
+    text-align: center;
+    padding: 3%;
+    font-family: "Limelight", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: underline;
+    color: #deb522;
+    
+}
+
+.card {
+    border: 15px dotted lightgray;
+    padding: 12px;
+    transition: border 5s;
+}
+
+.card:hover {
+    border: 15px dotted #d6d82c;
+}

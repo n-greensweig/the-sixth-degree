@@ -9,13 +9,14 @@ router.get('/', (req, res) => {
 
     // Info to GET from game table
     // ! May need to adjust req.params.id
+
     let queryText = 
 
     `SELECT "game"."id",
 	   "player_one_id", "user1"."first_name" as "player_one_first_name",
 	   "player_two_id", "user"."first_name" as "player_two_first_name", 
 	   "is_ongoing", "active_respondent_id", "active_scene", "winner_id", 
-	   to_char("game"."date_created", 'MM-dd-yy') AS "date_created" 
+	   to_char("game"."date_created", 'MM-dd-yy') AS "date_created" , "code"
 	 
 	 FROM "game"
 	 
@@ -25,6 +26,7 @@ router.get('/', (req, res) => {
      WHERE "player_one_id" = $1 OR "player_two_id" = $1;`;
     
     
+
     pool.query(queryText, [req.user.id])
         .then((result) => {
             res.send(result.rows);
@@ -35,11 +37,34 @@ router.get('/', (req, res) => {
         });
 
 });
+const generateGameLink = () => {
+    const length = 4;
+    let otp = "";
 
+    for(let i = 0; i < length; i++){
+        otp += Math.floor(Math.random() * 10 );
+    }
+    return otp;
+}
 /**
  * POST route template
  */
 router.post('/', (req, res) => {
+    // Info to POST to game table
+    let code = generateGameLink()
+    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene","code") VALUES ($1, $2, $3);`;
+    pool.query(queryText, [req.user.id, 1, code])
+        .then((result) => {
+            res.status(201).send({code: code});
+        })
+        .catch((error) => {
+            console.log('Error in game.router POST', error);
+            res.sendStatus(500);
+        });
+});
+
+router.post('/scripts', (req, res) => {
+    // req.body {gameId, scene, script1id, script2id, script3id}
     // Info to POST to game table
     let queryText = `INSERT INTO "game" ("player_one_id", "active_scene") VALUES ($1, $2);`;
     pool.query(queryText, [req.user.id, 1])

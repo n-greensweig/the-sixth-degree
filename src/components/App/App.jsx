@@ -30,6 +30,9 @@ import ActiveGame2 from "../ActiveGame2/ActiveGame2";
 import NewGame from "../NewGame/NewGame";
 import ActiveGame3 from "../ActiveGame3/ActiveGame3";
 
+//import for GameCode 
+import GameCode from '../GameCode/GameCode';
+
 function App() {
   const dispatch = useDispatch();
 
@@ -105,6 +108,13 @@ function App() {
             path="/saved-scripts"
           >
             <SavedScript />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/game-code"
+          >
+            <GameCode />
           </ProtectedRoute>
 
           <Route

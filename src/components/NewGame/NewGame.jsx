@@ -16,31 +16,41 @@ const scripts = useSelector((store) => store.scriptReducer);
 const handleClick = (e) => {
     e.preventDefault()
     dispatch({ type: 'CREATE_GAME' });
-    history.push('/user')
+    history.push('/game-code')
 }
 useEffect(() => {
     dispatch({ type: 'FETCH_SCRIPTS' });
   }, []);
+
+  const toggleScript = (event) => {
+    console.log(event.target); // Selected id
+  }
+// console.log(generateGameLink());
     return (
         <body>
              {/* {JSON.stringify(scripts)} */}
             <Nav/>
             <h1>Pick 3 Scripts!</h1>
+            <div class="container">
+                {/* Test <input type="checkbox" /> */}
+            </div>
+           
                 <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
-               
+               <Paper  id="scriptGame-list" elevation= "24">
             <ul>
                 {scripts?.map(script => (
-                 <li class="container">{script.first_actor} to {script.seventh_actor}
-                    <input type="checkbox"></input>
+                 <li key={script.id} class="container">
+                    <input onChange={toggleScript} value={script.id} type="checkbox" />
                     <span class="checkmark"></span>
+                    <p>{script.first_actor} to {script.seventh_actor}</p>
                 </li>
                 
                 ))}
                 
             </ul>
-            <h2 id="gameLinkHeader">Game Link:</h2>
-        <li id="gameLink">url@url.com</li>
-            
+            {/* <h2 id="gameLinkHeader">Game Link:</h2> */}
+        
+        </Paper>
             {/* Modal for creating new script, appears as button */}
             {<NewScript />}
             

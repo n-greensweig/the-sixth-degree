@@ -1,0 +1,24 @@
+#gameCodeBody{
+text-align: center;
+
+
+}
+#createGameH1{
+    text-align: center;
+    font-size: 50px;
+}
+#chosenScriptH1{
+    text-align: center;
+    margin-top: 50px;
+}
+#scriptLi{
+    text-align: center; 
+    font-size: 20px; 
+    margin-top: 10px;
+}
+#gameCodeP{
+    text-align: center;
+    font-size: 40px; 
+    margin-top: 10px;
+}
+
