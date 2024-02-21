@@ -37,6 +37,7 @@ router.get('/', (req, res) => {
         });
 
 });
+
 const generateGameLink = () => {
     const length = 4;
     let otp = "";
@@ -49,13 +50,14 @@ const generateGameLink = () => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 
     // Info to POST to game table
     let code = generateGameLink();
     let selectedScripts = req.body;
 
-    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene","code") VALUES ($1, $2, $3)
+    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene", 
+    "code") VALUES ($1, $2, $3)
     RETURNING "id";`;
 
     let firstGuessQueryText = `
@@ -70,11 +72,9 @@ router.post('/', (req, res) => {
             gameId = result.rows[0].id;
 
             selectedScripts.map((script, i) => {
-
-                pool.query(firstGuessQueryText, [req.body[i], gameId, 'Ashley', 'Ben'])
+                pool.query(firstGuessQueryText, [req.body[0], gameId, 'Ashley', 'Ben'])
                     .then((result) => {
-                        console.log('Guess inserted');
-                        // res.status(201).send({ code: code });
+                        i === 2 ? res.status(201).send({ code: code }) : null;
                     })
                     .catch((error) => {
                         console.log('Error in game.router POST', error);

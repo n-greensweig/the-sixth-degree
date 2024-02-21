@@ -4,6 +4,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* fetchGame() {
     try {
         const response = yield axios.get('/api/game');
+        console.log('Game GET request', response.data);
         yield put({ type: 'SET_GAME', payload: response.data });
     } catch (error) {
         console.log('Game GET request failed', error);
@@ -12,8 +13,8 @@ function* fetchGame() {
 
 function* createGame(action) {
     try {
-        console.log('In createGame', action.payload);
         let result = yield axios.post('/api/game', action.payload);
+        console.log(result.data.code);
         yield put({
             type: 'SET_GAME_CODE',
             payload: { code: result.data.code, }

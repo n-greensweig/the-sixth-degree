@@ -28,7 +28,8 @@ function NewGame() {
         e.preventDefault();
         dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
         history.push('/game-code')
-    }
+    };
+    
     useEffect(() => {
         dispatch({ type: 'FETCH_SCRIPTS' });
     }, []);
