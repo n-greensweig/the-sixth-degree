@@ -23,11 +23,13 @@ function NewGame() {
         } else {
             selectedScripts.splice(selectedScripts.indexOf(id), 1);
         }
+        console.log(selectedScripts);
     };
 
     const handleClick = (e) => {
         e.preventDefault();
         dispatch({ type: 'CREATE_GAME' });
+        // dispatch({ type: 'ADD_EMPTY_GUESS', payload: selectedScripts });
         history.push('/game-code')
     }
     useEffect(() => {
