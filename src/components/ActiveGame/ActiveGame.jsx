@@ -1,10 +1,10 @@
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import "./ActiveGame.css";
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Nav from "../Nav/Nav.jsx";
 
 function ActiveGame() {
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ function ActiveGame() {
         flexDirection: "column",
       }}
     >
+      <Nav />
       <h2>Active game</h2>
       <br />
       <FormControl>
