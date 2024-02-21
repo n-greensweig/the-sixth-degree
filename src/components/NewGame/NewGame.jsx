@@ -48,7 +48,7 @@ useEffect(() => {
                 ))}
                 
             </ul>
-            <h2 id="gameLinkHeader">Game Link:</h2>
+            {/* <h2 id="gameLinkHeader">Game Link:</h2> */}
         
         </Paper>
             {/* Modal for creating new script, appears as button */}
