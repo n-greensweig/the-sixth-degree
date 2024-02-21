@@ -1,12 +1,11 @@
 import { Box, FormControl, TextField, Button } from "@mui/material";
-import "./ActiveGame.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-function ActiveGame() {
+function ActiveGame3() {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -21,7 +20,7 @@ function ActiveGame() {
   // Submit user's guess
   const handleSubmit = () => {
     dispatch({ type: "SUBMIT_GUESS", payload: { guess, id } });
-    history.push("/activeGame2/:id"); // POST request to submit user's guess
+    history.push("/home"); // POST request to submit user's guess
   };
   // Save user's guess for later
   const handleSave = () =>
@@ -43,7 +42,7 @@ function ActiveGame() {
         flexDirection: "column",
       }}
     >
-      <h2>Active game</h2>
+      <h2>Active Game3</h2>
       <br />
       <FormControl>
         <TextField
@@ -181,4 +180,4 @@ function ActiveGame() {
   );
 }
 
-export default ActiveGame;
+export default ActiveGame3;
