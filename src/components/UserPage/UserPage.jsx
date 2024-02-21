@@ -104,12 +104,12 @@ function UserPage() {
 
       {games.length > 0 ?
         <div>
-          <h3>Actor</h3>
+          <h2>Actor</h2>
           {games.map(game => {
               if (game.is_ongoing && game.active_respondent_id === user.id) {
                 return (
                   <>                    
-                      <Card key={game.id}>
+                      <Card key={game.id} className='card'>
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Pitt-Jolie</h4>
@@ -128,8 +128,9 @@ function UserPage() {
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined' 
                             onClick={sendScriptsBack}
-                            sx={{               
-                              margin: '2%',
+                            sx={{                                          
+                              marginTop: '15px',
+                              marginRight: '10px',
                               border: '2px black solid',
                               color: 'black',          
                               }}
@@ -137,8 +138,8 @@ function UserPage() {
 
                             <Button variant='outlined' 
                             onClick={playScripts}
-                            sx={{               
-                              margin: '2%',
+                            sx={{              
+                              marginTop: '15px',
                               border: '2px black solid',
                               color: 'black',          
                               }}
@@ -150,12 +151,12 @@ function UserPage() {
               } 
             })}   
               
-          <h3>Director</h3>
+          <h2>Director</h2>
           {games.map(game => {
               if (game.is_ongoing && game.active_respondent_id !== user.id) {
                 return (
                   <>  
-                      <Card key={game.id}>
+                      <Card key={game.id} className='card'>
                         <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Cruz-Stone</h4>
