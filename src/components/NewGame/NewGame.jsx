@@ -18,9 +18,11 @@ function NewGame() {
     const selectedScripts = [];
 
     const handleScriptSelection = (id) => {
-        selectedScripts.push(id);
-        console.log(id);
-        console.log(selectedScripts);
+        if (!selectedScripts.includes(id)) {
+            selectedScripts.push(id);
+        } else {
+            selectedScripts.splice(selectedScripts.indexOf(id), 1);
+        }
     };
 
     const handleClick = (e) => {
