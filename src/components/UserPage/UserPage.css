@@ -36,3 +36,13 @@
     color: #deb522;
     
 }
+
+.card {
+    border: 15px dotted lightgray;
+    padding: 12px;
+    transition: border 5s;
+}
+
+.card:hover {
+    border: 15px dotted #d6d82c;
+}
