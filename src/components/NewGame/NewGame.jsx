@@ -13,7 +13,6 @@ function NewGame() {
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
-    console.log(scripts);
 
     const selectedScripts = [];
 
@@ -23,13 +22,11 @@ function NewGame() {
         } else {
             selectedScripts.splice(selectedScripts.indexOf(id), 1);
         }
-        console.log(selectedScripts);
     };
 
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch({ type: 'CREATE_GAME' });
-        // dispatch({ type: 'ADD_EMPTY_GUESS', payload: selectedScripts });
+        dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
         history.push('/game-code')
     }
     useEffect(() => {

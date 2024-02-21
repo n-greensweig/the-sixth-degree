@@ -26,21 +26,10 @@ function* saveGuess(action) {
   }
 }
 
-function* addEmptyGuess(action) {
-  console.log('In addEmptyGuess', action.payload);
-  try {
-    yield axios.post('/api/guess/add', action.payload);
-    yield put({ type: 'SET_GUESS' });
-  } catch (error) {
-    console.log('Add empty guess POST request failed', error);
-  }
-}
-
 function* guessSaga() {
   yield takeLatest('FETCH_GUESS', fetchGuess);
   yield takeLatest('SUBMIT_GUESS', submitGuess);
   yield takeLatest('SAVE_GUESS', saveGuess);
-  yield takeLatest('ADD_EMPTY_GUESS', addEmptyGuess);
 }
 
 export default guessSaga;

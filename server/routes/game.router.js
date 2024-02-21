@@ -51,14 +51,29 @@ const generateGameLink = () => {
  */
 router.post('/', (req, res) => {
     // Info to POST to game table
-    let code = generateGameLink()
+    let code = generateGameLink();
     let queryText = `INSERT INTO "game" ("player_one_id", "active_scene","code") VALUES ($1, $2, $3)
     RETURNING "id";`;
+
+    let firstGuessQueryText = `
+    INSERT INTO "guess" ("script_id", "game_id", "first_actor_guess", "seventh_actor_guess")
+    VALUES ($1, $2, $3, $4);`;
+
+    console.log('hey', req.body);
+
+    // Log the payload from the saga
+    console.log('Saga payload:', req.body);
+
+    let gameId;
+
     pool.query(queryText, [req.user.id, 1, code])
         .then((result) => {
 
-            // Come back here
-            console.log('hey', result.rows[0].id);
+            gameId = result.rows[0].id;
+
+
+            // pool.query(firstGuessQueryText, [req.body[0], gameId,])
+
             res.status(201).send({ code: code });
         })
         .catch((error) => {

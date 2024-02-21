@@ -10,10 +10,14 @@ function* fetchGame() {
     }
 }
 
-function* createGame() {
+function* createGame(action) {
     try {
-        let result = yield axios.post('/api/game');
-        yield put({ type: 'SET_GAME_CODE', payload: result.data.code });
+        console.log('In createGame', action.payload);
+        let result = yield axios.post('/api/game', action.payload);
+        yield put({
+            type: 'SET_GAME_CODE',
+            payload: { code: result.data.code, }
+        });
     } catch (error) {
         console.log('Game POST request failed', error);
     }
