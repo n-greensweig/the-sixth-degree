@@ -67,6 +67,10 @@ function NewScript() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
+    // variable URL for TMDB images
+    const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+
     // Jama's API Key
     const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
@@ -87,7 +91,11 @@ function NewScript() {
         if (name === 'firstActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFirstActorSuggestions(response.data.results);
+                setFirstActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -99,7 +107,11 @@ function NewScript() {
         if (name === 'secondActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSecondActorSuggestions(response.data.results);
+                setSecondActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -111,7 +123,11 @@ function NewScript() {
         if (name === 'thirdActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setThirdActorSuggestions(response.data.results);
+                setThirdActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -123,7 +139,11 @@ function NewScript() {
         if (name === 'fourthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFourthActorSuggestions(response.data.results);
+                setFourthActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -135,7 +155,11 @@ function NewScript() {
         if (name === 'fifthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setFifthActorSuggestions(response.data.results);
+                setFifthActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -147,7 +171,11 @@ function NewScript() {
         if (name === 'sixthActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSixthActorSuggestions(response.data.results);
+                setSixthActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -158,7 +186,11 @@ function NewScript() {
         if (name === 'seventhActor') {
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/search/person?query=${value}&api_key=${apiKey}`);
-                setSeventhActorSuggestions(response.data.results);
+                setSeventhActorSuggestions(response.data.results.map(actor => ({
+                    id: actor.id,
+                    name: actor.name,
+                    profilePath: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null, // Handling null profile paths
+                })));
             } catch (error) {
                 console.error('Error fetching actor suggestions:', error);
             }
@@ -173,7 +205,7 @@ function NewScript() {
                 setMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -189,7 +221,7 @@ function NewScript() {
                 setSecondMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -205,7 +237,7 @@ function NewScript() {
                 setThirdMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -221,7 +253,7 @@ function NewScript() {
                 setFourthMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -237,7 +269,7 @@ function NewScript() {
                 setFifthMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -253,7 +285,7 @@ function NewScript() {
                 setSixthMovieSuggestions(response.data.cast.map(movie => ({
                     id: movie.id,
                     title: movie.title,
-                    posterPath: movie.poster_path
+                    posterPath: `${IMAGE_BASE_URL}${movie.poster_path}`, // Updated to include full URL
                 })));
             } catch (error) {
                 console.error('Error fetching movie suggestions:', error);
@@ -444,10 +476,11 @@ function NewScript() {
                         value={formData.firstActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {firstActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'first')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -461,10 +494,11 @@ function NewScript() {
                         value={formData.firstAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {movieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'first')}>
-                                {movie.title}
+                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -479,10 +513,11 @@ function NewScript() {
                         value={formData.secondActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {secondActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'second')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -496,10 +531,11 @@ function NewScript() {
                         value={formData.secondAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {secondMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'second')}>
-                                {movie.title}
+                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -514,10 +550,11 @@ function NewScript() {
                         value={formData.thirdActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {thirdActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'third')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -531,10 +568,11 @@ function NewScript() {
                         value={formData.thirdAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {thirdMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'third')}>
-                                {movie.title}
+                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -549,10 +587,11 @@ function NewScript() {
                         value={formData.fourthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fourthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fourth')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -566,10 +605,11 @@ function NewScript() {
                         value={formData.fourthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fourthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fourth')}>
-                                {movie.title}
+                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -584,10 +624,11 @@ function NewScript() {
                         value={formData.fifthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fifthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fifth')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -601,10 +642,11 @@ function NewScript() {
                         value={formData.fifthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {fifthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fifth')}>
-                                {movie.title}
+                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -619,10 +661,11 @@ function NewScript() {
                         value={formData.sixthActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {sixthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'sixth')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>
@@ -636,10 +679,11 @@ function NewScript() {
                         value={formData.sixthAppearance} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {sixthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'sixth')}>
-                                {movie.title}
+            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+            {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -654,10 +698,11 @@ function NewScript() {
                         value={formData.seventhActor} 
                         onChange={handleChange} />
                     </label>
-                    <ul>
+                    <ul className="suggestions-list">
                         {seventhActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'seventh')}>
-                                {actor.name}
+                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                            {actor.name}
                             </li>
                         ))}
                     </ul>

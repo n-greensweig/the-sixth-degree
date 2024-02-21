@@ -1,5 +1,9 @@
 /* Lost the ability to close the modal by clicking outside it, to be resolved */
 
+
+
+
+/* Styling for the Modal */
 .Modal {
     display: flex;
     justify-content: center;
@@ -11,7 +15,11 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7); /*issue with opacity */
   }
+ 
   
+
+
+  /* Styling for the input form */
   .inputForm {
     color: black;
     background-color: white; 
@@ -24,10 +32,28 @@
     width: 90%; 
   }
   
-
-
   .inputForm input {
     margin-bottom: 20px;
   }
 
 
+
+
+/* Styling for the actor & movie suggestions */
+.suggestions-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .suggestions-list li {
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .suggestions-list li:hover {
+    background-color: #f0f0f0;
+  }
+  
