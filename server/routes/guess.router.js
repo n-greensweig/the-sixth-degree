@@ -31,6 +31,7 @@ router.put('/:id', (req, res) => {
   `;
 
   // ! script_id, game_id, and id need to be updated to reflect the correct values
+  // ! Also needs to be made into a PUT request on the frontend/sagas
   pool.query(queryText, [
     req.user.id, req.params.id, req.params.id, guess.first_actor, guess.first_appearance,
     guess.second_actor, guess.second_appearance, guess.third_actor, guess.third_appearance,
