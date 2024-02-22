@@ -43,7 +43,8 @@ CREATE TABLE "game" (
 	"player_two_lookup_used" BOOLEAN DEFAULT FALSE,
 	"player_two_phone_used" BOOLEAN DEFAULT FALSE,
 	"player_two_ask_stranger_used" BOOLEAN DEFAULT FALSE,
-	"date_created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	"date_created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	"code" VARCHAR(8);
 );
 
 INSERT INTO "game" (
@@ -126,6 +127,3 @@ CREATE TABLE "guess" (
 INSERT INTO "guess" (
 "id", "guesser_id", "script_id", "game_id")
 VALUES (1, 2, 1, 1);
-
--- Adds code column for game codes
-ALTER TABLE "game" ADD "code" VARCHAR(8);
