@@ -21,7 +21,7 @@ function ActiveGame2() {
   // Submit user's guess
   const handleSubmit = () => {
     dispatch({ type: "SUBMIT_GUESS", payload: { guess, id } });
-    history.push("/activeGame3/:id"); // POST request to submit user's guess
+    history.push("/active-game-3/:id"); // POST request to submit user's guess
   };
   // Save user's guess for later
   const handleSave = () =>

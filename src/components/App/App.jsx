@@ -57,14 +57,14 @@ function App() {
           >
             <SavedScript />
           </Route>
-          <ProtectedRoute exact path="/activeGame/:id">
+          <ProtectedRoute exact path="/active-game/:id">
             <ActiveGame />
           </ProtectedRoute>
           {/* Second active game page */}
-          <ProtectedRoute exact path="/activeGame2/:id">
+          <ProtectedRoute exact path="/active-game-2/:id">
             <ActiveGame2 />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/activeGame3/:id">
+          <ProtectedRoute exact path="/active-game-3/:id">
             <ActiveGame3 />
           </ProtectedRoute>
           {/* For protected routes, the view could show one of several things on the same route.
