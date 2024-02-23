@@ -117,6 +117,8 @@ function UserPage() {
                         <Card key={game.id} className='card'>
                           <CardContent>
                             <h4>game ID: {game.id}</h4>
+                            <h4>My Active Script Count: {game.my_active_scripts}</h4>
+                            <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
                             <h4>TITLE: Pitt-Jolie</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>

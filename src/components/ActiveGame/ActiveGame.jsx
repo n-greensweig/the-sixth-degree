@@ -11,25 +11,29 @@ function ActiveGame() {
   const history = useHistory();
 
   // GET request to display user's active script to guess on the DOM
-  const activeScriptToGuess = useSelector((store) => store.scriptReducer);
-  const [guess, setGuess] = useState({
-    first_actor: activeScriptToGuess.first_actor,
-    seventh_actor: activeScriptToGuess.seventh_actor,
-  });
+  const activeScriptsToGuess = useSelector((store) => store.scriptReducer);
+  const [guess, setGuess] = useState({});
   const { id } = useParams();
 
   // Submit user's guess
   const handleSubmit = () => {
-    dispatch({ type: "SUBMIT_GUESS", payload: { guess, id } }); // POST request to submit user's guess
-    history.push("/active-game-2/:id");
+    setGuess({});
+    dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: true}, id } }); // POST request to submit user's guess
   };
   // Save user's guess for later
-  const handleSave = () =>
-    dispatch({ type: "SAVE_GUESS", payload: { guess, id } }); // POST request to save user's guess without submitting
-
+  const handleSave = () => {
+    setGuess({});
+    dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: false}, id } }); // POST request to save user's guess without submitting
+  }
+    
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVE_SCRIPT", payload: id });
   }, []);
+
+  useEffect(() => {
+    console.log('Setting active script to guess:', activeScriptsToGuess[0]);
+    setGuess(activeScriptsToGuess[0]);
+  }, [activeScriptsToGuess]);
 
   return (
     <Box
@@ -46,138 +50,155 @@ function ActiveGame() {
       <Nav />
       <h2>Active game</h2>
       <br />
-      <FormControl>
-        <TextField
-          id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-          disabled
-          value={activeScriptToGuess.first_actor}
-        />
-        <TextField
-          label="Is in:"
-          id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({
-              ...guess,
-              first_actor: activeScriptToGuess.first_actor,
-              first_appearance: e.target.value,
-              seventh_actor: activeScriptToGuess.seventh_actor,
-            })
-          }
-        />
-        <TextField
-          label="With:"
-          id="outlined-start-adornment"
-          required
-          fullWidth
-          onChange={(e) => setGuess({ ...guess, second_actor: e.target.value })}
-        />
-        <TextField
-          label="Who is in:"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({ ...guess, second_appearance: e.target.value })
-          }
-        />
-        <TextField
-          className="p3"
-          label="With:"
-          id="outlined-start-adornment"
-          color="success"
-          required
-          fullWidth
-          onChange={(e) => setGuess({ ...guess, third_actor: e.target.value })}
-        />
-        <TextField
-          label="Who is in:"
-          id="outlined-start-adornment"
-          color="success"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({ ...guess, third_appearance: e.target.value })
-          }
-        />
-        <TextField
-          label="With:"
-          id="outlined-start-adornment"
-          color="warning"
-          required
-          fullWidth
-          onChange={(e) => setGuess({ ...guess, fourth_actor: e.target.value })}
-        />
-        <TextField
-          label="Who is in:"
-          id="outlined-start-adornment"
-          color="warning"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({ ...guess, fourth_appearance: e.target.value })
-          }
-        />
-        <TextField
-          label="With:"
-          id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-          onChange={(e) => setGuess({ ...guess, fifth_actor: e.target.value })}
-        />
-        <TextField
-          label="Who is in:"
-          id="outlined-start-adornment"
-          color="secondary"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({ ...guess, fifth_appearance: e.target.value })
-          }
-        />
-        <TextField
-          label="With:"
-          id="outlined-start-adornment"
-          color="error"
-          required
-          fullWidth
-          onChange={(e) => setGuess({ ...guess, sixth_actor: e.target.value })}
-        />
-        <TextField
-          label="Who is in:"
-          id="outlined-start-adornment"
-          color="error"
-          required
-          fullWidth
-          onChange={(e) =>
-            setGuess({ ...guess, sixth_appearance: e.target.value })
-          }
-        />
-        <TextField
-          id="outlined-start-adornment"
-          required
-          fullWidth
-          disabled
-          value={activeScriptToGuess.seventh_actor}
-        />
-        <br />
-        <Button
-          type="submit"
-          variant="contained"
-          onClick={() => handleSubmit()}
-        >
-          {" "}
-          Sumbit{" "}
-        </Button>
-        <Button type="submit" variant="contained" onClick={() => handleSave()}>
-          Save for later
-        </Button>
-      </FormControl>
+      {
+        activeScriptsToGuess && guess && activeScriptsToGuess.length > 0 ? (
+          <FormControl>
+            <TextField
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              disabled
+              value={guess.first_actor ?? ''}
+            />
+            <TextField
+              // label="Is in:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.first_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({
+                  ...guess,
+                  first_appearance_guess: e.target.value,
+                })
+              }
+            />
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              required
+              fullWidth
+              value={guess.second_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, second_actor_guess: e.target.value })}
+            />
+            <TextField
+              // label="Who is in:"
+              required
+              fullWidth
+              value={guess.second_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, second_appearance_guess: e.target.value })
+              }
+            />
+            <TextField
+              className="p3"
+              // label="With:"
+              id="outlined-start-adornment"
+              color="success"
+              required
+              fullWidth
+              value={guess.third_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, third_actor_guess: e.target.value })}
+            />
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="success"
+              required
+              fullWidth
+              value={guess.third_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, third_appearance_guess: e.target.value })
+              }
+            />
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="warning"
+              required
+              fullWidth
+              value={guess.fourth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, fourth_actor_guess: e.target.value })}
+            />
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="warning"
+              required
+              fullWidth
+              value={guess.fourth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, fourth_appearance_guess: e.target.value })
+              }
+            />
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.fifth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, fifth_actor_guess: e.target.value })}
+            />
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.fifth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, fifth_appearance_guess: e.target.value })
+              }
+            />
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="error"
+              required
+              fullWidth
+              value={guess.sixth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, sixth_actor_guess: e.target.value })}
+            />
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="error"
+              required
+              fullWidth
+              value={guess.sixth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, sixth_appearance_guess: e.target.value })
+              }
+            />
+            <TextField
+              id="outlined-start-adornment"
+              required
+              fullWidth
+              disabled
+              value={guess.seventh_actor ?? ''}
+            />
+            <br />
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={() => handleSubmit()}
+            >
+              {" "}
+              Sumbit{" "}
+            </Button>
+            <br />
+            <Button type="submit" variant="contained" onClick={() => handleSave()}>
+              Save for later
+            </Button>
+          </FormControl>
+        ) : (
+          <h3>There are no active games to guess on at this time.</h3>
+        )
+      }
+      
     </Box>
   );
 }
