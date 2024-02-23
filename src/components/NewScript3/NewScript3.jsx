@@ -460,6 +460,7 @@ function NewScript() {
             const response = await axios.post('/api/script', scriptData);
             console.log(response.data); // Handle the response as needed
             closeModal(); // Closes the modal on successful submission
+            dispatch({ type: 'FETCH_SCRIPTS' });
         } catch (error) {
             console.error('Error submitting script:', error);
         }
@@ -735,51 +736,3 @@ function NewScript() {
 }
 
 export default NewScript;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

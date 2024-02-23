@@ -24,7 +24,7 @@ function ActiveGame() {
   const handleSave = () => {
     setGuess({});
     dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: false}, id } }); // POST request to save user's guess without submitting
-  }
+  };
     
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVE_SCRIPT", payload: id });
