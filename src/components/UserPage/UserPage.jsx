@@ -38,15 +38,15 @@ function UserPage() {
 
   const sendScriptsBack = () => {
     console.log("in sendScriptsBack");
-  }
+
+    // Routes to a version of Zach's page
+
+  };
 
   const playScripts = () => {
     console.log("in playScripts");
-  }
-
-  const viewSentScripts = () => {
-    console.log("in viewSentScripts");
-  }
+    // Routes to Stephon's page
+  };
 
   useEffect(() => {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
@@ -111,7 +111,7 @@ function UserPage() {
               <div>
                 <h2>Actor</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.active_respondent_id === user.id) {
+                  if (game.is_ongoing && game.player_two_id === user.id) {
                     return (
                       <>
                         <Card key={game.id} className='card'>
@@ -158,7 +158,7 @@ function UserPage() {
 
                 <h2>Director</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.active_respondent_id !== user.id) {
+                  if (game.is_ongoing && game.player_two_id !== user.id) {
                     return (
                       <>
                         <Card key={game.id} className='card'>
@@ -178,8 +178,6 @@ function UserPage() {
                               </div>
                             }
                             <h4>STATUS: Waiting for your actor...</h4>
-                            {/* <Button variant='outlined' onClick={viewSentScripts}>view sent scripts</Button> */}
-                            {/* ^^ changing this to a stretch goal */}
                           </CardContent>
                         </Card>
                       </>
@@ -215,7 +213,7 @@ function UserPage() {
                       <TableRow>
                         <TableCell>Release Date</TableCell>
                         <TableCell>Starring</TableCell>
-                        <TableCell>Winner</TableCell>
+                        <TableCell>Best Actor</TableCell>
                         <TableCell>Score</TableCell>
                       </TableRow>
                     </TableHead>

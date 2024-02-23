@@ -87,12 +87,9 @@ router.post('/', async (req, res) => {
         });
 });
 
+// PUT route to update the game table with the second player's id
 router.put('/join', (req, res) => {
 
-    console.log('req.body', req.body);
-    console.log('req.user', req.user);
-    // req.body {gameId, userId}
-    // Info to PUT to game table
     let queryText = `UPDATE "game" SET "player_two_id" = $1 WHERE "code" = $2;`;
     pool.query(queryText, [req.user.id, req.body.gameId])
         .then((result) => {
@@ -104,20 +101,5 @@ router.put('/join', (req, res) => {
         });
 }
 );
-
-
-router.post('/scripts', (req, res) => {
-    // req.body {gameId, scene, script1id, script2id, script3id}
-    // Info to POST to game table
-    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene") VALUES ($1, $2);`;
-    pool.query(queryText, [req.user.id, 1])
-        .then((result) => {
-            res.sendStatus(201);
-        })
-        .catch((error) => {
-            console.log('Error in game.router POST', error);
-            res.sendStatus(500);
-        });
-});
 
 module.exports = router;
