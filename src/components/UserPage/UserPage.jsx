@@ -33,6 +33,7 @@ function UserPage() {
     e.preventDefault();
     console.log("in joinGame");
     dispatch({ type: 'JOIN_GAME', payload: { gameId: gameId } });
+    dispatch({ type: 'UPDATE_GUESSER', payload: { gameId: gameId } });
   };
 
 
