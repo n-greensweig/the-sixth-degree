@@ -20,12 +20,14 @@ router.get('/', (req, res) => {
 
 // GET first and seventh actor for script in /activeGame view
 router.get('/:id', (req, res) => {
+  console.log('GET scripts for active game', req.user.id, req.params.id);
   const queryText = `
-  SELECT "first_actor", "seventh_actor" FROM "script" WHERE "script_creator_id" = $1
-  AND "id" = $2;`;
+  SELECT "script"."first_actor", "script"."seventh_actor", "guess".* FROM "script"
+  JOIN "guess" ON "script_id" = "script"."id" WHERE "guesser_id" = $1
+  AND "game_id" = $2 AND "is_complete" = false;`;
   pool.query(queryText, [req.user.id, req.params.id])
     .then((result) => {
-      res.send(result.rows[0]);
+      res.send(result.rows);
     })
     .catch((error) => {
       console.log('Error getting scripts', error);

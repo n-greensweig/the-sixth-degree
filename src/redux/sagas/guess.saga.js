@@ -6,10 +6,11 @@ function* fetchGuess() {
 }
 
 function* submitGuess(action) {
-  const id = action.payload.id;
+  const gameId = action.payload.id;
+  const guess = action.payload.guess;
   try {
-    yield axios.post(`/api/guess/${id}`, action.payload);
-    yield put({ type: 'SEND_GUESS' });
+    yield axios.put(`/api/guess/${guess.id}`, guess);
+    yield put({ type: "FETCH_ACTIVE_SCRIPT", payload: gameId });
   } catch (error) {
     console.log('Submit POST request failed', error);
   }
