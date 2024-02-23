@@ -186,8 +186,7 @@ function ActiveGame() {
               variant="contained"
               onClick={() => handleSubmit()}
             >
-              {" "}
-              Sumbit{" "}
+              Submit
             </Button>
             <br />
             <Button type="submit" variant="contained" onClick={() => handleSave()}>
