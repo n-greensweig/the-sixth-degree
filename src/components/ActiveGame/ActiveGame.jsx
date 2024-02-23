@@ -24,15 +24,18 @@ function ActiveGame() {
   const handleSave = () => {
     setGuess({});
     dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: false}, id } }); // POST request to save user's guess without submitting
-  }
+  };
     
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVE_SCRIPT", payload: id });
   }, []);
 
   useEffect(() => {
-    console.log('Setting active script to guess:', activeScriptsToGuess[0]);
-    setGuess(activeScriptsToGuess[0]);
+    if (activeScriptsToGuess && activeScriptsToGuess.length > 0) {
+      setGuess(activeScriptsToGuess[0]);
+    } else {
+      history.push('/'); // Redirect to home page if there are no active scripts
+    }
   }, [activeScriptsToGuess]);
 
   return (
@@ -186,8 +189,7 @@ function ActiveGame() {
               variant="contained"
               onClick={() => handleSubmit()}
             >
-              {" "}
-              Sumbit{" "}
+              Submit
             </Button>
             <br />
             <Button type="submit" variant="contained" onClick={() => handleSave()}>

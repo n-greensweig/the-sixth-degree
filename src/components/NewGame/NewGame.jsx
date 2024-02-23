@@ -64,7 +64,7 @@ function NewGame() {
 
             </Paper>
             {/* Modal for creating new script, appears as button */}
-            {<NewScript />}
+            {<NewScript  />}
 
         </body>
     )

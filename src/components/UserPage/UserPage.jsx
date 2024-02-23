@@ -44,9 +44,10 @@ function UserPage() {
 
   };
 
-  const playScripts = () => {
+  const playScripts = id => {
     console.log("in playScripts");
     // Routes to Stephon's page
+    history.push(`/active-game/${id}`);
   };
 
   useEffect(() => {
@@ -145,7 +146,7 @@ function UserPage() {
                             >send scripts back</Button>
 
                             <Button variant='outlined'
-                              onClick={playScripts}
+                              onClick={id => playScripts(game.id)}
                               sx={{
                                 marginTop: '15px',
                                 border: '2px black solid',

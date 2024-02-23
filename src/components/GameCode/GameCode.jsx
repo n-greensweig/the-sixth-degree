@@ -5,7 +5,7 @@ import './GameCode.css';
 function GameCode() {
     const dispatch = useDispatch();
     const gameCode = useSelector((store) => store.code);
-    console.log('hey', gameCode);
+
     useEffect(() => {
         dispatch({ type: 'FETCH_GAME' });
     }, []);
