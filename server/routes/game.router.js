@@ -8,8 +8,6 @@ const router = express.Router();
 router.get('/', (req, res) => {
 
     // Info to GET from game table
-    // ! May need to adjust req.params.id
-
     let queryText =
 
         `SELECT "game"."id",
@@ -50,49 +48,57 @@ const generateGameLink = () => {
     return otp;
 }
 
-// POST route to add three new guesses when a game is created
 router.post('/', async (req, res) => {
+    try {
+        // Info to POST to game table
+        let code = generateGameLink();
+        let selectedScripts = req.body; // Assuming this is an array of script IDs. Adjust if necessary.
+        let queryText = `INSERT INTO "game" ("player_one_id", "active_scene", "code")
+            VALUES ($1, $2, $3)
+            RETURNING "id";`; // This will return the newly inserted game's ID
 
-    // Info to POST to game table
-    let code = generateGameLink();
-    let selectedScripts = req.body;
+        // Execute the query to insert a new game and retrieve its id
+        const gameInsertResult = await pool.query(queryText, [req.user.id, 1, code]);
+        const gameId = gameInsertResult.rows[0].id; // Correctly extracting the id from the result
 
-    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene", 
-    "code") VALUES ($1, $2, $3)
-    RETURNING "id";`;
+        let firstGuessQueryText = `
+            INSERT INTO "guess" ("script_id", "game_id", "first_actor_guess", "seventh_actor_guess", "code")
+            VALUES ($1, $2, $3, $4, $5);`;
 
-    let firstGuessQueryText = `
-    INSERT INTO "guess" ("script_id", "game_id", "first_actor_guess", "seventh_actor_guess")
-    VALUES ($1, $2, $3, $4);`;
+        // Assuming selectedScripts is an array of script IDs. Adjust your loop based on the actual data structure
+        for (const scriptId of selectedScripts) { // Adjust variable name if necessary
+            await pool.query(firstGuessQueryText, [scriptId, gameId, 'Ashley', 'Ben', code]); // Use gameId here
+        }
 
-    let gameId;
-
-    pool.query(queryText, [req.user.id, 1, code])
-        .then((result) => {
-
-            gameId = result.rows[0].id;
-
-            selectedScripts.map((script, i) => {
-                pool.query(firstGuessQueryText, [req.body[0], gameId, 'Ashley', 'Ben'])
-                    .then((result) => {
-                        i === 2 ? res.status(201).send({ code: code }) : null;
-                    })
-                    .catch((error) => {
-                        console.log('Error in game.router POST', error);
-                        res.sendStatus(500);
-                    });
-            });
-        })
-        .catch((error) => {
-            console.log('Error in game.router POST', error);
-            res.sendStatus(500);
-        });
+        // Send back the game link code as a response
+        res.status(201).send({ code: code });
+    } catch (error) {
+        console.log('Error in game.router POST', error);
+        res.sendStatus(500);
+    }
 });
 
 // PUT route to update the game table with the second player's id
 router.put('/join', (req, res) => {
 
     let queryText = `UPDATE "game" SET "player_two_id" = $1 WHERE "code" = $2;`;
+
+    pool.query(queryText, [req.user.id, req.body.gameId])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('Error in game.router PUT', error);
+            res.sendStatus(500);
+        });
+}
+);
+
+// PUT route to update the guess table with the guesser's id
+router.put('/guesser-update', (req, res) => {
+
+    let queryText = `UPDATE "guess" SET "guesser_id" = $1 WHERE "code" = $2 AND "guesser_id" IS NULL;`;
+
     pool.query(queryText, [req.user.id, req.body.gameId])
         .then((result) => {
             res.sendStatus(200);

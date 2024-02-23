@@ -24,11 +24,9 @@ import NewScript from '../NewScript3/NewScript3';
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
-import ActiveGame2 from "../ActiveGame2/ActiveGame2";
 
 // import for CreateGame
 import NewGame from "../NewGame/NewGame";
-import ActiveGame3 from "../ActiveGame3/ActiveGame3";
 
 //import for GameCode 
 import GameCode from '../GameCode/GameCode';
@@ -59,13 +57,6 @@ function App() {
           </Route>
           <ProtectedRoute exact path="/active-game/:id">
             <ActiveGame />
-          </ProtectedRoute>
-          {/* Second active game page */}
-          <ProtectedRoute exact path="/active-game-2/:id">
-            <ActiveGame2 />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/active-game-3/:id">
-            <ActiveGame3 />
           </ProtectedRoute>
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
