@@ -29,10 +29,20 @@ function* postScript(action) {
   }
 }
 
+function* deleteScript(action) {
+  try {
+    yield axios.delete(`/api/script/${action.payload}`);
+    yield put({ type: 'FETCH_SCRIPTS' });
+  } catch (error) {
+    console.log('Script DELETE request failed', error);
+  }
+};
+
 function* scriptSaga() {
   yield takeLatest('FETCH_SCRIPTS', getScripts);
   yield takeLatest('FETCH_ACTIVE_SCRIPT', getActiveScript);
   yield takeLatest('POST_SCRIPT', postScript);
+  yield takeLatest('DELETE_SCRIPT', deleteScript);
 }
 
 export default scriptSaga;

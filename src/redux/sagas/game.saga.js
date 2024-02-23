@@ -11,6 +11,16 @@ function* fetchGame() {
     }
 }
 
+function* joinGame(action) {
+    try {
+        const response = yield axios.put('/api/game/join', action.payload);
+        console.log(response.data);
+        // yield put({ type: 'ADD_PLAYER_TWO' });
+    } catch (error) {
+        console.log('Game PUT request failed', error);
+    }
+}
+
 function* createGame(action) {
     try {
         let result = yield axios.post('/api/game', action.payload);
@@ -26,6 +36,7 @@ function* createGame(action) {
 
 function* gameSaga() {
     yield takeLatest('FETCH_GAME', fetchGame);
+    yield takeLatest('JOIN_GAME', joinGame);
     yield takeLatest('CREATE_GAME', createGame);
 }
 

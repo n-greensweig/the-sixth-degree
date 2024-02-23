@@ -47,9 +47,8 @@ const generateGameLink = () => {
     }
     return otp;
 }
-/**
- * POST route template
- */
+
+// POST route to add three new guesses when a game is created
 router.post('/', async (req, res) => {
 
     // Info to POST to game table
@@ -88,18 +87,19 @@ router.post('/', async (req, res) => {
         });
 });
 
-router.post('/scripts', (req, res) => {
-    // req.body {gameId, scene, script1id, script2id, script3id}
-    // Info to POST to game table
-    let queryText = `INSERT INTO "game" ("player_one_id", "active_scene") VALUES ($1, $2);`;
-    pool.query(queryText, [req.user.id, 1])
+// PUT route to update the game table with the second player's id
+router.put('/join', (req, res) => {
+
+    let queryText = `UPDATE "game" SET "player_two_id" = $1 WHERE "code" = $2;`;
+    pool.query(queryText, [req.user.id, req.body.gameId])
         .then((result) => {
-            res.sendStatus(201);
+            res.sendStatus(200);
         })
         .catch((error) => {
-            console.log('Error in game.router POST', error);
+            console.log('Error in game.router PUT', error);
             res.sendStatus(500);
         });
-});
+}
+);
 
 module.exports = router;

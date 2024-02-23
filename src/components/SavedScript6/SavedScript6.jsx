@@ -16,16 +16,20 @@ function savedScripts() {
     // Open and close dialog based on isEditing status
     const toggleEditing = e => isEditing ? setIsEditing(false) : setIsEditing(true);
 
+    const deleteScript = (scriptId) => {
+        dispatch({ type: 'DELETE_SCRIPT', payload: scriptId });
+    };
+
     useEffect(() => {
         dispatch({ type: 'FETCH_SCRIPTS' });
     }, []);
 
     return (
         <div>
-            <Nav/>
-            
+            <Nav />
+
             <h2>My Scripts</h2>
-            <NewScript/>
+            <NewScript />
 
             <ul>
                 {scripts?.map(script => {
@@ -36,6 +40,10 @@ function savedScripts() {
                                 style={{
                                     borderColor: 'white', color: "gray",
                                 }}>{isEditing ? null : 'Edit script'}</Button>
+                            <Button variant="contained" onClick={id => deleteScript(script.id)}
+                                style={{
+                                    borderColor: 'white', color: "white", fill: "red"
+                                }}>Delete script</Button>
                         </li>
                     );
                 })}

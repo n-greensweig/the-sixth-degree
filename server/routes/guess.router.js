@@ -49,35 +49,6 @@ router.put('/:id', (req, res) => {
 
 });
 
-// POST route to add three rows into guess table
-// at the beginning of a game
-router.post('/add', (req, res) => {
-
-  const firstGuessScriptId = req.body[0];
-
-  const queryText = `
-  INSERT INTO "guess" (
-    "script_id",
-    "game_id",
-    "first_actor_guess",
-    "seventh_actor_guess",
-  )
-VALUES ($1, $2, $3, $4); 
-  `;
-  pool.query(queryText, [
-    firstGuessScriptId, guess.first_actor, guess.seventh_actor
-  ])
-    .then(() => {
-      console.log('Guess submitted');
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      console.log('Error submitting guess', error);
-      res.sendStatus(500);
-    });
-
-});
-
 // POST route to save user's guess without submitting
 // Perhaps should be a PUT request instead to allow for multiple saves?
 router.post('/save/:id', (req, res) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import Nav from '../Nav/Nav';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,8 @@ import './UserPage.css';
 
 function UserPage() {
 
+  const [gameId, setGameId] = useState(null);
+
   // added for CreateGame button
   const history = useHistory();
   const handleClick = () => {
@@ -26,218 +28,219 @@ function UserPage() {
   const games = useSelector((store) => store.gameReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_GAME', payload: user.id });
-  }, []);
 
-  const joinGame = () => {
+  const joinGame = e => {
+    e.preventDefault();
     console.log("in joinGame");
-  }
+    dispatch({ type: 'JOIN_GAME', payload: { gameId: gameId } });
+  };
 
 
   const sendScriptsBack = () => {
     console.log("in sendScriptsBack");
-  }
+
+    // Routes to a version of Zach's page
+
+  };
 
   const playScripts = () => {
     console.log("in playScripts");
-  }
+    // Routes to Stephon's page
+  };
 
-  const viewSentScripts = () => {
-    console.log("in viewSentScripts");
-  }
-
-
+  useEffect(() => {
+    dispatch({ type: 'FETCH_GAME', payload: user.id });
+  }, []);
 
   return (
     <div>
-      <Box>  
-      <Nav></Nav>
+      <Box>
+        <Nav></Nav>
 
-      <Grid>
-      <Container >  
-          <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
-          {/* <p>Your ID is: {user.id}</p> */}
+        <Grid>
+          <Container >
+            <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
+            {/* <p>Your ID is: {user.id}</p> */}
 
-          
-          <TextField
-            id="access-code-textfield"
-            required
-            name="access_code"
-            placeholder="Access Code"
-            variant="outlined"
-            // defaultValue=
-            sx={{               
-                width: '40%',
-                padding: '1%',
-                marginLeft: '5%'
+
+            <form onSubmit={e => joinGame(e)}>
+              <TextField
+                id="access-code-textfield"
+                required
+                name="access_code"
+                placeholder="Access Code"
+                variant="outlined"
+                sx={{
+                  width: '40%',
+                  padding: '1%',
+                  marginLeft: '5%'
                 }}
-          />
-          
-                     
-          <Button
-            variant='outlined'
-            onClick={handleClick}
-            sx={{               
-              float: 'right',
-              height: '50px',
-              marginTop: '30px',
-              marginRight: '5%',
-              border: '2px black solid',
-              color: 'black',          
+                onChange={(event) => setGameId(event.target.value)}
+              />
+              <Button
+                variant='outlined'
+                type='submit'
+                sx={{
+                  padding: 1,
+                  marginLeft: '11%',
+                  border: '2px black solid',
+                  color: 'black',
+                }}
+              >Join Game</Button>
+            </form>
+
+
+            <Button
+              variant='outlined'
+              onClick={handleClick}
+              sx={{
+                float: 'right',
+                height: '50px',
+                marginTop: '30px',
+                marginRight: '5%',
+                border: '2px black solid',
+                color: 'black',
               }}
             >Create Game</Button>
 
-          <Button
-            variant='outlined'
-            onClick={joinGame}
-            sx={{               
-              padding: 1,
-              marginLeft: '11%',
-              border: '2px black solid',
-              color: 'black',
-              }}
-            >Join Game</Button>
-      
-      
-      <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
-      {games.length > 0 ?
-        <div>
-          <h2>Actor</h2>
-          {games.map(game => {
-              if (game.is_ongoing && game.active_respondent_id === user.id) {
-                return (
-                  <>                    
-                      <Card key={game.id} className='card'>
-                        <CardContent>
+
+            <h2 id="nowplaying-line">NOW PLAYING:</h2>
+
+            {games.length > 0 ?
+              <div>
+                <h2>Actor</h2>
+                {games.map(game => {
+                  if (game.is_ongoing && game.player_two_id === user.id) {
+                    return (
+                      <>
+                        <Card key={game.id} className='card'>
+                          <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Pitt-Jolie</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
-                            {game.active_scene > 1 ? 
-                            <div>
-                              <h4>SCORE: shows up when you're on scene 2</h4>
-                            </div>
+                            {game.active_scene > 1 ?
+                              <div>
+                                <h4>SCORE: shows up when you're on scene 2</h4>
+                              </div>
 
-                            :
+                              :
 
-                            <div>
-                            </div>  
-                            }                            
+                              <div>
+                              </div>
+                            }
                             <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined' 
-                            onClick={sendScriptsBack}
-                            sx={{                                          
-                              marginTop: '15px',
-                              marginRight: '10px',
-                              border: '2px black solid',
-                              color: 'black',          
+                            <Button variant='outlined'
+                              onClick={sendScriptsBack}
+                              sx={{
+                                marginTop: '15px',
+                                marginRight: '10px',
+                                border: '2px black solid',
+                                color: 'black',
                               }}
                             >send scripts back</Button>
 
-                            <Button variant='outlined' 
-                            onClick={playScripts}
-                            sx={{              
-                              marginTop: '15px',
-                              border: '2px black solid',
-                              color: 'black',          
+                            <Button variant='outlined'
+                              onClick={playScripts}
+                              sx={{
+                                marginTop: '15px',
+                                border: '2px black solid',
+                                color: 'black',
                               }}
-                            >play</Button>                                             
-                        </CardContent>
-                      </Card>
-                  </>
-                )
-              } 
-            })}   
-              
-          <h2>Director</h2>
-          {games.map(game => {
-              if (game.is_ongoing && game.active_respondent_id !== user.id) {
-                return (
-                  <>  
-                      <Card key={game.id} className='card'>
-                        <CardContent>
+                            >play</Button>
+                          </CardContent>
+                        </Card>
+                      </>
+                    )
+                  }
+                })}
+
+                <h2>Director</h2>
+                {games.map(game => {
+                  if (game.is_ongoing && game.player_two_id !== user.id) {
+                    return (
+                      <>
+                        <Card key={game.id} className='card'>
+                          <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Cruz-Stone</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
-                            {game.active_scene > 1 ? 
-                            <div>
-                              <h4>SCORE: shows up when you're on scene 2</h4>
-                            </div>
+                            {game.active_scene > 1 ?
+                              <div>
+                                <h4>SCORE: shows up when you're on scene 2</h4>
+                              </div>
 
-                            :
+                              :
 
-                            <div>
-                            </div>  
-                            }  
+                              <div>
+                              </div>
+                            }
                             <h4>STATUS: Waiting for your actor...</h4>
-                            {/* <Button variant='outlined' onClick={viewSentScripts}>view sent scripts</Button> */}
-                            {/* ^^ changing this to a stretch goal */}
-                        </CardContent>
-                      </Card>
-                  </>
-                )
-            }             
-          })}          
-        </div>
+                          </CardContent>
+                        </Card>
+                      </>
+                    )
+                  }
+                })}
+              </div>
 
-        :
+              :
 
-        <div>
-            <h3 id="no-games">No games to display!</h3>
-        </div>
-      }
+              <div>
+                <h3 id="no-games">No games to display!</h3>
+              </div>
+            }
 
 
 
 
 
 
-      <h2 id="filmography-line">FILMOGRAPHY:</h2>
-        {games.length === 0 ?
-          <div>
-            <h4>No game history yet!</h4>
-          </div>
+            <h2 id="filmography-line">FILMOGRAPHY:</h2>
+            {games.length === 0 ?
+              <div>
+                <h4>No game history yet!</h4>
+              </div>
 
-          :
+              :
 
-          <div>
-            <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Release Date</TableCell>
-                      <TableCell>Starring</TableCell>
-                      <TableCell>Winner</TableCell>
-                      <TableCell>Score</TableCell>
-                    </TableRow>
-                  </TableHead>
+              <div>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Release Date</TableCell>
+                        <TableCell>Starring</TableCell>
+                        <TableCell>Best Actor</TableCell>
+                        <TableCell>Score</TableCell>
+                      </TableRow>
+                    </TableHead>
 
-                  <TableBody>
-                    {games.map((game) => {
-                      if (!game.is_ongoing) {
-                        return (
-                          <TableRow key={game.id}>
-                            <TableCell>id of {game.id}, {game.date_created}</TableCell>
-                            <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
-                            <TableCell>{game.winner_id}</TableCell>
-                            <TableCell>score</TableCell>
-                          </TableRow>
-                        )
-                      }
-                    })}
-                  </TableBody>
-                </Table>
-            </TableContainer>
-          </div>
-        }
-    {/* ^^ this isn't working quite as expected.... I still want the Filmography: no game history yet! to show up if all the games
+                    <TableBody>
+                      {games.map((game) => {
+                        if (!game.is_ongoing) {
+                          return (
+                            <TableRow key={game.id}>
+                              <TableCell>id of {game.id}, {game.date_created}</TableCell>
+                              <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
+                              <TableCell>{game.winner_id}</TableCell>
+                              <TableCell>score</TableCell>
+                            </TableRow>
+                          )
+                        }
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            }
+            {/* ^^ this isn't working quite as expected.... I still want the Filmography: no game history yet! to show up if all the games
     you are in are active */}
-    </Container>
-    </Grid>
-    </Box>
+          </Container>
+        </Grid>
+      </Box>
     </div>
   );
 }
