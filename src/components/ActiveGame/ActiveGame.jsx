@@ -31,8 +31,11 @@ function ActiveGame() {
   }, []);
 
   useEffect(() => {
-    console.log('Setting active script to guess:', activeScriptsToGuess[0]);
-    setGuess(activeScriptsToGuess[0]);
+    if (activeScriptsToGuess && activeScriptsToGuess.length > 0) {
+      setGuess(activeScriptsToGuess[0]);
+    } else {
+      history.push('/'); // Redirect to home page if there are no active scripts
+    }
   }, [activeScriptsToGuess]);
 
   return (
