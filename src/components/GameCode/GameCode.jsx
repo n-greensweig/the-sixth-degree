@@ -5,6 +5,7 @@ import './GameCode.css';
 function GameCode() {
     const dispatch = useDispatch();
     const gameCode = useSelector((store) => store.code);
+    console.log('hey', gameCode);
     useEffect(() => {
         dispatch({ type: 'FETCH_GAME' });
     }, []);
@@ -14,9 +15,11 @@ function GameCode() {
             <h1 id="createGameH1">You Created A Game!</h1>
 
             <h1 id="chosenScriptH1">Chosen Scripts: </h1>
-            <li id="scriptLi">Ryan Reynolds to Tyler Perry</li>
-            <li id="scriptLi">Hugh Jackman to Chris Rock</li>
-            <li id="scriptLi">Halle Berry to Martha Stewart</li>
+            <ul>
+                <li id="scriptLi">Ryan Reynolds to Tyler Perry</li>
+                <li id="scriptLi">Hugh Jackman to Chris Rock</li>
+                <li id="scriptLi">Halle Berry to Martha Stewart</li>
+            </ul>
 
             <h1 id="chosenScriptH1">Send this Game Code To A Friend!</h1>
             <p id="gameCodeP">{gameCode.code}</p>
