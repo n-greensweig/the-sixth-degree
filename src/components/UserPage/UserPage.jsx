@@ -162,7 +162,7 @@ function UserPage() {
                   if (game.is_ongoing && game.player_two_id !== user.id) {
                     return (
                       <>
-                        <Card key={game.id} className='card'>
+                        {/* <Card key={game.id} className='card'>
                           <CardContent>
                             <h4>game ID: {game.id}</h4>
                             <h4>TITLE: Cruz-Stone</h4>
@@ -179,6 +179,47 @@ function UserPage() {
                               </div>
                             }
                             <h4>STATUS: Waiting for your actor...</h4>
+                          </CardContent>
+                        </Card> */}
+                        <Card key={game.id} className='card'>
+                          <CardContent>
+                            <h4>game ID: {game.id}</h4>
+                            <h4>My Active Script Count: {game.my_active_scripts}</h4>
+                            <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
+                            <h4>TITLE: {game.my_active_scripts}</h4>
+                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
+                            <h4>SCENE: {game.active_scene}</h4>
+                            {game.active_scene > 1 ?
+                              <div>
+                                <h4>SCORE: shows up when you're on scene 2</h4>
+                              </div>
+
+                              :
+
+                              <div>
+                              </div>
+                            }
+                            <h4>STATUS: You're wanted on set!</h4>
+                            <Button variant='outlined'
+                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
+                              sx={{
+                                marginTop: '15px',
+                                marginRight: '10px',
+                                border: '2px black solid',
+                                color: 'black',
+                              }}
+                            >send scripts back</Button>
+
+                            {game.my_active_scripts === '0' ? null :
+                              <Button variant='outlined'
+                                onClick={id => playScripts(game.id)}
+                                sx={{
+                                  marginTop: '15px',
+                                  border: '2px black solid',
+                                  color: 'black',
+                                }}
+                              >Play</Button>
+                            }
                           </CardContent>
                         </Card>
                       </>

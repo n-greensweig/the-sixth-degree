@@ -118,11 +118,12 @@ CREATE TABLE "guess" (
 	"fifth_appearance_guess" VARCHAR(256) DEFAULT NULL,
 	"sixth_actor_guess" VARCHAR(256) DEFAULT NULL,
 	"sixth_appearance_guess" VARCHAR(256) DEFAULT NULL,
+	"seventh_actor_guess" VARCHAR(256) DEFAULT NULL,
 	"points" INTEGER DEFAULT 0,
 	"scene_number" INTEGER DEFAULT NULL,
 	"is_complete" BOOLEAN DEFAULT FALSE,
 	"date_created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	codes VARCHAR(8) DEFAULT NULL
+	"code" VARCHAR(8) DEFAULT NULL
 );
 
 INSERT INTO "guess" (
