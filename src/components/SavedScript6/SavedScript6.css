@@ -8,3 +8,18 @@
         color: #128bb5;      
 }
 
+#script-actor-names {
+        text-align: left;
+        padding: 3%;   
+        font-family: "Limelight", sans-serif;
+        font-size: 22px;
+        font-weight: 400;
+        font-style: normal;
+        color: #128bb5;   
+}
+
+#delete-script-button{
+    border: 8px dotted #c74e1e;
+    color: #c74e1e;
+    background-color: white;
+}
