@@ -484,7 +484,7 @@ function NewScript() {
     
     return (
         <>
-            <Button variant='contained' onClick={openModal}>Create New Script</Button>
+            <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button>
             <Modal className='Modal' isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
                 <form className='inputForm'>
                     {/* First Actor and Appearance Input Fields */}

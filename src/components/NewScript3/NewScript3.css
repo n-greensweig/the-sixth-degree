@@ -1,7 +1,15 @@
 /* Lost the ability to close the modal by clicking outside it, to be resolved */
 
 
+#create-new-script-button {
+  border: 8px dotted black;
+  color: black;
+  background-color: white;
+}
 
+#create-new-script-button:hover {
+  border: 8px dotted #d6d82c;
+}
 
 /* Styling for the Modal */
 .Modal {
