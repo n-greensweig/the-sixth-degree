@@ -78,6 +78,14 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
+
+
+          <ProtectedRoute exact path ='/scripts'>
+            <SavedScript/>
+          </ProtectedRoute>
+
+
+
           <ProtectedRoute
             //  logged in shows the Creategame page
             exact

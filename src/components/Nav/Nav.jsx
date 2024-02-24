@@ -85,7 +85,7 @@ function Nav() {
           
           <ul>
             <DropdownItem title={'Rules'} text={"/user"} icon={<FaTheaterMasks />} />
-            <DropdownItem title={'Scripts'} text={"/about"} icon={<PiFilmSlateLight />} />
+            <DropdownItem title={'Scripts'} text={"/scripts"} icon={<PiFilmSlateLight />} />
             <DropdownItem title={'Stats'} text={""} icon={<GiFilmSpool />} />
             <DropdownItem title={'Account'} text={""} icon={<GiFilmProjector />} />
 
