@@ -89,7 +89,7 @@ function App() {
           <ProtectedRoute
             //  logged in shows the SendScriptsBack page
             exact
-            path="/send-scripts/:id"
+            path="/send-scripts/:id/:code"
           >
             <SendScriptsBack />
           </ProtectedRoute>

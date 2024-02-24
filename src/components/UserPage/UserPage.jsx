@@ -37,8 +37,8 @@ function UserPage() {
   };
 
 
-  const sendScriptsBack = id => {
-    history.push(`/send-scripts/${id}`);
+  const sendScriptsBack = (id, code) => {
+    history.push(`/send-scripts/${id}/${code}`);
   };
 
   const playScripts = id => {
@@ -113,7 +113,6 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            <h4>game code: {game.code}</h4>
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
@@ -132,7 +131,7 @@ function UserPage() {
                             }
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined'
-                              onClick={id => sendScriptsBack(game.id)}
+                              onClick={() => sendScriptsBack(game.id, game.code)}
                               sx={{
                                 marginTop: '15px',
                                 marginRight: '10px',

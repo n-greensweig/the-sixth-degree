@@ -26,10 +26,11 @@ function* saveGuess(action) {
 function* sendScriptsToGuess(action) {
   const scripts = action.payload;
   const id = action.payload.id;
-  console.log(id);
+  const code = action.payload.code;
+  console.log(code);
   try {
     console.log(scripts);
-    yield axios.post(`/api/guess/send-back/${id}`, scripts);
+    yield axios.post(`/api/guess/send-back/${id}/${code}`, scripts);
     yield put({ type: 'SEND_SCRIPTS' });
   } catch (error) {
     console.log('Send scripts POST request failed', error);

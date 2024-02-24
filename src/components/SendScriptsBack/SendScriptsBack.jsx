@@ -13,6 +13,7 @@ function SendScriptsBack() {
     const history = useHistory();
 
     const { id } = useParams();
+    const { code } = useParams();
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
@@ -31,7 +32,7 @@ function SendScriptsBack() {
     const handleClick = (e) => {
         e.preventDefault();
         console.log(id);
-        dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id } });
+        dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code } });
     };
 
     useEffect(() => {

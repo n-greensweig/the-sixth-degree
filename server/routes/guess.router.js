@@ -2,10 +2,12 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// POST new scripts to the database
-router.post('/send-back/:id', (req, res) => {
+// POST new scripts to guess to the database
+router.post('/send-back/:id/:code', (req, res) => {
   const body = req.body;
   const gameId = req.params.id;
+  const code = req.params.code;
+  console.log(code);
 
   const queryText = `
     INSERT INTO "guess" 
@@ -14,7 +16,7 @@ router.post('/send-back/:id', (req, res) => {
       ($1, $2, $3, $4);
   `;
 
-  pool.query(queryText, [gameId, body.guesser_id, body.selectedScripts[0], body.code])
+  pool.query(queryText, [gameId, body.guesser_id, body.selectedScripts[0], code])
     .then(() => {
       console.log('Scripts added to the database');
       res.sendStatus(201);
