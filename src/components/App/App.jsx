@@ -55,7 +55,7 @@ function App() {
             exact
             path="/about"
           >
-            <SavedScript />
+            <ActiveGame />
           </Route>
           <ProtectedRoute exact path="/activeGame/:id">
             <ActiveGame />
