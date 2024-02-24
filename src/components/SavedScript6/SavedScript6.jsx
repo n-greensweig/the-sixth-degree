@@ -55,8 +55,11 @@ function savedScripts() {
 
             <Grid container justifyContent="center">
                 <h2 id="my-scripts-line">My Scripts</h2>
+                <br></br>
                 <NewScript id="create-new-script-button"/>
-
+            </Grid>
+            
+            <Box>
                 <ul>
                     {scripts?.map(script => {
                         return (
@@ -67,12 +70,18 @@ function savedScripts() {
                                         borderColor: 'white', color: "gray",
                                     }}>{isEditing ? null : 'Edit script'}</Button> */}
                                 {/* ^^^might move this to a stretch goal??? */}
-                                <Button id="delete-script-button" variant="contained" onClick={id => deleteScript(script.id)}>Delete script</Button>
+                                <Button 
+                                id="delete-script-button" 
+                                variant="outlined"
+                                size="small" 
+                                sx = {{float: 'right', marginRight: '20px'}}
+                                onClick={id => deleteScript(script.id)}>Delete</Button>
+
                             </li>
                         );
                     })}
                 </ul>
-            </Grid>
+            </Box>
         </div>
     );
 
