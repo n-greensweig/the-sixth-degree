@@ -42,7 +42,7 @@ function NewGame() {
         <body>
             {/* {JSON.stringify(scripts)} */}
             <Nav />
-            <h1>Pick 3 Scripts!</h1>
+            <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
             <div className="container">
                 {/* Test <input type="checkbox" /> */}
             </div>
