@@ -20,6 +20,7 @@ function UserPage() {
 
   // added for CreateGame button
   const history = useHistory();
+
   const handleClick = () => {
     history.push('/new-game');
   }
@@ -37,8 +38,9 @@ function UserPage() {
   };
 
 
-  const sendScriptsBack = (id, code) => {
-    history.push(`/send-scripts/${id}/${code}`);
+  const sendScriptsBack = (id, code, guesser) => {
+    console.log(guesser);
+    history.push(`/send-scripts/${id}/${code}/${guesser}`);
   };
 
   const playScripts = id => {
@@ -131,7 +133,7 @@ function UserPage() {
                             }
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined'
-                              onClick={() => sendScriptsBack(game.id, game.code)}
+                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
                               sx={{
                                 marginTop: '15px',
                                 marginRight: '10px',

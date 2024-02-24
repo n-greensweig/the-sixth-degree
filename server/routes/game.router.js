@@ -91,6 +91,7 @@ router.post('/', async (req, res) => {
 
         // Assuming selectedScripts is an array of script IDs. Adjust your loop based on the actual data structure
         for (const scriptId of selectedScripts) {
+            
             // Fetch the first_actor and seventh_actor based on scriptId
             const scriptResult = await pool.query(scriptValuesQueryText, [scriptId]);
             const { first_actor, seventh_actor } = scriptResult.rows[0];
