@@ -44,7 +44,7 @@ CREATE TABLE "game" (
 	"player_two_phone_used" BOOLEAN DEFAULT FALSE,
 	"player_two_ask_stranger_used" BOOLEAN DEFAULT FALSE,
 	"date_created" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	"code" VARCHAR(8);
+	"code" VARCHAR(8)
 );
 
 INSERT INTO "game" (
