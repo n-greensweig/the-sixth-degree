@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchGuess() {
-
-}
-
 function* submitGuess(action) {
   const gameId = action.payload.id;
   const guess = action.payload.guess;
@@ -27,8 +23,8 @@ function* saveGuess(action) {
   }
 }
 
+
 function* guessSaga() {
-  yield takeLatest('FETCH_GUESS', fetchGuess);
   yield takeLatest('SUBMIT_GUESS', submitGuess);
   yield takeLatest('SAVE_GUESS', saveGuess);
 }

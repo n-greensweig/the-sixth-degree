@@ -30,6 +30,7 @@ import NewGame from "../NewGame/NewGame";
 
 //import for GameCode 
 import GameCode from '../GameCode/GameCode';
+import SendScriptsBack from "../SendScriptsBack/SendScriptsBack";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,6 +86,14 @@ function App() {
             <NewGame />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            //  logged in shows the SendScriptsBack page
+            exact
+            path="/send-scripts"
+          >
+            <SendScriptsBack />
+          </ProtectedRoute>
+
 
           <ProtectedRoute
             exact
@@ -94,7 +103,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            //  logged in shows the Creategame page
+            //  logged in shows the SavedScripts page
             exact
             path="/saved-scripts"
           >

@@ -46,11 +46,11 @@ function UserPage() {
 
   const playScripts = id => {
     console.log("in playScripts");
-    // Routes to Stephon's page
+    // Routes to ActiveGame page
     history.push(`/active-game/${id}`);
   };
 
-  useEffect(() => {
+  useEffect(() =>  {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
   }, []);
 
@@ -62,8 +62,6 @@ function UserPage() {
         <Grid>
           <Container >
             <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
-            {/* <p>Your ID is: {user.id}</p> */}
-
 
             <form onSubmit={e => joinGame(e)}>
               <TextField
@@ -121,7 +119,7 @@ function UserPage() {
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
-                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>TITLE: {game.my_active_scripts}</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             {game.active_scene > 1 ?
@@ -152,7 +150,7 @@ function UserPage() {
                                 border: '2px black solid',
                                 color: 'black',
                               }}
-                            >play</Button>
+                            >Play</Button>
                           </CardContent>
                         </Card>
                       </>

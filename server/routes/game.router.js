@@ -50,7 +50,6 @@ router.get('/active-scripts', (req, res) => {
 
     pool.query(queryText, [gameCode]) // Pass gameCode as parameter to the query
         .then((result) => {
-            console.log('Scripts for game code:', gameCode, ' - ', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -87,10 +86,17 @@ router.post('/', async (req, res) => {
         let firstGuessQueryText = `
             INSERT INTO "guess" ("script_id", "game_id", "first_actor_guess", "seventh_actor_guess", "code")
             VALUES ($1, $2, $3, $4, $5);`;
+        let scriptValuesQueryText = `
+            SELECT "first_actor", "seventh_actor" FROM "script" WHERE "id" = $1;`;
 
         // Assuming selectedScripts is an array of script IDs. Adjust your loop based on the actual data structure
-        for (const scriptId of selectedScripts) { // Adjust variable name if necessary
-            await pool.query(firstGuessQueryText, [scriptId, gameId, 'Ashley', 'Ben', code]); // Use gameId here
+        for (const scriptId of selectedScripts) {
+            // Fetch the first_actor and seventh_actor based on scriptId
+            const scriptResult = await pool.query(scriptValuesQueryText, [scriptId]);
+            const { first_actor, seventh_actor } = scriptResult.rows[0];
+        
+            // Now inserting with the correct values for first_actor_guess and seventh_actor_guess
+            await pool.query(firstGuessQueryText, [scriptId, gameId, first_actor, seventh_actor, code]);
         }
 
         // Send back the game link code as a response
