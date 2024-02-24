@@ -2,9 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * GET route template
- */
+// GET route to retrieve all games for the logged in user
 router.get('/', (req, res) => {
 
     // Info to GET from game table
@@ -38,6 +36,30 @@ router.get('/', (req, res) => {
 
 });
 
+// GET route to retrieve the selected scripts for a game
+// on the game code page
+router.get('/active-scripts', (req, res) => {
+    
+    // Use req.query to access query parameters
+    let gameCode = req.query.code;
+
+    let queryText = `
+        SELECT "first_actor", "seventh_actor" FROM "script"
+        JOIN "guess" ON "guess"."script_id" = "script"."id"
+        WHERE "guess"."code" = $1;`;
+
+    pool.query(queryText, [gameCode]) // Pass gameCode as parameter to the query
+        .then((result) => {
+            console.log('Scripts for game code:', gameCode, ' - ', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in active-scripts GET with game code', gameCode, ':', error);
+            res.sendStatus(500);
+        });
+});
+
+// Generate a random 4-digit number to use as a game code
 const generateGameLink = () => {
     const length = 4;
     let otp = "";
@@ -48,6 +70,7 @@ const generateGameLink = () => {
     return otp;
 }
 
+// POST route to create a new game
 router.post('/', async (req, res) => {
     try {
         // Info to POST to game table

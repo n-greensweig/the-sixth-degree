@@ -27,28 +27,22 @@ function NewGame() {
     const handleClick = (e) => {
         e.preventDefault();
         dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
-        history.push('/game-code')
+        history.push('/game-code');
     };
-    
+
     useEffect(() => {
         dispatch({ type: 'FETCH_SCRIPTS' });
     }, []);
 
-    const toggleScript = (event) => {
-        console.log(event.target); // Selected id
-    }
-    // console.log(generateGameLink());
     return (
-        <body>
-            {/* {JSON.stringify(scripts)} */}
+        <div>
             <Nav />
             <h1>Pick 3 Scripts!</h1>
             <div className="container">
-                {/* Test <input type="checkbox" /> */}
             </div>
 
             <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
-            <Paper id="scriptGame-list" elevation="24">
+            <Paper id="scriptGame-list" elevation={24}>
                 <ul>
                     {scripts?.map(script => (
                         <li key={script.id} className="container">
@@ -56,17 +50,11 @@ function NewGame() {
                             <span className="checkmark"></span>
                             <p>{script.first_actor} to {script.seventh_actor}</p>
                         </li>
-
                     ))}
-
                 </ul>
-                {/* <h2 id="gameLinkHeader">Game Link:</h2> */}
-
             </Paper>
-            {/* Modal for creating new script, appears as button */}
-            {<NewScript  />}
-
-        </body>
+            {<NewScript />}
+        </div>
     )
 }
 

@@ -2,7 +2,9 @@ const gameReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_GAME':
         return action.payload;
-      case 'UNSET_GAME':
+      case 'SET_GAME_SCRIPTS':
+        return action.payload;
+        case 'UNSET_GAME':
         return [];
       default:
         return state;

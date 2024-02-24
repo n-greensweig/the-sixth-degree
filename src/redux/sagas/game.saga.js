@@ -40,11 +40,22 @@ function* createGame(action) {
     }
 }
 
+function* fetchGameScripts(action) {
+    try {
+        console.log(action.payload);
+        const response = yield axios.get('/api/game/active-scripts', { params: { code: action.payload.code } });
+        yield put({ type: 'SET_GAME_SCRIPTS', payload: response.data });
+    } catch (error) {
+        console.log('Game GET request failed', error);
+    }
+}
+
 function* gameSaga() {
     yield takeLatest('FETCH_GAME', fetchGame);
     yield takeLatest('JOIN_GAME', joinGame);
     yield takeLatest('CREATE_GAME', createGame);
     yield takeLatest('UPDATE_GUESSER', updateGuesser);
+    yield takeLatest('FETCH_GAME_SCRIPTS', fetchGameScripts);
 }
 
 export default gameSaga;
