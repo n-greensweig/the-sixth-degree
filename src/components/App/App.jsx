@@ -24,14 +24,13 @@ import NewScript from '../NewScript3/NewScript3';
 
 import "./App.css";
 import ActiveGame from "../ActiveGame/ActiveGame";
-import ActiveGame2 from "../ActiveGame2/ActiveGame2";
 
 // import for CreateGame
 import NewGame from "../NewGame/NewGame";
-import ActiveGame3 from "../ActiveGame3/ActiveGame3";
 
 //import for GameCode 
 import GameCode from '../GameCode/GameCode';
+import SendScriptsBack from "../SendScriptsBack/SendScriptsBack";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,15 +56,8 @@ function App() {
           >
             <ActiveGame />
           </Route>
-          <ProtectedRoute exact path="/activeGame/:id">
+          <ProtectedRoute exact path="/active-game/:id">
             <ActiveGame />
-          </ProtectedRoute>
-          {/* Second active game page */}
-          <ProtectedRoute exact path="/activeGame2/:id">
-            <ActiveGame2 />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/activeGame3/:id">
-            <ActiveGame3 />
           </ProtectedRoute>
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
@@ -94,6 +86,14 @@ function App() {
             <NewGame />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            //  logged in shows the SendScriptsBack page
+            exact
+            path="/send-scripts/:id/:code/:guesser"
+          >
+            <SendScriptsBack />
+          </ProtectedRoute>
+
 
           <ProtectedRoute
             exact
@@ -103,7 +103,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            //  logged in shows the Creategame page
+            //  logged in shows the SavedScripts page
             exact
             path="/saved-scripts"
           >
