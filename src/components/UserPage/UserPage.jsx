@@ -37,11 +37,8 @@ function UserPage() {
   };
 
 
-  const sendScriptsBack = () => {
-    console.log("in sendScriptsBack");
-
-    // Routes to a version of Zach's page
-
+  const sendScriptsBack = id => {
+    history.push(`/send-scripts/${id}`);
   };
 
   const playScripts = id => {
@@ -50,7 +47,7 @@ function UserPage() {
     history.push(`/active-game/${id}`);
   };
 
-  useEffect(() =>  {
+  useEffect(() => {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
   }, []);
 
@@ -116,6 +113,7 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
+                            <h4>game code: {game.code}</h4>
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
@@ -134,7 +132,7 @@ function UserPage() {
                             }
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined'
-                              onClick={sendScriptsBack}
+                              onClick={id => sendScriptsBack(game.id)}
                               sx={{
                                 marginTop: '15px',
                                 marginRight: '10px',

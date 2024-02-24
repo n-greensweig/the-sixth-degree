@@ -2,6 +2,30 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+// POST new scripts to the database
+router.post('/send-back/:id', (req, res) => {
+  const body = req.body;
+  const gameId = req.params.id;
+
+  const queryText = `
+    INSERT INTO "guess" 
+      ("game_id", "guesser_id", "script_id", "code")
+    VALUES 
+      ($1, $2, $3, $4);
+  `;
+
+  pool.query(queryText, [gameId, body.guesser_id, body.selectedScripts[0], body.code])
+    .then(() => {
+      console.log('Scripts added to the database');
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log('Error adding scripts to the database', error);
+      res.sendStatus(500);
+    });
+
+});
+
 // PUT route to submit user's guess
 router.put('/:id', (req, res) => {
   const guess = req.body;

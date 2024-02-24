@@ -7,9 +7,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
 import './SendScriptsBack.css'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 function SendScriptsBack() {
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const { id } = useParams();
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
@@ -27,7 +30,8 @@ function SendScriptsBack() {
     // Add verification that 3 scripts are selected
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch({ type: 'SEND_SCRIPTS', payload: selectedScripts });
+        console.log(id);
+        dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id } });
     };
 
     useEffect(() => {

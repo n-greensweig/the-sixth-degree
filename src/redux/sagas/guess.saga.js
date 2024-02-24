@@ -23,10 +23,23 @@ function* saveGuess(action) {
   }
 }
 
+function* sendScriptsToGuess(action) {
+  const scripts = action.payload;
+  const id = action.payload.id;
+  console.log(id);
+  try {
+    console.log(scripts);
+    yield axios.post(`/api/guess/send-back/${id}`, scripts);
+    yield put({ type: 'SEND_SCRIPTS' });
+  } catch (error) {
+    console.log('Send scripts POST request failed', error);
+  }
+}
 
 function* guessSaga() {
   yield takeLatest('SUBMIT_GUESS', submitGuess);
   yield takeLatest('SAVE_GUESS', saveGuess);
+  yield takeLatest('SEND_SCRIPTS_TO_GUESS', sendScriptsToGuess);
 }
 
 export default guessSaga;
