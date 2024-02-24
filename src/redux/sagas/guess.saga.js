@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchGuess() {
-
-}
-
 function* submitGuess(action) {
   const gameId = action.payload.id;
   const guess = action.payload.guess;
@@ -27,10 +23,25 @@ function* saveGuess(action) {
   }
 }
 
+function* sendScriptsToGuess(action) {
+  const scripts = action.payload;
+  const id = action.payload.id;
+  const code = action.payload.code;
+  const guesser = action.payload.guesser;
+  console.log(guesser);
+  try {
+    console.log(scripts);
+    yield axios.post(`/api/guess/send-back/${id}/${code}/${guesser}`, scripts);
+    yield put({ type: 'SEND_SCRIPTS' });
+  } catch (error) {
+    console.log('Send scripts POST request failed', error);
+  }
+}
+
 function* guessSaga() {
-  yield takeLatest('FETCH_GUESS', fetchGuess);
   yield takeLatest('SUBMIT_GUESS', submitGuess);
   yield takeLatest('SAVE_GUESS', saveGuess);
+  yield takeLatest('SEND_SCRIPTS_TO_GUESS', sendScriptsToGuess);
 }
 
 export default guessSaga;

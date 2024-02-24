@@ -20,6 +20,7 @@ function UserPage() {
 
   // added for CreateGame button
   const history = useHistory();
+
   const handleClick = () => {
     history.push('/new-game');
   }
@@ -37,16 +38,14 @@ function UserPage() {
   };
 
 
-  const sendScriptsBack = () => {
-    console.log("in sendScriptsBack");
-
-    // Routes to a version of Zach's page
-
+  const sendScriptsBack = (id, code, guesser) => {
+    console.log(guesser);
+    history.push(`/send-scripts/${id}/${code}/${guesser}`);
   };
 
   const playScripts = id => {
     console.log("in playScripts");
-    // Routes to Stephon's page
+    // Routes to ActiveGame page
     history.push(`/active-game/${id}`);
   };
 
@@ -62,8 +61,6 @@ function UserPage() {
         <Grid>
           <Container >
             <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
-            {/* <p>Your ID is: {user.id}</p> */}
-
 
             <form onSubmit={e => joinGame(e)}>
               <TextField
@@ -121,7 +118,7 @@ function UserPage() {
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
-                            <h4>TITLE: Pitt-Jolie</h4>
+                            <h4>TITLE: {game.my_active_scripts}</h4>
                             <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
                             <h4>SCENE: {game.active_scene}</h4>
                             {game.active_scene > 1 ?
@@ -136,7 +133,7 @@ function UserPage() {
                             }
                             <h4>STATUS: You're wanted on set!</h4>
                             <Button variant='outlined'
-                              onClick={sendScriptsBack}
+                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
                               sx={{
                                 marginTop: '15px',
                                 marginRight: '10px',
@@ -152,7 +149,7 @@ function UserPage() {
                                 border: '2px black solid',
                                 color: 'black',
                               }}
-                            >play</Button>
+                            >Play</Button>
                           </CardContent>
                         </Card>
                       </>

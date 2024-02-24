@@ -2,6 +2,53 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+// POST new scripts to guess to the database
+router.post('/send-back/:id/:code/:guesser', async (req, res) => {
+
+  try {
+    const selectedScripts = req.body.selectedScripts;
+    const gameId = req.params.id;
+    const code = req.params.code;
+    const guesser = req.params.guesser;
+
+    const queryText = `
+    INSERT INTO "guess" 
+      ("game_id", "guesser_id", "script_id",  "first_actor_guess", "seventh_actor_guess", "code")
+    VALUES 
+      ($1, $2, $3, $4, $5, $6);
+  `;
+
+    let scriptValuesQueryText = `
+            SELECT "first_actor", "seventh_actor" FROM "script" WHERE "id" = $1;`;
+
+    for (const scriptId of selectedScripts) {
+
+      // Fetch the first_actor and seventh_actor based on scriptId
+      const scriptResult = await pool.query(scriptValuesQueryText, [scriptId]);
+      const { first_actor, seventh_actor } = scriptResult.rows[0];
+
+      await pool.query(queryText, [gameId, guesser, scriptId, first_actor, seventh_actor, code])
+    }
+
+    res.sendStatus(201);
+  } catch (error) {
+    console.log('Error adding scripts to the database', error);
+    res.sendStatus(500);
+  }
+
+
+  // pool.query(queryText, [gameId, guesser, selectedScripts, code])
+  //   .then(() => {
+  //     console.log('Scripts added to the database');
+  //     res.sendStatus(201);
+  //   })
+  //   .catch((error) => {
+  //     console.log('Error adding scripts to the database', error);
+  //     res.sendStatus(500);
+  //   });
+
+});
+
 // PUT route to submit user's guess
 router.put('/:id', (req, res) => {
   const guess = req.body;

@@ -6,10 +6,15 @@ import Paper from '@mui/material/Paper';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
-import './NewGame.css'
-function NewGame() {
+import './SendScriptsBack.css'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+function SendScriptsBack() {
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const { id } = useParams();
+    const { code } = useParams();
+    const { guesser } = useParams();
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
@@ -24,10 +29,11 @@ function NewGame() {
         }
     };
 
+    // Add verification that 3 scripts are selected
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
-        history.push('/game-code');
+        console.log(id);
+        dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
     };
 
     useEffect(() => {
@@ -37,11 +43,11 @@ function NewGame() {
     return (
         <div>
             <Nav />
-            <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
+            <h1>Pick 3 Scripts to send back!</h1>
             <div className="container">
             </div>
 
-            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
+            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}>Send Scripts</Button>
             <Paper id="scriptGame-list" elevation={24}>
                 <ul>
                     {scripts?.map(script => (
@@ -58,7 +64,7 @@ function NewGame() {
     )
 }
 
-export default NewGame;
+export default SendScriptsBack;
 
 
 
