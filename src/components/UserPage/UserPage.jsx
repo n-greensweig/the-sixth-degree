@@ -49,6 +49,12 @@ function UserPage() {
     history.push(`/active-game/${id}`);
   };
 
+  const formattedDate = (date) => {
+    let newDate = new Date(date);
+    let formattedDate = newDate.toLocaleDateString();
+    return formattedDate;
+  };
+
   useEffect(() => {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
   }, []);
@@ -119,16 +125,8 @@ function UserPage() {
                               >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
                                 <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
                             }
-                            <h4>game ID: {game.id}</h4>
-                            <h4 style={{
-                              color: 'white',
-                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
-                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
-                            <h4>{game.completedScripts === '6' ? 'Game over' : 'Still going'}</h4>
-                            <h4 style={{
-                              color: 'white',
-                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
-                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
+                            {/* For testing only */}
+                            <h4>Game ID: {game.id}</h4>
                             <h4>{game.completedScripts}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
@@ -180,12 +178,9 @@ function UserPage() {
                           <CardContent>
                             <h4>Your score: {game.userScore}</h4>
                             <h4>Their score: {game.playerTwoScore}</h4>
-                            <h4 style={{
-                              color: 'white',
-                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
-                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
-                            <h4>{game.completedScripts === '6' ? 'Game over' : 'Still going'}</h4>
-                            <h4>game ID: {game.id}</h4>
+
+                            {/* For testing only */}
+                            <h4>Game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
                             <h4>TITLE: {game.my_active_scripts}</h4>
@@ -268,10 +263,15 @@ function UserPage() {
                         if (game.completedScripts === '6') {
                           return (
                             <TableRow key={game.id}>
-                              <TableCell>id of {game.id}, {game.date_created}</TableCell>
+                              <TableCell>{formattedDate(game.date_created)}</TableCell>
                               <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
-                              <TableCell>{game.winner_id}</TableCell>
-                              <TableCell>score</TableCell>
+                              <TableCell style={{
+                                color: game.userScore !== game.playerTwoScore ? 'white' : null,
+                                backgroundColor: game.userScore > game.playerTwoScore ? 'green' : 
+                                game.userScore < game.playerTwoScore ? 'red' : null
+                              }}>{game.userScore > game.playerTwoScore ? game.userFirstName :
+                                game.userScore < game.playerTwoScore ? game.nonUserFirstName : 'Tie!'}</TableCell>
+                              <TableCell>{game.userScore} - {game.playerTwoScore}</TableCell>
                             </TableRow>
                           )
                         }
