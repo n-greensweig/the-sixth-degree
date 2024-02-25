@@ -1,7 +1,31 @@
-h2 {
-    color: black;
+#active-game-line {
+    text-align: center;
+    padding: 3%;   
+    font-family: "Limelight", sans-serif;
+    font-size: 35px;
+    font-weight: 400;
+    font-style: normal;
+    color: #128bb5;
 }
 
 .p3 {
     border-color: black;
+}
+
+#submit-button {
+    border: 8px dotted rgb(57, 179, 73);
+    color: rgb(57, 179, 73);
+    font-family: "Limelight", sans-serif;
+    font-size: larger;
+    font-weight: 300;
+    letter-spacing: 5px;
+    background-color: white;
+}
+
+#save-for-later-button {
+    border: 8px dotted black;
+    color: black;
+    font-family: "Limelight", sans-serif;
+    letter-spacing: 2px;
+    background-color: white;
 }
