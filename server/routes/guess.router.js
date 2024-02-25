@@ -109,11 +109,15 @@ WHERE "id" = $15 AND "guesser_id" = $16;
     for (let i = 0; i < appearanceGuesses.length; i++) {
 
       if (i < 6 && appearanceGuesses[i] === appearanceScriptValues[i] && actorGuesses[i] === actorScriptValues[i]) {
-        score++;
+        score += 2;
       } else if (i === 6 && appearanceGuesses[i] === appearanceScriptValues[i]) {
-        score++;
+        score += 2;
       }
 
+    }
+
+    if (actorGuesses.join(', ') === actorScriptValues.join(', ') && appearanceGuesses.join(', ') === appearanceScriptValues.join(', ')) {
+      score += 5;
     }
 
     const updateScoreQuery = `UPDATE "guess" SET "points" = $1 WHERE "id" = $2;`;
