@@ -114,9 +114,11 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            <h4>Your score: {game.userScore}</h4>
-                            <h4>Their score: {game.playerTwoScore}</h4>
-                            <h4>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You suck' : null}</h4>
+                            {
+                              game.userScore !== game.playerTwoScore ? <h4
+                              >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
+                                <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
+                            }
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
@@ -168,7 +170,10 @@ function UserPage() {
                           <CardContent>
                             <h4>Your score: {game.userScore}</h4>
                             <h4>Their score: {game.playerTwoScore}</h4>
-                            <h4>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
+                            <h4 style={{
+                              color: 'white',
+                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
+                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
