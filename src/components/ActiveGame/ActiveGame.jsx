@@ -5,15 +5,36 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Nav from "../Nav/Nav.jsx";
+import axios from 'axios';
+
+
+
 
 function ActiveGame() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
+
+    // variable URL for TMDB images
+    let IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+
+    // Jama's API Key
+    let apiKey = '30c198675e2638514ba7c9dc7212193c';
+
+
+
+
+
   // GET request to display user's active script to guess on the DOM
   const activeScriptsToGuess = useSelector((store) => store.scriptReducer);
   const [guess, setGuess] = useState({});
   const { id } = useParams();
+
+
+
+
 
   // Submit user's guess
   const handleSubmit = () => {
@@ -37,6 +58,20 @@ function ActiveGame() {
       history.push('/'); // Redirect to home page if there are no active scripts
     }
   }, [activeScriptsToGuess]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <Box
@@ -204,5 +239,10 @@ function ActiveGame() {
     </Box>
   );
 }
+
+
+
+
+
 
 export default ActiveGame;
