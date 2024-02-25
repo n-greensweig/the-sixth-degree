@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
 // GET first and seventh actor for script in /activeGame view
 router.get('/:id', (req, res) => {
-  console.log('GET scripts for active game', req.user.id, req.params.id);
+
   const queryText = `
   SELECT "script"."first_actor", "script"."seventh_actor", "guess".* FROM "script"
   JOIN "guess" ON "script_id" = "script"."id" WHERE "guesser_id" = $1
