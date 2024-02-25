@@ -77,23 +77,28 @@ WHERE "id" = $15 AND "guesser_id" = $16;
 
     const guessQueryResult = await pool.query(getGuessQuery, [req.params.id, req.user.id]);
     const guessData = guessQueryResult.rows[0];
-    console.log('hey', guessData);
 
-    // const getScoreQuery = `
-    // SELECT "first_actor", "first_appearance", "second_actor", "second_appearance", "third_actor", "third_appearance", "fourth_actor", 
-    // "fourth_appearance", "fifth_actor", "fifth_appearance", "sixth_actor", "sixth_appearance", "seventh_actor" FROM "script" WHERE "id" = $1;`;
-
-    const getGuessScoreQuery = `SELECT "first_actor_guess", "first_appearance_guess", "script"."first_actor", "script"."first_appearance" FROM "guess"
+    const getGuessScoreQuery = `SELECT "first_appearance_guess", "second_appearance_guess",
+    "third_appearance_guess", "fourth_appearance_guess", "fifth_appearance_guess", "sixth_appearance_guess" FROM "guess" 
+    JOIN "script" on "script"."id" = "guess"."script_id"
+    WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
+    const getScriptValuesQuery = `SELECT "first_appearance", "second_appearance",
+    "third_appearance", "fourth_appearance", "fifth_appearance", "sixth_appearance" FROM "guess" 
     JOIN "script" on "script"."id" = "guess"."script_id"
     WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
 
-    const scoredFirstActor = await pool.query(getGuessScoreQuery, [guessData.script_id, req.params.id]);
-    console.log('scoredFirstActor', scoredFirstActor.rows[0]);
+    const guessQuery = await pool.query(getGuessScoreQuery, [guessData.script_id, req.params.id]);
+    const scriptValuesQuery = await pool.query(getScriptValuesQuery, [guessData.script_id, req.params.id]);
 
-    if (scoredFirstActor.rows[0].first_appearance_guess === scoredFirstActor.rows[0].first_appearance) {
-      console.log('first appearance guess is correct');
-    } else {
-      console.log('first appearance guess is incorrect');
+    const guesses = Object.values(guessQuery.rows[0]);
+    const scriptValues = Object.values(scriptValuesQuery.rows[0]);
+
+    let score = 0;
+    for (let i = 0; i < guesses.length; i++) {
+      if (guesses[i] === scriptValues[i]) {
+        score++;
+        console.log('Score:', score);
+      }
     }
 
     console.log('Guess submitted');
