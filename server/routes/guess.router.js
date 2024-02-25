@@ -78,30 +78,47 @@ WHERE "id" = $15 AND "guesser_id" = $16;
     const guessQueryResult = await pool.query(getGuessQuery, [req.params.id, req.user.id]);
     const guessData = guessQueryResult.rows[0];
 
-    const getGuessScoreQuery = `SELECT "first_appearance_guess", "second_appearance_guess",
+    const getActorGuessScoreQuery = `SELECT "first_actor_guess", "second_actor_guess",
+    "third_actor_guess", "fourth_actor_guess", "fifth_actor_guess", "sixth_actor_guess" FROM "guess" 
+    JOIN "script" on "script"."id" = "guess"."script_id"
+    WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
+    const getActorScriptValuesQuery = `SELECT "first_actor", "second_actor",
+    "third_actor", "fourth_actor", "fifth_actor", "sixth_actor" FROM "guess" 
+    JOIN "script" on "script"."id" = "guess"."script_id"
+    WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
+    const getAppearanceGuessScoreQuery = `SELECT "first_appearance_guess", "second_appearance_guess",
     "third_appearance_guess", "fourth_appearance_guess", "fifth_appearance_guess", "sixth_appearance_guess" FROM "guess" 
     JOIN "script" on "script"."id" = "guess"."script_id"
     WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
-    const getScriptValuesQuery = `SELECT "first_appearance", "second_appearance",
+    const getAppearanceScriptValuesQuery = `SELECT "first_appearance", "second_appearance",
     "third_appearance", "fourth_appearance", "fifth_appearance", "sixth_appearance" FROM "guess" 
     JOIN "script" on "script"."id" = "guess"."script_id"
     WHERE "script"."id" = $1 AND "guess"."id" = $2;`;
 
-    const guessQuery = await pool.query(getGuessScoreQuery, [guessData.script_id, req.params.id]);
-    const scriptValuesQuery = await pool.query(getScriptValuesQuery, [guessData.script_id, req.params.id]);
+    const actorGuessQuery = await pool.query(getActorGuessScoreQuery, [guessData.script_id, req.params.id]);
+    const actorScriptValuesQuery = await pool.query(getActorScriptValuesQuery, [guessData.script_id, req.params.id]);
+    const appearanceGuessQuery = await pool.query(getAppearanceGuessScoreQuery, [guessData.script_id, req.params.id]);
+    const appearanceScriptValuesQuery = await pool.query(getAppearanceScriptValuesQuery, [guessData.script_id, req.params.id]);
 
-    const guesses = Object.values(guessQuery.rows[0]);
-    const scriptValues = Object.values(scriptValuesQuery.rows[0]);
+    const actorGuesses = Object.values(actorGuessQuery.rows[0]);
+    const actorScriptValues = Object.values(actorScriptValuesQuery.rows[0]);
+    const appearanceGuesses = Object.values(appearanceGuessQuery.rows[0]);
+    const appearanceScriptValues = Object.values(appearanceScriptValuesQuery.rows[0]);
 
     let score = 0;
-    for (let i = 0; i < guesses.length; i++) {
-      if (guesses[i] === scriptValues[i]) {
+    for (let i = 0; i < appearanceGuesses.length; i++) {
+
+      if (i < 6 && appearanceGuesses[i] === appearanceScriptValues[i] && actorGuesses[i] === actorScriptValues[i]) {
         score++;
-        console.log('Score:', score);
+      } else if (i === 6 && appearanceGuesses[i] === appearanceScriptValues[i]) {
+        score++;
       }
+
     }
 
-    console.log('Guess submitted');
+    const updateScoreQuery = `UPDATE "guess" SET "points" = $1 WHERE "id" = $2;`;
+    await pool.query(updateScoreQuery, [score, req.params.id]);
+
     res.sendStatus(201);
   } catch (error) {
     console.log('Error submitting guess', error);
