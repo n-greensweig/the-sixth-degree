@@ -36,17 +36,6 @@ router.post('/send-back/:id/:code/:guesser', async (req, res) => {
     res.sendStatus(500);
   }
 
-
-  // pool.query(queryText, [gameId, guesser, selectedScripts, code])
-  //   .then(() => {
-  //     console.log('Scripts added to the database');
-  //     res.sendStatus(201);
-  //   })
-  //   .catch((error) => {
-  //     console.log('Error adding scripts to the database', error);
-  //     res.sendStatus(500);
-  //   });
-
 });
 
 // PUT route to submit user's guess
