@@ -53,9 +53,9 @@ function NewGame() {
                 <ul>
                     {scripts?.map(script => (
                         <li key={script.id} className="container">
-                            <input onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <span className="checkmark"></span>
-                            <p>{script.first_actor} to {script.seventh_actor}</p>
+                            <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
+                            {/* <span className="checkmark"></span> */}
+                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
                         </li>
                     ))}
                 </ul>

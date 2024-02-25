@@ -1,4 +1,4 @@
-.container {
+/* .container { 
     display: block;
     position: relative;
     padding-left: 35px;
@@ -11,7 +11,7 @@
     -ms-user-select: none;
     user-select: none;
     font-weight: bold;
-  }
+   }  */
   
   /* Hide the browser's default checkbox */
   /* .container input {
@@ -23,39 +23,39 @@
   } */
   
   /* Create a custom checkbox */
-  .checkmark {
+  /* .checkmark {
     position: absolute;
     top: 0;
     left: 0;
     height: 25px;
     width: 25px;
     background-color: #eee;
-  }
+  } */
   
   /* On mouse-over, add a grey background color */
-  .container:hover input ~ .checkmark {
+  /* .container:hover input ~ .checkmark {
     background-color: #ccc;
   }
-  
+   */
   /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
+  /* .container input:checked ~ .checkmark {
     background-color: #deb522;
   }
-  
+   */
   /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
+  /* .checkmark:after { 
     content: "";
     position: absolute;
     display: none;
-  }
+  /* }
   
   /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
+  /* .container input:checked ~ .checkmark:after { 
     display: block;
-  }
+   } */
   
   /* Style the checkmark/indicator */
-  .container .checkmark:after {
+  /* .container .checkmark:after { 
     left: 9px;
     top: 5px;
     width: 5px;
@@ -65,7 +65,16 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+   } */
+  #checkboxes, #theScripts{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
   }
+   #checkboxes{
+    margin-left: -25px;
+    
+   }
 
   #createGameBtn {
     top:150px;
