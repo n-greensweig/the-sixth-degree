@@ -72,43 +72,46 @@ function UserPage() {
                 id="access-code-textfield"
                 required
                 name="access_code"
-                placeholder="Access Code"
+                placeholder="Access #"
                 variant="outlined"
                 sx={{
-                  width: '40%',
+                  width: '30%',
                   padding: '1%',
                   marginLeft: '5%'
                 }}
                 onChange={(event) => setGameId(event.target.value)}
               />
               <Button
+                id="join-game-button"
                 variant='outlined'
                 type='submit'
                 sx={{
-                  padding: 1,
-                  marginLeft: '11%',
+                  // padding: 1,
+                  marginLeft: '2%',
+                  height: '55px',
                   border: '2px black solid',
                   color: 'black',
                 }}
               >Join Game</Button>
+              
+              <Button
+                id="create-game-button"
+                variant='outlined'
+                onClick={handleClick}
+                sx={{
+                  float: 'right',
+                  // height: '50px',
+                  // marginTop: '30px',
+                  marginRight: '5%',
+                  height: '55px',
+                  border: '2px black solid',
+                  color: 'black',
+                }}
+              >Create Game</Button>
             </form>
-
-
-            <Button
-              variant='outlined'
-              onClick={handleClick}
-              sx={{
-                float: 'right',
-                height: '50px',
-                marginTop: '30px',
-                marginRight: '5%',
-                border: '2px black solid',
-                color: 'black',
-              }}
-            >Create Game</Button>
-
-
-
+            
+            <br></br>
+          
             <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
             {games.length > 0 ?
@@ -144,17 +147,21 @@ function UserPage() {
                               </div>
                             }
                             <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined'
-                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
-                              sx={{
-                                marginTop: '15px',
-                                marginRight: '10px',
-                                border: '2px black solid',
-                                color: 'black',
+                            <Button 
+                                id="send-scripts-back-button"
+                                variant='outlined'
+                                onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
+                                sx={{
+                                  marginTop: '15px',
+                                  marginRight: '10px',
+                                  border: '2px black solid',
+                                  color: 'black',
                               }}
                             >send scripts back</Button>
 
-                            <Button variant='outlined'
+                            <Button 
+                              id="play-button"
+                              variant='outlined'
                               onClick={id => playScripts(game.id)}
                               sx={{
                                 marginTop: '15px',

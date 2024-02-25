@@ -78,18 +78,19 @@ function ActiveGame() {
       component="form"
       noValidate
       sx={{
-        mt: 1,
+        // mt: 1,
         alignItems: "center",
-        marginTop: 8,
-        display: "flex",
+        // marginTop: 8,
+        // display: "flex",
         flexDirection: "column",
       }}
     >
       <Nav />
-      <h2>Active game</h2>
+      <h2 id="active-game-line">Active game</h2>
       <br />
       {
         activeScriptsToGuess && guess && activeScriptsToGuess.length > 0 ? (
+        <Box container align="center">
           <FormControl>
             <TextField
               id="outlined-start-adornment"
@@ -98,6 +99,7 @@ function ActiveGame() {
               fullWidth
               disabled
               value={guess.first_actor ?? ''}
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="Is in:"
@@ -112,6 +114,7 @@ function ActiveGame() {
                   first_appearance_guess: e.target.value,
                 })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="With:"
@@ -120,6 +123,7 @@ function ActiveGame() {
               fullWidth
               value={guess.second_actor_guess ?? ''}
               onChange={(e) => setGuess({ ...guess, second_actor_guess: e.target.value })}
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="Who is in:"
@@ -129,6 +133,7 @@ function ActiveGame() {
               onChange={(e) =>
                 setGuess({ ...guess, second_appearance_guess: e.target.value })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               className="p3"
@@ -139,6 +144,7 @@ function ActiveGame() {
               fullWidth
               value={guess.third_actor_guess ?? ''}
               onChange={(e) => setGuess({ ...guess, third_actor_guess: e.target.value })}
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="Who is in:"
@@ -150,6 +156,7 @@ function ActiveGame() {
               onChange={(e) =>
                 setGuess({ ...guess, third_appearance_guess: e.target.value })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="With:"
@@ -159,6 +166,7 @@ function ActiveGame() {
               fullWidth
               value={guess.fourth_actor_guess ?? ''}
               onChange={(e) => setGuess({ ...guess, fourth_actor_guess: e.target.value })}
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="Who is in:"
@@ -170,6 +178,7 @@ function ActiveGame() {
               onChange={(e) =>
                 setGuess({ ...guess, fourth_appearance_guess: e.target.value })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="With:"
@@ -179,6 +188,7 @@ function ActiveGame() {
               fullWidth
               value={guess.fifth_actor_guess ?? ''}
               onChange={(e) => setGuess({ ...guess, fifth_actor_guess: e.target.value })}
+              sx={{margin:"2%"}}  
             />
             <TextField
               // label="Who is in:"
@@ -190,6 +200,7 @@ function ActiveGame() {
               onChange={(e) =>
                 setGuess({ ...guess, fifth_appearance_guess: e.target.value })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="With:"
@@ -199,6 +210,7 @@ function ActiveGame() {
               fullWidth
               value={guess.sixth_actor_guess ?? ''}
               onChange={(e) => setGuess({ ...guess, sixth_actor_guess: e.target.value })}
+              sx={{margin:"2%"}}
             />
             <TextField
               // label="Who is in:"
@@ -210,6 +222,7 @@ function ActiveGame() {
               onChange={(e) =>
                 setGuess({ ...guess, sixth_appearance_guess: e.target.value })
               }
+              sx={{margin:"2%"}}
             />
             <TextField
               id="outlined-start-adornment"
@@ -217,20 +230,23 @@ function ActiveGame() {
               fullWidth
               disabled
               value={guess.seventh_actor ?? ''}
+              sx={{margin:"2%"}}
             />
             <br />
             <Button
+              id="submit-button"
               type="submit"
-              variant="contained"
+              variant="outlined"
               onClick={() => handleSubmit()}
             >
               Submit
             </Button>
             <br />
-            <Button type="submit" variant="contained" onClick={() => handleSave()}>
+            <Button id="save-for-later-button" type="submit" variant="outlined" onClick={() => handleSave()}>
               Save for later
             </Button>
           </FormControl>
+        </Box>  
         ) : (
           <h3>There are no active games to guess on at this time.</h3>
         )
