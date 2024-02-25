@@ -25,14 +25,17 @@ router.get('/', async (req, res) => {
         for (let game of games) {
             const getUserScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" = $2;`;
             const getPlayerTwoScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" != $2;`;
+            const getCompletedScriptsQuery = `SELECT COUNT(*) FROM "guess" WHERE "game_id" = $1 AND "is_complete" = true;`;
 
             // Fetch scores
             const userScoreResult = await pool.query(getUserScoreQuery, [game.id, req.user.id]);
             const playerTwoScoreResult = await pool.query(getPlayerTwoScoreQuery, [game.id, req.user.id]);
+            const completedScriptsResult = await pool.query(getCompletedScriptsQuery, [game.id]);
 
             // Add scores to game object
             game.userScore = userScoreResult.rows[0].sum || 0;
             game.playerTwoScore = playerTwoScoreResult.rows[0].sum || 0;
+            game.completedScripts = completedScriptsResult.rows[0].count;
         }
 
         // Send modified games array with scores included

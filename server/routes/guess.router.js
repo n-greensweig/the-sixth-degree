@@ -48,7 +48,6 @@ router.put('/:id', async (req, res) => {
   SELECT * FROM "guess" WHERE "id" = $1 AND "guesser_id" = $2;
 `;
 
-
     const queryText = `
 UPDATE "guess" SET 
 "first_actor_guess" = $1,

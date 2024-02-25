@@ -109,7 +109,7 @@ function UserPage() {
               <div>
                 <h2>Actor</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.player_two_id === user.id) {
+                  if (game.completedScripts !== '6' && game.player_two_id === user.id) {
                     return (
                       <>
                         <Card key={game.id} className='card'>
@@ -120,6 +120,16 @@ function UserPage() {
                                 <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
                             }
                             <h4>game ID: {game.id}</h4>
+                            <h4 style={{
+                              color: 'white',
+                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
+                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
+                            <h4>{game.completedScripts === '6' ? 'Game over' : 'Still going'}</h4>
+                            <h4 style={{
+                              color: 'white',
+                              backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
+                            }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
+                            <h4>{game.completedScripts}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
                             <h4>TITLE: {game.my_active_scripts}</h4>
@@ -163,7 +173,7 @@ function UserPage() {
 
                 <h2>Director</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.player_two_id !== user.id) {
+                  if (game.completedScripts !== '6' && game.player_two_id !== user.id) {
                     return (
                       <>
                         <Card key={game.id} className='card'>
@@ -174,6 +184,7 @@ function UserPage() {
                               color: 'white',
                               backgroundColor: game.userScore > game.playerTwoScore ? 'green' : game.playerTwoScore < game.userScore ? 'red' : 'black'
                             }}>{game.userScore > game.playerTwoScore ? 'You won!' : game.playerTwoScore < game.userScore ? 'You lost' : null}</h4>
+                            <h4>{game.completedScripts === '6' ? 'Game over' : 'Still going'}</h4>
                             <h4>game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
@@ -253,7 +264,8 @@ function UserPage() {
 
                     <TableBody>
                       {games.map((game) => {
-                        if (!game.is_ongoing) {
+                        console.log(game.id);
+                        if (game.completedScripts === '6') {
                           return (
                             <TableRow key={game.id}>
                               <TableCell>id of {game.id}, {game.date_created}</TableCell>
