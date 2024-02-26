@@ -92,7 +92,7 @@ function Nav() {
             {/* LOG OUT BUTTON */}
             <div
               className='dropdownItem'
-              onClick={() => dispatch({ type: 'LOGOUT' })}
+              onClick={() => dispatch({ type: 'LOGOUT' })} 
             >
               <VscMegaphone />
               <span className='menuWord'><h6>Log Out</h6></span>
