@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
 import './SendScriptsBack.css'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 function SendScriptsBack() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -28,18 +29,20 @@ function SendScriptsBack() {
             selectedScripts.splice(selectedScripts.indexOf(id), 1);
         }
     };
-
     // Add verification that 3 scripts are selected
     const handleClick = (e) => {
         e.preventDefault();
         console.log(id);
         if (selectedScripts.length < '3'){
-            alert('select 3 scripts')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Select 3 Scripts!",
+            });
         } else{
             dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
         history.push('/user');
         }
-        // dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
     };
 
     useEffect(() => {
@@ -52,7 +55,6 @@ function SendScriptsBack() {
             <h1>Pick 3 Scripts to send back!</h1>
             <div className="container">
             </div>
-
             <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}>Send Scripts</Button>
             <Paper id="scriptGame-list" elevation={24}>
                 <ul>
@@ -68,7 +70,6 @@ function SendScriptsBack() {
         </div>
     )
 }
-
 export default SendScriptsBack;
 
 
