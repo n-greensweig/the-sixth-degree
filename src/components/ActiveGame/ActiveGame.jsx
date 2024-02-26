@@ -18,14 +18,27 @@ function ActiveGame() {
 
 
   const [guess, setGuess] = useState({
-    // your existing fields,
+    second_actor_id: null,
     third_actor_id: null,
+    fourth_actor_id: null,
+    fifth_actor_id: null,
+    sixth_actor_id: null,
   });
 
 
-
+  const [secondActorSuggestions, setSecondActorSuggestions] = useState([]);
   const [thirdActorSuggestions, setThirdActorSuggestions] = useState([]);
+  const [fourthActorSuggestions, setFourthActorSuggestions] = useState([]);
+  const [fifthActorSuggestions, setFifthActorSuggestions] = useState([]);
+  const [sixthActorSuggestions, setSixthActorSuggestions] = useState([]);
+
+
+
+  const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
   const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
+  const [fourthMovieSuggestions,setFourthMovieSuggestions] = useState([]);
+  const [fifthMovieSuggestions, setFifthMovieSuggestions] = useState([]);
+  const [sixthMovieSuggestions, setSixthMovieSuggestions] = useState([]);
   const { id } = useParams();
 
 
@@ -56,6 +69,20 @@ function ActiveGame() {
 
 
 
+    // Fetches second actor suggestions based on user input
+    const fetchSecondActorSuggestions = async (query) => {
+      if (!query) return;
+      try {
+        const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+        // Variable to filter results so only actors with profile images appear
+        const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+        setSecondActorSuggestions(actorsWithImages);
+      } catch (error) {
+        console.error("Error fetching actors:", error);
+      }
+    };
+
+
   // Fetches third actor suggestions based on user input
   const fetchThirdActorSuggestions = async (query) => {
     if (!query) return;
@@ -69,6 +96,78 @@ function ActiveGame() {
     }
   };
   
+
+
+
+  // Fetches fourth actor suggestions based on user input
+  const fetchFourthActorSuggestions = async (query) => {
+    if (!query) return;
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results so only actors with profile images appear
+      const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+      setFourthActorSuggestions(actorsWithImages);
+    } catch (error) {
+      console.error("Error fetching actors:", error);
+    }
+  };
+  
+
+
+
+    // Fetches fifth actor suggestions based on user input
+    const fetchFifthActorSuggestions = async (query) => {
+      if (!query) return;
+      try {
+        const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+        // Variable to filter results so only actors with profile images appear
+        const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+        setFifthActorSuggestions(actorsWithImages);
+      } catch (error) {
+        console.error("Error fetching actors:", error);
+      }
+    };
+  
+    
+
+
+
+      // Fetches sixth actor suggestions based on user input
+  const fetchSixthActorSuggestions = async (query) => {
+    if (!query) return;
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results so only actors with profile images appear
+      const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+      setSixthActorSuggestions(actorsWithImages);
+    } catch (error) {
+      console.error("Error fetching actors:", error);
+    }
+  };
+  
+
+
+
+
+
+    // Fetches second movie suggestions based on selected actor and user input
+    const fetchSecondMovieSuggestions = async (query) => {
+      const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
+      if (!query || !actorId) return;
+    
+      try {
+        // Using the /discover/movie endpoint with the with_cast parameter
+        const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+        // Variable to filter results to only include movies with poster images
+        const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+        setSecondMovieSuggestions(moviesWithPosters);
+      } catch (error) {
+        console.error("Error fetching movies for actor:", error);
+      }
+    };
+  
+    
+
 
 
 
@@ -89,12 +188,66 @@ function ActiveGame() {
   };
   
   
+  // Fetches fourth movie suggestions based on selected actor and user input
+  const fetchFourthMovieSuggestions = async (query) => {
+    const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
+    if (!query || !actorId) return;
+  
+    try {
+      // Using the /discover/movie endpoint with the with_cast parameter
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results to only include movies with poster images
+      const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+      setFourthMovieSuggestions(moviesWithPosters);
+    } catch (error) {
+      console.error("Error fetching movies for actor:", error);
+    }
+  };
+  
+
+
+
+    // Fetches fifth movie suggestions based on selected actor and user input
+    const fetchFifthMovieSuggestions = async (query) => {
+      const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
+      if (!query || !actorId) return;
+    
+      try {
+        // Using the /discover/movie endpoint with the with_cast parameter
+        const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+        // Variable to filter results to only include movies with poster images
+        const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+        setFifthMovieSuggestions(moviesWithPosters);
+      } catch (error) {
+        console.error("Error fetching movies for actor:", error);
+      }
+    };
+  
+    
+
+
+
+      // Fetches sixth movie suggestions based on selected actor and user input
+  const fetchSixthMovieSuggestions = async (query) => {
+    const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
+    if (!query || !actorId) return;
+  
+    try {
+      // Using the /discover/movie endpoint with the with_cast parameter
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results to only include movies with poster images
+      const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+      setSixthMovieSuggestions(moviesWithPosters);
+    } catch (error) {
+      console.error("Error fetching movies for actor:", error);
+    }
+  };
+  
 
 
 
 
-
-
+// Need to implement the rest
   const handleActorChange = (event) => {
     const { value } = event.target;
     setGuess({ ...guess, third_actor_guess: value });
@@ -106,6 +259,10 @@ function ActiveGame() {
     setGuess({ ...guess, third_appearance_guess: value });
     fetchThirdMovieSuggestions(value);
   };
+
+
+
+
 
   const handleSubmit = () => {
     setGuess({});
