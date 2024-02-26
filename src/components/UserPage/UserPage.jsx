@@ -124,12 +124,12 @@ function UserPage() {
                         <Card key={game.id} className='card'>
                           <CardContent>
                             {
-                              game.userScore === game.playerTwoScore ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
+                              Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
                               <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
                             <h4>Starring: You & {game.nonUserFirstName}</h4>
                             {
-                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#FFCDD2', }}>You have {game.their_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
+                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#C71585', }}>You have {game.my_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
                                 game.their_active_scripts !== '0' ? <h4 style={{ color: '#FA8072' }}>Still waiting on {game.nonUserFirstName} to play {game.their_active_scripts} {Number(game.their_active_scripts) > 1 ? 'scripts' : 'script'}!</h4> :
                                   null
                             }
@@ -171,18 +171,19 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            {
-                              game.userScore !== game.playerTwoScore ? <h4
-                              >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
-                                <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
+                          {
+                              Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
+                              <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
                             <h4>Starring: You & {game.nonUserFirstName}</h4>
                             {
-                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#FFCDD2', }}>You have {game.their_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
+                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#C71585', }}>You have {game.my_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
                                 game.their_active_scripts !== '0' ? <h4 style={{ color: '#FA8072' }}>Still waiting on {game.nonUserFirstName} to play {game.their_active_scripts} {Number(game.their_active_scripts) > 1 ? 'scripts' : 'script'}!</h4> :
                                   null
                             }
-                            {game.their_total_scripts === '3' ? null :
+
+                            {/* The director can't send scripts back until we allow for going into a third scene of the game */}
+                            {/* {game.their_total_scripts === '3' ? null :
                               <Button variant='outlined'
                                 onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
                                 sx={{
@@ -192,7 +193,7 @@ function UserPage() {
                                   color: 'black',
                                 }}
                               >Send scripts back</Button>
-                            }
+                            } */}
 
                             {game.my_active_scripts === '0' ? null :
                               <Button variant='outlined'
@@ -254,7 +255,7 @@ function UserPage() {
                                 game.userScore < game.playerTwoScore ? '#FFCDD2' : null
                             }}>
                               <TableCell>{formattedDate(game.date_created)}</TableCell>
-                              <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
+                              <TableCell>{user.first_name} & {game.nonUserFirstName}</TableCell>
                               <TableCell>{game.userScore > game.playerTwoScore ? user.first_name :
                                 game.userScore < game.playerTwoScore ? game.nonUserFirstName : 'Tie!'}</TableCell>
                               <TableCell>{game.userScore} - {game.playerTwoScore}</TableCell>
