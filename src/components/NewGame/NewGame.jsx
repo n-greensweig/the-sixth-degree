@@ -26,8 +26,15 @@ function NewGame() {
 
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
+        if (selectedScripts.length < '3'){
+            alert('select 3 scripts')
+        } else{
+            dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
         history.push('/game-code');
+        }
+
+        // dispatch({ type: 'CREATE_GAME', payload: selectedScripts });
+        // history.push('/game-code');
     };
 
     useEffect(() => {
@@ -46,9 +53,8 @@ function NewGame() {
                 <ul>
                     {scripts?.map(script => (
                         <li key={script.id} className="container">
-                            <input onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <span className="checkmark"></span>
-                            <p>{script.first_actor} to {script.seventh_actor}</p>
+                            <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
+                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
                         </li>
                     ))}
                 </ul>

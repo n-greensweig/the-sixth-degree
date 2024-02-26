@@ -3,43 +3,64 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // GET route to retrieve all games for the logged in user
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    try {
+        // Info to GET from game table
+        let queryText = `SELECT "game"."id",
+                            "player_one_id", "user1"."first_name" as "player_one_first_name",
+                            "player_two_id", "user"."first_name" as "player_two_first_name", 
+                            "is_ongoing", "active_scene", "winner_id", 
+                            to_char("game"."date_created", 'MM-dd-yy') AS "date_created" , "code",
+                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" = $1 AND "is_complete" = false) as "my_active_scripts",
+                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" != $1 AND "is_complete" = false) as "their_active_scripts"
+                            FROM "game"
+                            INNER JOIN "user" as "user1" on "user1"."id" = "game"."player_one_id"
+                            INNER JOIN "user" on "user"."id" = "game"."player_two_id"
+                            WHERE "player_one_id" = $1 OR "player_two_id" = $1;`;
 
-    // Info to GET from game table
-    let queryText =
+        const result = await pool.query(queryText, [req.user.id]);
+        const games = result.rows;
 
-        `SELECT "game"."id",
-        "player_one_id", "user1"."first_name" as "player_one_first_name",
-        "player_two_id", "user"."first_name" as "player_two_first_name", 
-        "is_ongoing", "active_scene", "winner_id", 
-        to_char("game"."date_created", 'MM-dd-yy') AS "date_created" , "code",
-        (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" = $1 AND "is_complete" = false) as "my_active_scripts",
-        (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" != $1 AND "is_complete" = false) as "their_active_scripts"
-      
-      FROM "game"
-      
-      INNER JOIN "user" as "user1" on "user1"."id" = "game"."player_one_id"
-      INNER JOIN "user" on "user"."id" = "game"."player_two_id"
-     
-      WHERE "player_one_id" = $1 OR "player_two_id" = $1;`;
+        // Process each game to include scores
+        for (let game of games) {
+            const getUserScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" = $2;`;
+            const getPlayerTwoScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" != $2;`;
+            const getCompletedScriptsQuery = `SELECT COUNT(*) FROM "guess" WHERE "game_id" = $1 AND "is_complete" = true;`;
+            // const getUserFirstNameQuery = `SELECT "first_name" FROM "user" WHERE "id" = $1;`;
+            const getNonUserFirstNameQuery = `
+            SELECT "first_name" FROM "user" 
+JOIN "game" ON "game"."player_one_id" = "user"."id" AND "game"."id" = 6
+WHERE "user"."id" != $1 ;`;
 
 
+            // Fetch scores
+            const userScoreResult = await pool.query(getUserScoreQuery, [game.id, req.user.id]);
+            const playerTwoScoreResult = await pool.query(getPlayerTwoScoreQuery, [game.id, req.user.id]);
+            const completedScriptsResult = await pool.query(getCompletedScriptsQuery, [game.id]);
+            // const userFirstNameResult = await pool.query(getUserFirstNameQuery, [game.player_one_id]);
+            const nonUserFirstNameResult = await pool.query(getNonUserFirstNameQuery, [req.user.id]);
 
-    pool.query(queryText, [req.user.id])
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('Error in game.router GET', error);
-            res.sendStatus(500);
-        });
+            // Add scores to game object
+            game.userScore = userScoreResult.rows[0].sum || 0;
+            game.playerTwoScore = playerTwoScoreResult.rows[0].sum || 0;
+            game.completedScripts = completedScriptsResult.rows[0].count;
+            // game.userFirstName = userFirstNameResult.rows[0].first_name;
+            game.nonUserFirstName = nonUserFirstNameResult.rows[0].first_name;
+        }
 
+        // Send modified games array with scores included
+        res.send(games);
+    } catch (error) {
+        console.log('Error in game.router GET', error);
+        res.sendStatus(500);
+    }
 });
+
 
 // GET route to retrieve the selected scripts for a game
 // on the game code page
 router.get('/active-scripts', (req, res) => {
-    
+
     // Use req.query to access query parameters
     let gameCode = req.query.code;
 
@@ -91,11 +112,11 @@ router.post('/', async (req, res) => {
 
         // Assuming selectedScripts is an array of script IDs. Adjust your loop based on the actual data structure
         for (const scriptId of selectedScripts) {
-            
+
             // Fetch the first_actor and seventh_actor based on scriptId
             const scriptResult = await pool.query(scriptValuesQueryText, [scriptId]);
             const { first_actor, seventh_actor } = scriptResult.rows[0];
-        
+
             // Now inserting with the correct values for first_actor_guess and seventh_actor_guess
             await pool.query(firstGuessQueryText, [scriptId, gameId, first_actor, seventh_actor, code]);
         }

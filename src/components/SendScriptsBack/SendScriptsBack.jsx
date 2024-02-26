@@ -33,7 +33,13 @@ function SendScriptsBack() {
     const handleClick = (e) => {
         e.preventDefault();
         console.log(id);
-        dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
+        if (selectedScripts.length < '3'){
+            alert('select 3 scripts')
+        } else{
+            dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
+        history.push('/user');
+        }
+        // dispatch({ type: 'SEND_SCRIPTS_TO_GUESS', payload: { selectedScripts, id, code, guesser } });
     };
 
     useEffect(() => {
@@ -53,8 +59,7 @@ function SendScriptsBack() {
                     {scripts?.map(script => (
                         <li key={script.id} className="container">
                             <input onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <span className="checkmark"></span>
-                            <p>{script.first_actor} to {script.seventh_actor}</p>
+                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
                         </li>
                     ))}
                 </ul>

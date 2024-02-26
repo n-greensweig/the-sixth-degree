@@ -49,6 +49,12 @@ function UserPage() {
     history.push(`/active-game/${id}`);
   };
 
+  const formattedDate = (date) => {
+    let newDate = new Date(date);
+    let formattedDate = newDate.toLocaleDateString();
+    return formattedDate;
+  };
+
   useEffect(() => {
     dispatch({ type: 'FETCH_GAME', payload: user.id });
   }, []);
@@ -56,8 +62,7 @@ function UserPage() {
   return (
     <div>
       <Box>
-        <Nav></Nav>
-
+        <Nav />
         <Grid>
           <Container >
             <h1 id="welcome-line">Welcome, {user.first_name}!</h1>
@@ -67,55 +72,65 @@ function UserPage() {
                 id="access-code-textfield"
                 required
                 name="access_code"
-                placeholder="Access Code"
+                placeholder="Access #"
                 variant="outlined"
                 sx={{
-                  width: '40%',
+                  width: '30%',
                   padding: '1%',
                   marginLeft: '5%'
                 }}
                 onChange={(event) => setGameId(event.target.value)}
               />
               <Button
+                id="join-game-button"
                 variant='outlined'
                 type='submit'
                 sx={{
-                  padding: 1,
-                  marginLeft: '11%',
+                  // padding: 1,
+                  marginLeft: '2%',
+                  height: '55px',
                   border: '2px black solid',
                   color: 'black',
                 }}
               >Join Game</Button>
+              
+              <Button
+                id="create-game-button"
+                variant='outlined'
+                onClick={handleClick}
+                sx={{
+                  float: 'right',
+                  // height: '50px',
+                  // marginTop: '30px',
+                  marginRight: '5%',
+                  height: '55px',
+                  border: '2px black solid',
+                  color: 'black',
+                }}
+              >Create Game</Button>
             </form>
-
-
-            <Button
-              variant='outlined'
-              onClick={handleClick}
-              sx={{
-                float: 'right',
-                height: '50px',
-                marginTop: '30px',
-                marginRight: '5%',
-                border: '2px black solid',
-                color: 'black',
-              }}
-            >Create Game</Button>
-
-
-
+            
+            <br></br>
+          
             <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
             {games.length > 0 ?
               <div>
                 <h2>Actor</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.player_two_id === user.id) {
+                  if (game.completedScripts !== '6' && game.player_two_id === user.id) {
                     return (
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            <h4>game ID: {game.id}</h4>
+                            {
+                              game.userScore !== game.playerTwoScore ? <h4
+                              >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
+                                <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
+                            }
+                            {/* For testing only */}
+                            <h4>Game ID: {game.id}</h4>
+                            <h4>{game.completedScripts}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
                             <h4>TITLE: {game.my_active_scripts}</h4>
@@ -132,17 +147,21 @@ function UserPage() {
                               </div>
                             }
                             <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined'
-                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
-                              sx={{
-                                marginTop: '15px',
-                                marginRight: '10px',
-                                border: '2px black solid',
-                                color: 'black',
+                            <Button 
+                                id="send-scripts-back-button"
+                                variant='outlined'
+                                onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
+                                sx={{
+                                  marginTop: '15px',
+                                  marginRight: '10px',
+                                  border: '2px black solid',
+                                  color: 'black',
                               }}
                             >send scripts back</Button>
 
-                            <Button variant='outlined'
+                            <Button 
+                              id="play-button"
+                              variant='outlined'
                               onClick={id => playScripts(game.id)}
                               sx={{
                                 marginTop: '15px',
@@ -159,31 +178,16 @@ function UserPage() {
 
                 <h2>Director</h2>
                 {games.map(game => {
-                  if (game.is_ongoing && game.player_two_id !== user.id) {
+                  if (game.completedScripts !== '6' && game.player_two_id !== user.id) {
                     return (
                       <>
-                        {/* <Card key={game.id} className='card'>
-                          <CardContent>
-                            <h4>game ID: {game.id}</h4>
-                            <h4>TITLE: Cruz-Stone</h4>
-                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
-                            <h4>SCENE: {game.active_scene}</h4>
-                            {game.active_scene > 1 ?
-                              <div>
-                                <h4>SCORE: shows up when you're on scene 2</h4>
-                              </div>
-
-                              :
-
-                              <div>
-                              </div>
-                            }
-                            <h4>STATUS: Waiting for your actor...</h4>
-                          </CardContent>
-                        </Card> */}
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            <h4>game ID: {game.id}</h4>
+                            <h4>Your score: {game.userScore}</h4>
+                            <h4>Their score: {game.playerTwoScore}</h4>
+
+                            {/* For testing only */}
+                            <h4>Game ID: {game.id}</h4>
                             <h4>My Active Script Count: {game.my_active_scripts}</h4>
                             <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
                             <h4>TITLE: {game.my_active_scripts}</h4>
@@ -262,13 +266,19 @@ function UserPage() {
 
                     <TableBody>
                       {games.map((game) => {
-                        if (!game.is_ongoing) {
+                        console.log(game.id);
+                        if (game.completedScripts === '6') {
                           return (
                             <TableRow key={game.id}>
-                              <TableCell>id of {game.id}, {game.date_created}</TableCell>
+                              <TableCell>{formattedDate(game.date_created)}</TableCell>
                               <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
-                              <TableCell>{game.winner_id}</TableCell>
-                              <TableCell>score</TableCell>
+                              <TableCell style={{
+                                color: game.userScore !== game.playerTwoScore ? 'white' : null,
+                                backgroundColor: game.userScore > game.playerTwoScore ? 'green' : 
+                                game.userScore < game.playerTwoScore ? 'red' : null
+                              }}>{game.userScore > game.playerTwoScore ? game.userFirstName :
+                                game.userScore < game.playerTwoScore ? game.nonUserFirstName : 'Tie!'}</TableCell>
+                              <TableCell>{game.userScore} - {game.playerTwoScore}</TableCell>
                             </TableRow>
                           )
                         }
