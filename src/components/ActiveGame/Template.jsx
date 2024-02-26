@@ -322,7 +322,6 @@
 
 
 
-
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
@@ -333,26 +332,30 @@ import "./ActiveGame.css";
 
 
 
-
-
-
 function ActiveGame() {
+
+
   const dispatch = useDispatch();
   const history = useHistory();
   const activeScriptsToGuess = useSelector((store) => store.scriptReducer);
+
+
+
   const [guess, setGuess] = useState({
     // your existing fields,
-    third_actor_id: null, // Initialize third_actor_id
+    third_actor_id: null,
   });
+
+
+
   const [thirdActorSuggestions, setThirdActorSuggestions] = useState([]);
   const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
   const { id } = useParams();
 
 
-
-
-
+ // variable URL for TMDB images
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+    // Jama's API Key
   const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
 
@@ -377,12 +380,12 @@ function ActiveGame() {
 
 
 
-
+  // Fetches third actor suggestions based on user input
   const fetchThirdActorSuggestions = async (query) => {
     if (!query) return;
     try {
       const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
-      // Filter results to only include actors with profile images
+      // Variable to filter results so only actors with profile images appear
       const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
       setThirdActorSuggestions(actorsWithImages);
     } catch (error) {
@@ -393,15 +396,15 @@ function ActiveGame() {
 
 
 
-
+  // Fetches third movie suggestions based on selected actor and user input
   const fetchThirdMovieSuggestions = async (query) => {
     const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
     if (!query || !actorId) return;
   
     try {
-      // Use the /discover/movie endpoint with the with_cast parameter
+      // Using the /discover/movie endpoint with the with_cast parameter
       const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
-      // Filter results to only include movies with poster images
+      // Variable to filter results to only include movies with poster images
       const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
       setThirdMovieSuggestions(moviesWithPosters);
     } catch (error) {
@@ -438,6 +441,15 @@ function ActiveGame() {
     dispatch({ type: "SUBMIT_GUESS", payload: { guess: { ...guess, complete: false }, id } });
   };
 
+
+
+
+
+
+
+
+
+
   return (
     <Box
       component="form"
@@ -455,8 +467,64 @@ function ActiveGame() {
       <br />
       {activeScriptsToGuess && guess && activeScriptsToGuess.length > 0 ? (
         <FormControl>
-          {/* Existing TextFields for first_actor, first_appearance_guess, etc. */}
-          
+
+
+
+          <TextField
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              disabled
+              value={guess.first_actor ?? ''}
+            />
+
+
+
+            <TextField
+              // label="Is in:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.first_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({
+                  ...guess,
+                  first_appearance_guess: e.target.value,
+                })
+              }
+            />
+
+
+
+
+
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              required
+              fullWidth
+              value={guess.second_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, second_actor_guess: e.target.value })}
+            />
+
+
+
+            <TextField
+              // label="Who is in:"
+              required
+              fullWidth
+              value={guess.second_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, second_appearance_guess: e.target.value })
+              }
+            />
+
+
+
+
+
           {/* Modified TextField for third_actor_guess */}
           <TextField
             id="third_actor_guess"
@@ -473,7 +541,7 @@ function ActiveGame() {
     setGuess({ 
       ...guess, 
       third_actor_guess: actor.name, 
-      third_actor_id: actor.id  // Add the actor's ID here
+      third_actor_id: actor.id  
     });
     setThirdActorSuggestions([]); // Clear suggestions after selection
   }} style={{ cursor: "pointer", margin: "10px 0" }}>
@@ -483,6 +551,7 @@ function ActiveGame() {
     {actor.name}
   </div>
 ))}
+
 
 
           {/* Modified TextField for third_appearance_guess */}
@@ -506,14 +575,121 @@ function ActiveGame() {
     {movie.title}
   </div>
 ))}
-          {/* Continue with other TextFields and buttons */}
+
+
+
+
+
+          <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="warning"
+              required
+              fullWidth
+              value={guess.fourth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, fourth_actor_guess: e.target.value })}
+            />
+
+
+
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="warning"
+              required
+              fullWidth
+              value={guess.fourth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, fourth_appearance_guess: e.target.value })
+              }
+            />
+
+
+
+
+
+
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.fifth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, fifth_actor_guess: e.target.value })}
+            />
+
+
+
+
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="secondary"
+              required
+              fullWidth
+              value={guess.fifth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, fifth_appearance_guess: e.target.value })
+              }
+            />
+
+
+
+
+
+
+            <TextField
+              // label="With:"
+              id="outlined-start-adornment"
+              color="error"
+              required
+              fullWidth
+              value={guess.sixth_actor_guess ?? ''}
+              onChange={(e) => setGuess({ ...guess, sixth_actor_guess: e.target.value })}
+            />
+
+
+
+            <TextField
+              // label="Who is in:"
+              id="outlined-start-adornment"
+              color="error"
+              required
+              fullWidth
+              value={guess.sixth_appearance_guess ?? ''}
+              onChange={(e) =>
+                setGuess({ ...guess, sixth_appearance_guess: e.target.value })
+              }
+            />
+
+
+
+
+
+
+            <TextField
+              id="outlined-start-adornment"
+              required
+              fullWidth
+              disabled
+              value={guess.seventh_actor ?? ''}
+            />
+
+
+
+
+
+              <br/>
           <Button type="submit" variant="contained" onClick={() => handleSubmit()}>
             Submit
           </Button>
           <br />
+
           <Button type="submit" variant="contained" onClick={() => handleSave()}>
             Save for later
           </Button>
+
         </FormControl>
       ) : (
         <h3>There are no active games to guess on at this time.</h3>
@@ -522,272 +698,7 @@ function ActiveGame() {
   );
 }
 
+
+
+
 export default ActiveGame;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { Box, FormControl, TextField, Button } from "@mui/material";
-// import "./ActiveGame.css";
-// import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
-// import Nav from "../Nav/Nav.jsx";
-// import axios from 'axios';
-
-
-
-
-// function ActiveGame() {
-//   const dispatch = useDispatch();
-//   const history = useHistory();
-
-
-
-//     // variable URL for TMDB images
-//     let IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
-
-
-//     // Jama's API Key
-//     let apiKey = '30c198675e2638514ba7c9dc7212193c';
-
-
-
-
-
-//   // GET request to display user's active script to guess on the DOM
-//   const activeScriptsToGuess = useSelector((store) => store.scriptReducer);
-//   const [guess, setGuess] = useState({});
-//   const { id } = useParams();
-
-
-
-
-
-//   // Submit user's guess
-//   const handleSubmit = () => {
-//     setGuess({});
-//     dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: true}, id } }); // POST request to submit user's guess
-//   };
-//   // Save user's guess for later
-//   const handleSave = () => {
-//     setGuess({});
-//     dispatch({ type: "SUBMIT_GUESS", payload: { guess: {...guess, complete: false}, id } }); // POST request to save user's guess without submitting
-//   };
-    
-//   useEffect(() => {
-//     dispatch({ type: "FETCH_ACTIVE_SCRIPT", payload: id });
-//   }, []);
-
-//   useEffect(() => {
-//     if (activeScriptsToGuess && activeScriptsToGuess.length > 0) {
-//       setGuess(activeScriptsToGuess[0]);
-//     } else {
-//       history.push('/'); // Redirect to home page if there are no active scripts
-//     }
-//   }, [activeScriptsToGuess]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   return (
-//     <Box
-//       component="form"
-//       noValidate
-//       sx={{
-//         mt: 1,
-//         alignItems: "center",
-//         marginTop: 8,
-//         display: "flex",
-//         flexDirection: "column",
-//       }}
-//     >
-//       <Nav />
-//       <h2>Active game</h2>
-//       <br />
-//       {
-//         activeScriptsToGuess && guess && activeScriptsToGuess.length > 0 ? (
-//           <FormControl>
-//             <TextField
-//               id="outlined-start-adornment"
-//               color="secondary"
-//               required
-//               fullWidth
-//               disabled
-//               value={guess.first_actor ?? ''}
-//             />
-//             <TextField
-//               // label="Is in:"
-//               id="outlined-start-adornment"
-//               color="secondary"
-//               required
-//               fullWidth
-//               value={guess.first_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({
-//                   ...guess,
-//                   first_appearance_guess: e.target.value,
-//                 })
-//               }
-//             />
-//             <TextField
-//               // label="With:"
-//               id="outlined-start-adornment"
-//               required
-//               fullWidth
-//               value={guess.second_actor_guess ?? ''}
-//               onChange={(e) => setGuess({ ...guess, second_actor_guess: e.target.value })}
-//             />
-//             <TextField
-//               // label="Who is in:"
-//               required
-//               fullWidth
-//               value={guess.second_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({ ...guess, second_appearance_guess: e.target.value })
-//               }
-//             />
-//             <TextField
-//               className="p3"
-//               // label="With:"
-//               id="outlined-start-adornment"
-//               color="success"
-//               required
-//               fullWidth
-//               value={guess.third_actor_guess ?? ''}
-//               onChange={(e) => setGuess({ ...guess, third_actor_guess: e.target.value })}
-//             />
-//             <TextField
-//               // label="Who is in:"
-//               id="outlined-start-adornment"
-//               color="success"
-//               required
-//               fullWidth
-//               value={guess.third_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({ ...guess, third_appearance_guess: e.target.value })
-//               }
-//             />
-//             <TextField
-//               // label="With:"
-//               id="outlined-start-adornment"
-//               color="warning"
-//               required
-//               fullWidth
-//               value={guess.fourth_actor_guess ?? ''}
-//               onChange={(e) => setGuess({ ...guess, fourth_actor_guess: e.target.value })}
-//             />
-//             <TextField
-//               // label="Who is in:"
-//               id="outlined-start-adornment"
-//               color="warning"
-//               required
-//               fullWidth
-//               value={guess.fourth_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({ ...guess, fourth_appearance_guess: e.target.value })
-//               }
-//             />
-//             <TextField
-//               // label="With:"
-//               id="outlined-start-adornment"
-//               color="secondary"
-//               required
-//               fullWidth
-//               value={guess.fifth_actor_guess ?? ''}
-//               onChange={(e) => setGuess({ ...guess, fifth_actor_guess: e.target.value })}
-//             />
-//             <TextField
-//               // label="Who is in:"
-//               id="outlined-start-adornment"
-//               color="secondary"
-//               required
-//               fullWidth
-//               value={guess.fifth_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({ ...guess, fifth_appearance_guess: e.target.value })
-//               }
-//             />
-//             <TextField
-//               // label="With:"
-//               id="outlined-start-adornment"
-//               color="error"
-//               required
-//               fullWidth
-//               value={guess.sixth_actor_guess ?? ''}
-//               onChange={(e) => setGuess({ ...guess, sixth_actor_guess: e.target.value })}
-//             />
-//             <TextField
-//               // label="Who is in:"
-//               id="outlined-start-adornment"
-//               color="error"
-//               required
-//               fullWidth
-//               value={guess.sixth_appearance_guess ?? ''}
-//               onChange={(e) =>
-//                 setGuess({ ...guess, sixth_appearance_guess: e.target.value })
-//               }
-//             />
-//             <TextField
-//               id="outlined-start-adornment"
-//               required
-//               fullWidth
-//               disabled
-//               value={guess.seventh_actor ?? ''}
-//             />
-//             <br />
-//             <Button
-//               type="submit"
-//               variant="contained"
-//               onClick={() => handleSubmit()}
-//             >
-//               Submit
-//             </Button>
-//             <br />
-//             <Button type="submit" variant="contained" onClick={() => handleSave()}>
-//               Save for later
-//             </Button>
-//           </FormControl>
-//         ) : (
-//           <h3>There are no active games to guess on at this time.</h3>
-//         )
-//       }
-      
-//     </Box>
-//   );
-// }
-
-
-
-
-
-
-// export default ActiveGame;
