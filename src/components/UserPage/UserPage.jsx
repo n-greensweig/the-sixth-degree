@@ -41,6 +41,7 @@ function UserPage() {
     });
       dispatch({ type: 'JOIN_GAME', payload: { gameId: gameId } });
       dispatch({ type: 'UPDATE_GUESSER', payload: { gameId: gameId } });
+      dispatch({ type: 'FETCH_GAME', payload: user.id });
   };
 
 

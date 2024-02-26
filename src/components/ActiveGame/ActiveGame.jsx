@@ -49,7 +49,23 @@ function ActiveGame() {
   const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
 
-
+  const handleAutofill = () => {
+    setGuess({
+      ...guess,
+      first_appearance_guess: "VS.",
+      second_actor_guess: "Christopher Patrick Nolan",
+      second_appearance_guess: "Lynn + Lucy",
+      third_actor_guess: "Morgan Freeman",
+      third_appearance_guess: "Se7en",
+      fourth_actor_guess: "Christopher Patrick Nolan",
+      fourth_appearance_guess: "The Ballad Of Billy McCrae",
+      fifth_actor_guess: "Lizze Broadway",
+      fifth_appearance_guess: "American Pie Presents: Girls' Rules",
+      sixth_actor_guess: "Emma Stone",
+      sixth_appearance_guess: "The Help",
+      complete: true
+    });
+  };
 
 
   useEffect(() => {
@@ -415,7 +431,7 @@ function ActiveGame() {
             onChange={handleFirstMovieChange}
             label="Search and select a movie"
           />
-           {firstMovieSuggestions.map((movie) => (
+          {firstMovieSuggestions.map((movie) => (
             <div key={movie.id} onClick={() => {
               setGuess({ ...guess, first_appearance_guess: movie.title });
               setFirstMovieSuggestions([]); // Clear suggestions after selection
@@ -726,6 +742,10 @@ function ActiveGame() {
 
           <Button type="submit" variant="contained" onClick={() => handleSave()}>
             Save for later
+          </Button>
+
+          <Button type="submit" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }} onClick={() => handleAutofill()}>
+            Fill Data
           </Button>
 
         </FormControl>
