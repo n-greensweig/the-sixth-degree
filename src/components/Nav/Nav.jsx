@@ -84,7 +84,7 @@ function Nav() {
         <div className={`dropdownMenu ${menu ? 'active' : 'inactive'}`}>
           
           <ul>
-            <DropdownItem title={'Rules'} text={"/user"} icon={<FaTheaterMasks />} />
+            <DropdownItem title={'Rules'} text={"/about"} icon={<FaTheaterMasks />} />
             <DropdownItem title={'Scripts'} text={"/scripts"} icon={<PiFilmSlateLight />} />
             <DropdownItem title={'Stats'} text={""} icon={<GiFilmSpool />} />
             <DropdownItem title={'Account'} text={""} icon={<GiFilmProjector />} />

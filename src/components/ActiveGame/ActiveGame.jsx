@@ -18,14 +18,27 @@ function ActiveGame() {
 
 
   const [guess, setGuess] = useState({
-    // your existing fields,
+    second_actor_id: null,
     third_actor_id: null,
+    fourth_actor_id: null,
+    fifth_actor_id: null,
+    sixth_actor_id: null,
   });
 
 
-
+  const [secondActorSuggestions, setSecondActorSuggestions] = useState([]);
   const [thirdActorSuggestions, setThirdActorSuggestions] = useState([]);
+  const [fourthActorSuggestions, setFourthActorSuggestions] = useState([]);
+  const [fifthActorSuggestions, setFifthActorSuggestions] = useState([]);
+  const [sixthActorSuggestions, setSixthActorSuggestions] = useState([]);
+
+
+
+  const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
   const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
+  const [fourthMovieSuggestions,setFourthMovieSuggestions] = useState([]);
+  const [fifthMovieSuggestions, setFifthMovieSuggestions] = useState([]);
+  const [sixthMovieSuggestions, setSixthMovieSuggestions] = useState([]);
   const { id } = useParams();
 
 
