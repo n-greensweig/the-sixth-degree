@@ -93,7 +93,7 @@ function UserPage() {
                   color: 'black',
                 }}
               >Join Game</Button>
-              
+
               <Button
                 id="create-game-button"
                 variant='outlined'
@@ -109,9 +109,9 @@ function UserPage() {
                 }}
               >Create Game</Button>
             </form>
-            
+
             <br></br>
-          
+
             <h2 id="nowplaying-line">NOW PLAYING:</h2>
 
             {games.length > 0 ?
@@ -124,51 +124,39 @@ function UserPage() {
                         <Card key={game.id} className='card'>
                           <CardContent>
                             {
-                              game.userScore !== game.playerTwoScore ? <h4
-                              >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
-                                <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4>
+                              Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
+                              <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
-                            {/* For testing only */}
-                            <h4>Game ID: {game.id}</h4>
-                            <h4>{game.completedScripts}</h4>
-                            <h4>My Active Script Count: {game.my_active_scripts}</h4>
-                            <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
-                            <h4>TITLE: {game.my_active_scripts}</h4>
-                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
-                            <h4>SCENE: {game.active_scene}</h4>
-                            {game.active_scene > 1 ?
-                              <div>
-                                <h4>SCORE: shows up when you're on scene 2</h4>
-                              </div>
-
-                              :
-
-                              <div>
-                              </div>
+                            <h4>Starring: You & {game.nonUserFirstName}</h4>
+                            {
+                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#C71585', }}>You have {game.my_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
+                                game.their_active_scripts !== '0' ? <h4 style={{ color: '#FA8072' }}>Still waiting on {game.nonUserFirstName} to play {game.their_active_scripts} {Number(game.their_active_scripts) > 1 ? 'scripts' : 'script'}!</h4> :
+                                  null
                             }
-                            <h4>STATUS: You're wanted on set!</h4>
-                            <Button 
-                                id="send-scripts-back-button"
-                                variant='outlined'
+                            {game.their_total_scripts === '3' ? null :
+                              <Button variant='outlined'
                                 onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
                                 sx={{
                                   marginTop: '15px',
                                   marginRight: '10px',
                                   border: '2px black solid',
                                   color: 'black',
-                              }}
-                            >send scripts back</Button>
-
-                            <Button 
-                              id="play-button"
-                              variant='outlined'
-                              onClick={id => playScripts(game.id)}
-                              sx={{
-                                marginTop: '15px',
-                                border: '2px black solid',
-                                color: 'black',
-                              }}
-                            >Play</Button>
+                                }}
+                              >Send scripts back</Button>
+                            }
+                            {
+                              game.my_active_scripts === '0' ? null :
+                                <Button
+                                  id="play-button"
+                                  variant='outlined'
+                                  onClick={id => playScripts(game.id)}
+                                  sx={{
+                                    marginTop: '15px',
+                                    border: '2px black solid',
+                                    color: 'black',
+                                  }}
+                                >Play</Button>
+                            }
                           </CardContent>
                         </Card>
                       </>
@@ -183,36 +171,29 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                            <h4>Your score: {game.userScore}</h4>
-                            <h4>Their score: {game.playerTwoScore}</h4>
-
-                            {/* For testing only */}
-                            <h4>Game ID: {game.id}</h4>
-                            <h4>My Active Script Count: {game.my_active_scripts}</h4>
-                            <h4>Other Player Active Script Count: {game.their_active_scripts}</h4>
-                            <h4>TITLE: {game.my_active_scripts}</h4>
-                            <h4>STARRING: {game.player_one_first_name} & {game.player_two_first_name}</h4>
-                            <h4>SCENE: {game.active_scene}</h4>
-                            {game.active_scene > 1 ?
-                              <div>
-                                <h4>SCORE: shows up when you're on scene 2</h4>
-                              </div>
-
-                              :
-
-                              <div>
-                              </div>
+                          {
+                              Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
+                              <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
-                            <h4>STATUS: You're wanted on set!</h4>
-                            <Button variant='outlined'
-                              onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
-                              sx={{
-                                marginTop: '15px',
-                                marginRight: '10px',
-                                border: '2px black solid',
-                                color: 'black',
-                              }}
-                            >send scripts back</Button>
+                            <h4>Starring: You & {game.nonUserFirstName}</h4>
+                            {
+                              game.my_active_scripts !== '0' ? <h4 style={{ color: '#C71585', }}>You have {game.my_active_scripts} {Number(game.my_active_scripts) > 1 ? 'scripts' : 'script'} to play!</h4> :
+                                game.their_active_scripts !== '0' ? <h4 style={{ color: '#FA8072' }}>Still waiting on {game.nonUserFirstName} to play {game.their_active_scripts} {Number(game.their_active_scripts) > 1 ? 'scripts' : 'script'}!</h4> :
+                                  null
+                            }
+
+                            {/* The director can't send scripts back until we allow for going into a third scene of the game */}
+                            {/* {game.their_total_scripts === '3' ? null :
+                              <Button variant='outlined'
+                                onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
+                                sx={{
+                                  marginTop: '15px',
+                                  marginRight: '10px',
+                                  border: '2px black solid',
+                                  color: 'black',
+                                }}
+                              >Send scripts back</Button>
+                            } */}
 
                             {game.my_active_scripts === '0' ? null :
                               <Button variant='outlined'
@@ -269,14 +250,13 @@ function UserPage() {
                         console.log(game.id);
                         if (game.completedScripts === '6') {
                           return (
-                            <TableRow key={game.id}>
+                            <TableRow key={game.id} style={{
+                              backgroundColor: game.userScore > game.playerTwoScore ? '#C8E6C9' :
+                                game.userScore < game.playerTwoScore ? '#FFCDD2' : null
+                            }}>
                               <TableCell>{formattedDate(game.date_created)}</TableCell>
-                              <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
-                              <TableCell style={{
-                                color: game.userScore !== game.playerTwoScore ? 'white' : null,
-                                backgroundColor: game.userScore > game.playerTwoScore ? 'green' : 
-                                game.userScore < game.playerTwoScore ? 'red' : null
-                              }}>{game.userScore > game.playerTwoScore ? game.userFirstName :
+                              <TableCell>{user.first_name} & {game.nonUserFirstName}</TableCell>
+                              <TableCell>{game.userScore > game.playerTwoScore ? user.first_name :
                                 game.userScore < game.playerTwoScore ? game.nonUserFirstName : 'Tie!'}</TableCell>
                               <TableCell>{game.userScore} - {game.playerTwoScore}</TableCell>
                             </TableRow>
