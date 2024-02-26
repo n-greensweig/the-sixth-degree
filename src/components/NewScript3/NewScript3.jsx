@@ -453,7 +453,6 @@ function NewScript() {
             sixth_actor: formData.sixthActor,
             sixth_appearance: formData.sixthAppearance,
             seventh_actor: formData.seventhActor,
-            // Add other fields as necessary
         };
     
         try {
