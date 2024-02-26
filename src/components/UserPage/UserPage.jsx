@@ -131,7 +131,7 @@ function UserPage() {
                           <CardContent>
                             {
                               Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
-                              <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
+                                <h4>You're {Number(game.userScore) > Number(game.playerTwoScore) ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
                             <h4>Starring: You & {game.nonUserFirstName}</h4>
                             {
@@ -177,9 +177,9 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
-                          {
+                            {
                               Number(game.userScore) === Number(game.playerTwoScore) ? <h4>The game is tied {game.userScore} - {game.playerTwoScore}</h4> :
-                              <h4>You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
+                                <h4>You're {Number(game.userScore) > Number(game.playerTwoScore) ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4>
                             }
                             <h4>Starring: You & {game.nonUserFirstName}</h4>
                             {
