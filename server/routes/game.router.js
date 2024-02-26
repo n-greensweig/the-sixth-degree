@@ -12,7 +12,9 @@ router.get('/', async (req, res) => {
                             "is_ongoing", "active_scene", "winner_id", 
                             to_char("game"."date_created", 'MM-dd-yy') AS "date_created" , "code",
                             (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" = $1 AND "is_complete" = false) as "my_active_scripts",
-                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" != $1 AND "is_complete" = false) as "their_active_scripts"
+                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" = $1) as "my_total_scripts",
+                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" != $1 AND "is_complete" = false) as "their_active_scripts",
+                            (SELECT COUNT(*) FROM "guess" WHERE "game"."id" = "guess"."game_id" AND "guesser_id" != $1) as "their_total_scripts"
                             FROM "game"
                             INNER JOIN "user" as "user1" on "user1"."id" = "game"."player_one_id"
                             INNER JOIN "user" on "user"."id" = "game"."player_two_id"
