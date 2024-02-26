@@ -7,7 +7,7 @@
   align-items: center;
   gap: 5%;
   /* background-color: #242319; */
-  background-image: linear-gradient(to bottom, #242319, 10%, #dcdada);
+  background-image: linear-gradient(to bottom, #242319, 100%, #dcdada);
   padding: 0px 40px;
 }
 .nav a {
@@ -23,6 +23,7 @@
   padding: 3px;
   transition: 0.2s;
   margin-top: 10px;
+  background-color: #f0eee2;
 }
 .navLogo:hover {
   box-shadow: 0 0 10px black;
@@ -41,7 +42,7 @@
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background-color: #deb522aa;
+  background-color: #f6d767;
   box-shadow: 0 0 5px black;
   overflow: hidden;
   cursor: pointer;
