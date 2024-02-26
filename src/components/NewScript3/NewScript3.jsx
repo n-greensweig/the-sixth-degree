@@ -29,6 +29,45 @@ function NewScript() {
     });
 
 
+        //Variable for Dummy for data
+    const [dummyFormData, setDummyFormData] = useState({
+        firstActor: '',
+        firstAppearance: '',
+        secondActor: '',
+        secondAppearance: '',
+        thirdActor: '',
+        thirdAppearance: '',
+        fourthActor: '',
+        fourthAppearance: '',
+        fifthActor: '',
+        fifthAppearance: '',
+        sixthActor: '',
+        sixthAppearance: '',
+        seventhActor: '',
+      });
+
+
+
+      const fillWithDummyData = () => {
+        setDummyFormData({
+            firstActor: 'Will Smith',
+            firstAppearance: 'Independence Day',
+            secondActor: '',
+            secondAppearance: '',
+            thirdActor: '',
+            thirdAppearance: '',
+            fourthActor: '',
+            fourthAppearance: '',
+            fifthActor: '',
+            fifthAppearance: '',
+            sixthActor: '',
+            sixthAppearance: '',
+            seventhActor: '',
+        });
+      };
+
+
+
 
     // Holds actor and movie suggestions separately for each input
     const [firstActorSuggestions, setFirstActorSuggestions] = useState([]);
