@@ -29,3 +29,23 @@
     letter-spacing: 2px;
     background-color: white;
 }
+
+
+
+/* Styling for the actor & movie suggestions */
+.suggestions-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .suggestions-list li {
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .suggestions-list li:hover {
+    background-color: #f0f0f0;
+  }

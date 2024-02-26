@@ -28,7 +28,7 @@ function GameCode() {
                 ))}
             </ul>
 
-            <h1 id="chosenScriptH1">Send this Game Code To A Friend!</h1>
+            <h1 id="send-code-line">Send this Game Code To A Friend!</h1>
             <p id="gameCodeP">{gameCode.code}</p>
         </div>
     )
