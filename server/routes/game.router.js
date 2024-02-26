@@ -26,26 +26,29 @@ router.get('/', async (req, res) => {
             const getUserScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" = $2;`;
             const getPlayerTwoScoreQuery = `SELECT SUM("points") AS "sum" FROM "guess" WHERE "game_id" = $1 AND "guesser_id" != $2;`;
             const getCompletedScriptsQuery = `SELECT COUNT(*) FROM "guess" WHERE "game_id" = $1 AND "is_complete" = true;`;
-            // const getUserFirstNameQuery = `SELECT "first_name" FROM "user" WHERE "id" = $1;`;
             const getNonUserFirstNameQuery = `
-            SELECT "first_name" FROM "user" 
-JOIN "game" ON "game"."player_one_id" = "user"."id" AND "game"."id" = 6
-WHERE "user"."id" != $1 ;`;
+            SELECT 
+    CASE
+        WHEN game.player_one_id = $1 THEN user_two.first_name
+        ELSE user_one.first_name
+    END AS non_user_first_name
+FROM game
+JOIN "user" AS user_one ON game.player_one_id = user_one.id
+JOIN "user" AS user_two ON game.player_two_id = user_two.id
+WHERE game.id = $2;`;
 
 
             // Fetch scores
             const userScoreResult = await pool.query(getUserScoreQuery, [game.id, req.user.id]);
             const playerTwoScoreResult = await pool.query(getPlayerTwoScoreQuery, [game.id, req.user.id]);
             const completedScriptsResult = await pool.query(getCompletedScriptsQuery, [game.id]);
-            // const userFirstNameResult = await pool.query(getUserFirstNameQuery, [game.player_one_id]);
-            const nonUserFirstNameResult = await pool.query(getNonUserFirstNameQuery, [req.user.id]);
+            const nonUserFirstNameResult = await pool.query(getNonUserFirstNameQuery, [req.user.id, game.id]);
 
             // Add scores to game object
             game.userScore = userScoreResult.rows[0].sum || 0;
             game.playerTwoScore = playerTwoScoreResult.rows[0].sum || 0;
             game.completedScripts = completedScriptsResult.rows[0].count;
-            // game.userFirstName = userFirstNameResult.rows[0].first_name;
-            game.nonUserFirstName = nonUserFirstNameResult.rows[0].first_name;
+            game.nonUserFirstName = nonUserFirstNameResult.rows[0].non_user_first_name;
         }
 
         // Send modified games array with scores included

@@ -123,6 +123,7 @@ function UserPage() {
                       <>
                         <Card key={game.id} className='card'>
                           <CardContent>
+                            <h4>{game.nonUserFirstName}</h4>
                             {
                               game.userScore !== game.playerTwoScore ? <h4
                               >You're {game.userScore > game.playerTwoScore ? 'winning' : 'losing'} {game.userScore} - {game.playerTwoScore}</h4> :
@@ -269,14 +270,13 @@ function UserPage() {
                         console.log(game.id);
                         if (game.completedScripts === '6') {
                           return (
-                            <TableRow key={game.id}>
+                            <TableRow key={game.id} style={{
+                              backgroundColor: game.userScore > game.playerTwoScore ? '#C8E6C9' : 
+                              game.userScore < game.playerTwoScore ? '#FFCDD2' : null
+                            }}>
                               <TableCell>{formattedDate(game.date_created)}</TableCell>
                               <TableCell>{game.player_one_first_name} & {game.player_two_first_name}</TableCell>
-                              <TableCell style={{
-                                color: game.userScore !== game.playerTwoScore ? 'white' : null,
-                                backgroundColor: game.userScore > game.playerTwoScore ? 'green' : 
-                                game.userScore < game.playerTwoScore ? 'red' : null
-                              }}>{game.userScore > game.playerTwoScore ? game.userFirstName :
+                              <TableCell>{game.userScore > game.playerTwoScore ? user.first_name :
                                 game.userScore < game.playerTwoScore ? game.nonUserFirstName : 'Tie!'}</TableCell>
                               <TableCell>{game.userScore} - {game.playerTwoScore}</TableCell>
                             </TableRow>
