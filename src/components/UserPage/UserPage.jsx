@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import FormControl from '@mui/material/FormControl';
 import './UserPage.css';
+import Swal from 'sweetalert2';
 
 
 function UserPage() {
@@ -33,8 +34,13 @@ function UserPage() {
   const joinGame = e => {
     e.preventDefault();
     console.log("in joinGame");
-    dispatch({ type: 'JOIN_GAME', payload: { gameId: gameId } });
-    dispatch({ type: 'UPDATE_GUESSER', payload: { gameId: gameId } });
+    Swal.fire({
+      title: "Access Granted",
+      text: "New Game Joined!",
+      icon: "success"
+    });
+      dispatch({ type: 'JOIN_GAME', payload: { gameId: gameId } });
+      dispatch({ type: 'UPDATE_GUESSER', payload: { gameId: gameId } });
   };
 
 
