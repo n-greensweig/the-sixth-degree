@@ -30,27 +30,29 @@ function NewScript() {
 
 
 
-        const handleAutoFill = () => {
-            // Dummy Data
-            let dummyData = {
-                secondActor: "Christopher Patrick Nolan",
-                secondAppearance: "Lynn + Lucy",
-                thirdActor: "Morgan Freeman",
-                thirdAppearance: "Se7en",
-                fourthActor: "Christopher Patrick Nolan",
-                fourthAppearance:  "The Ballad Of Billy McCrae",
-                fifthActor: "Lizze Broadway",
-                fifthAppearance: "American Pie Presents: Girls' Rules",
-                sixthActor: "Emma Stone",
-                sixthAppearance: "The Help",
-                seventhActor: "Will Smith",
-            };
-        //formData state with dummy data
-            setFormData(dummyData);
+
+    const handleAutoFill = (event) => {
+        event.preventDefault();
+        // Dummy Data
+        let dummyData = {
+            secondActor: "Christopher Patrick Nolan",
+            secondAppearance: "Lynn + Lucy",
+            thirdActor: "Morgan Freeman",
+            thirdAppearance: "Se7en",
+            fourthActor: "Christopher Patrick Nolan",
+            fourthAppearance: "The Ballad Of Billy McCrae",
+            fifthActor: "Lizze Broadway",
+            fifthAppearance: "American Pie Presents: Girls' Rules",
+            sixthActor: "Emma Stone",
+            sixthAppearance: "The Help",
+            seventhActor: "Will Smith",
         };
-        
-
-
+        // Update formData state with dummy data, preserving existing data
+        setFormData(prevFormData => ({
+            ...prevFormData, // Spread the current state
+            ...dummyData // Spread the dummy data to update the state
+        }));
+    };
 
 
 
@@ -113,7 +115,7 @@ function NewScript() {
 
 
 
- 
+
 
         // Fetch first actor suggestions
         if (name === 'firstActor') {
@@ -482,7 +484,7 @@ function NewScript() {
             sixth_appearance: formData.sixthAppearance,
             seventh_actor: formData.seventhActor,
         };
-    
+
         try {
             const response = await axios.post('/api/script', scriptData);
             console.log(response.data); // Handle the response as needed
@@ -492,7 +494,7 @@ function NewScript() {
             console.error('Error submitting script:', error);
         }
     };
-    
+
 
 
 
@@ -508,7 +510,7 @@ function NewScript() {
     let openModal = () => setModalIsOpen(true);
     let closeModal = () => setModalIsOpen(false);
 
-    
+
     return (
         <>
             <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button>
@@ -517,36 +519,36 @@ function NewScript() {
                     {/* First Actor and Appearance Input Fields */}
                     <label>
                         First Actor:
-                        <input 
-                        type="text" 
-                        placeholder='First Actor'
-                        name="firstActor" 
-                        value={formData.firstActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder='First Actor'
+                            name="firstActor"
+                            value={formData.firstActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {firstActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'first')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         First Appearance:
-                        <input 
-                        type="text" 
-                        placeholder='First Appearance'
-                        name="firstAppearance" 
-                        value={formData.firstAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder='First Appearance'
+                            name="firstAppearance"
+                            value={formData.firstAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {FirstMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'first')}>
-                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-                            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -554,36 +556,36 @@ function NewScript() {
                     {/* Second Actor and Appearance Input Fields */}
                     <label>
                         Second Actor:
-                        <input 
-                        type="text"
-                        placeholder="Second Actor" 
-                        name="secondActor" 
-                        value={formData.secondActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Second Actor"
+                            name="secondActor"
+                            value={formData.secondActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {secondActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'second')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         Second Appearance:
-                        <input 
-                        type="text"
-                        placeholder="Second Appearance"
-                        name="secondAppearance" 
-                        value={formData.secondAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Second Appearance"
+                            name="secondAppearance"
+                            value={formData.secondAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {secondMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'second')}>
-                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-                            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -591,36 +593,36 @@ function NewScript() {
                     {/* Third Actor and Appearance Input Fields */}
                     <label>
                         Third Actor:
-                        <input 
-                        type="text"
-                        placeholder="Third Actor" 
-                        name="thirdActor" 
-                        value={formData.thirdActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Third Actor"
+                            name="thirdActor"
+                            value={formData.thirdActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {thirdActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'third')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         Third Appearance:
-                        <input 
-                        type="text" 
-                        placeholder="Third Appearance"
-                        name="thirdAppearance" 
-                        value={formData.thirdAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Third Appearance"
+                            name="thirdAppearance"
+                            value={formData.thirdAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {thirdMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'third')}>
-                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-                            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -628,36 +630,36 @@ function NewScript() {
                     {/* Fourth Actor and Appearance Input Fields */}
                     <label>
                         Fourth Actor:
-                        <input 
-                        type="text" 
-                        placeholder="Fourth Actor"
-                        name="fourthActor" 
-                        value={formData.fourthActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Fourth Actor"
+                            name="fourthActor"
+                            value={formData.fourthActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {fourthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fourth')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         Fourth Appearance:
-                        <input 
-                        type="text" 
-                        placeholder="Fourth Appearance"
-                        name="fourthAppearance" 
-                        value={formData.fourthAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Fourth Appearance"
+                            name="fourthAppearance"
+                            value={formData.fourthAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {fourthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fourth')}>
-                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-                            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -665,36 +667,36 @@ function NewScript() {
                     {/* Fifth Actor and Appearance Input Fields */}
                     <label>
                         Fifth Actor:
-                        <input 
-                        type="text" 
-                        placeholder="Fifth Actor"
-                        name="fifthActor" 
-                        value={formData.fifthActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Fifth Actor"
+                            name="fifthActor"
+                            value={formData.fifthActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {fifthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'fifth')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         Fifth Appearance:
-                        <input 
-                        type="text" 
-                        placeholder="Fifth Appearance"
-                        name="fifthAppearance" 
-                        value={formData.fifthAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Fifth Appearance"
+                            name="fifthAppearance"
+                            value={formData.fifthAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {fifthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'fifth')}>
-                            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-                            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -702,36 +704,36 @@ function NewScript() {
                     {/* Sixth Actor and Appearance Input Fields */}
                     <label>
                         Sixth Actor:
-                        <input 
-                        type="text" 
-                        placeholder="Sixth Actor"
-                        name="sixthActor" 
-                        value={formData.sixthActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Sixth Actor"
+                            name="sixthActor"
+                            value={formData.sixthActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {sixthActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'sixth')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <label>
                         Sixth Appearance:
-                        <input 
-                        type="text" 
-                        placeholder="Sixth Appearance"
-                        name="sixthAppearance" 
-                        value={formData.sixthAppearance} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Sixth Appearance"
+                            name="sixthAppearance"
+                            value={formData.sixthAppearance}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {sixthMovieSuggestions.map(movie => (
                             <li key={movie.id} onClick={() => handleMovieSelect(movie, 'sixth')}>
-            {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
-            {movie.title}
+                                {movie.posterPath && <img src={movie.posterPath} alt={movie.title} style={{ width: "50px", height: "auto" }} />}
+                                {movie.title}
                             </li>
                         ))}
                     </ul>
@@ -739,28 +741,29 @@ function NewScript() {
                     {/* Seventh Actor Input Field */}
                     <label>
                         Seventh Actor:
-                        <input 
-                        type="text" 
-                        placeholder="Seventh Actor"
-                        name="seventhActor" 
-                        value={formData.seventhActor} 
-                        onChange={handleChange} />
+                        <input
+                            type="text"
+                            placeholder="Seventh Actor"
+                            name="seventhActor"
+                            value={formData.seventhActor}
+                            onChange={handleChange} />
                     </label>
                     <ul className="suggestions-list">
                         {seventhActorSuggestions.map(actor => (
                             <li key={actor.id} onClick={() => handleActorSelect(actor, 'seventh')}>
-                            {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
-                            {actor.name}
+                                {actor.profilePath && <img src={actor.profilePath} alt={actor.name} style={{ width: "50px", height: "auto" }} />}
+                                {actor.name}
                             </li>
                         ))}
                     </ul>
 
                     <Button variant='contained' onClick={handleSubmit}>Submit</Button>
 
-                    <Button type="submit" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
-                     onClick={() => handleAutoFill()}>
-                         Fill Data
-                         </Button>
+                    <Button type="button" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
+                        onClick={(event) => handleAutoFill(event)}>
+                        Fill Data
+                    </Button>
+
                 </form>
             </Modal>
         </>
