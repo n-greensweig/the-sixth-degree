@@ -29,7 +29,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.3",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.10.1"
+    "sweetalert2": "^11.10.5"
   },
   "scripts": {
     "start": "node server/server.js | vite",

@@ -17,8 +17,7 @@ function savedScripts() {
 
 
 
-    // Open and close dialog based on isEditing status
-    const toggleEditing = e => isEditing ? setIsEditing(false) : setIsEditing(true);
+
 
     const deleteScript = (scriptId) => {
         swal({
@@ -60,16 +59,15 @@ function savedScripts() {
             </Grid>
             
             <Box>
+                
                 <ul>
                     {scripts?.map(script => {
                         return (
+                            <Card className="card">
+                            <CardContent>
                             <li key={script.id}>
                                 <p id="script-actor-names">{script.first_actor} - {script.seventh_actor}</p>
-                                {/* <Button variant="contained" onClick={e => toggleEditing(e)} startIcon={isEditing ? null : <EditIcon />}
-                                    style={{
-                                        borderColor: 'white', color: "gray",
-                                    }}>{isEditing ? null : 'Edit script'}</Button> */}
-                                {/* ^^^might move this to a stretch goal??? */}
+
                                 <Button 
                                 id="delete-script-button" 
                                 variant="outlined"
@@ -78,9 +76,12 @@ function savedScripts() {
                                 onClick={id => deleteScript(script.id)}>Delete</Button>
 
                             </li>
+                            </CardContent>
+                </Card>
                         );
                     })}
                 </ul>
+                
             </Box>
         </div>
     );

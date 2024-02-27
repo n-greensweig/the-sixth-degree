@@ -20,7 +20,23 @@
 }
 
 #delete-script-button{
-    border: 8px dotted #c74e1e;
-    color: #c74e1e;
-    background-color: white;   
+    font-family: "Limelight", sans-serif;
+
+    color: black;
+    letter-spacing: 1px;
 }
+
+
+
+.card {
+    border: 15px dotted rgb(52, 52, 52);
+    padding: 12px;
+    margin:.5em;
+    margin-bottom: 1em;
+    transition: border 5s;
+}
+
+.card:hover {
+    border: 15px dotted #d6d82c;
+}
+
