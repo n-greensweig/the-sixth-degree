@@ -48,11 +48,8 @@ function NewGame() {
             <Nav />
 
             <div className="container"> 
-            <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
-            
-
-            
-                      
+                <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
+                                    
                 <Paper id="scriptGame-list" elevation={24}>
                     <ul>
                         {scripts?.map(script => (
@@ -63,14 +60,15 @@ function NewGame() {
                         ))}
                     </ul>
                 </Paper>
+
                 <Button 
-                variant="contained" 
-                id="create-game-button-2"
-                size="large" 
-                onClick={e => handleClick(e)}> Create Game </Button> 
+                    id="create-game-button-2"
+                    variant="contained"                  
+                    size="large" 
+                    onClick={e => handleClick(e)}> Create Game </Button> 
+
                 {<NewScript />}
-            </div>
-            
+            </div>           
         </div>
     )
 }
