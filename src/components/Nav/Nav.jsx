@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,8 +16,6 @@ import { GiFilmProjector } from "react-icons/gi";
 import { GiFilmSpool } from "react-icons/gi";
 import { VscMegaphone } from "react-icons/vsc";
 import { IoMdFilm } from "react-icons/io";
-
-
 
 
 function Nav() {
@@ -58,6 +55,12 @@ function Nav() {
   //   setPageTitle(titleArray);
   // }
 
+  // logout option resets user to log into the home page
+  function userLogoutAndReset() {
+    console.log('resetting the home page');
+    dispatch({ type: 'LOGOUT' });
+    history.push('/home');
+  }
 
   // logo takes user to home page
   function toHomePage() {
@@ -84,15 +87,13 @@ function Nav() {
         <div className={`dropdownMenu ${menu ? 'active' : 'inactive'}`}>
           
           <ul>
-            <DropdownItem title={'Rules'} text={"/about"} icon={<FaTheaterMasks />} />
-            <DropdownItem title={'Scripts'} text={"/scripts"} icon={<PiFilmSlateLight />} />
-            <DropdownItem title={'Stats'} text={""} icon={<GiFilmSpool />} />
-            <DropdownItem title={'Account'} text={""} icon={<GiFilmProjector />} />
-
+            <DropdownItem title={'Action!'} text={"/home"} icon={<FaTheaterMasks />} />
+            <DropdownItem title={'Rules'} text={"/about"} icon={<PiFilmSlateLight />} />
+            <DropdownItem title={'Scripts'} text={"/scripts"} icon={<GiFilmProjector />} />
             {/* LOG OUT BUTTON */}
             <div
               className='dropdownItem'
-              onClick={() => dispatch({ type: 'LOGOUT' })} 
+              onClick={userLogoutAndReset} 
             >
               <VscMegaphone />
               <span className='menuWord'><h6>Log Out</h6></span>

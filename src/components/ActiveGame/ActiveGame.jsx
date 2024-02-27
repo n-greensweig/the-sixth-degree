@@ -34,29 +34,58 @@ function ActiveGame() {
 
 
 
+  const [firstMovieSuggestions, setFirstMovieSuggestions] = useState([]);
   const [secondMovieSuggestions, setSecondMovieSuggestions] = useState([]);
   const [thirdMovieSuggestions, setThirdMovieSuggestions] = useState([]);
-  const [fourthMovieSuggestions,setFourthMovieSuggestions] = useState([]);
+  const [fourthMovieSuggestions, setFourthMovieSuggestions] = useState([]);
   const [fifthMovieSuggestions, setFifthMovieSuggestions] = useState([]);
   const [sixthMovieSuggestions, setSixthMovieSuggestions] = useState([]);
   const { id } = useParams();
 
 
- // variable URL for TMDB images
+  // variable URL for TMDB images
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
-    // Jama's API Key
+  // Jama's API Key
   const apiKey = '30c198675e2638514ba7c9dc7212193c';
 
 
-
+  const handleAutofill = () => {
+    setGuess({
+      ...guess,
+      first_appearance_guess: "VS.",
+      second_actor_guess: "Christopher Patrick Nolan",
+      second_appearance_guess: "Lynn + Lucy",
+      third_actor_guess: "Morgan Freeman",
+      third_appearance_guess: "Se7en",
+      fourth_actor_guess: "Christopher Patrick Nolan",
+      fourth_appearance_guess: "The Ballad Of Billy McCrae",
+      fifth_actor_guess: "Lizze Broadway",
+      fifth_appearance_guess: "American Pie Presents: Girls' Rules",
+      sixth_actor_guess: "Emma Stone",
+      sixth_appearance_guess: "The Help",
+      complete: true
+    });
+  };
 
 
   useEffect(() => {
     dispatch({ type: "FETCH_ACTIVE_SCRIPT", payload: id });
   }, [dispatch, id]);
 
-
-
+  useEffect(() => {
+    if (activeScriptsToGuess && activeScriptsToGuess.length > 0) {
+      const fetchFirstActorId = async () => {
+        try {
+          const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(activeScriptsToGuess[0].first_actor)}`);
+          const firstActorId = response.data.results[0].id;
+          setGuess(prevGuess => ({ ...prevGuess, first_actor_id: firstActorId }));
+        } catch (error) {
+          console.error("Error fetching first actor:", error);
+        }
+      };
+      fetchFirstActorId();
+    }
+  }, [activeScriptsToGuess, apiKey]);
 
   useEffect(() => {
     if (activeScriptsToGuess && activeScriptsToGuess.length > 0) {
@@ -68,19 +97,18 @@ function ActiveGame() {
 
 
 
-
-    // Fetches second actor suggestions based on user input
-    const fetchSecondActorSuggestions = async (query) => {
-      if (!query) return;
-      try {
-        const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
-        // Variable to filter results so only actors with profile images appear
-        const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
-        setSecondActorSuggestions(actorsWithImages);
-      } catch (error) {
-        console.error("Error fetching actors:", error);
-      }
-    };
+  // Fetches second actor suggestions based on user input
+  const fetchSecondActorSuggestions = async (query) => {
+    if (!query) return;
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results so only actors with profile images appear
+      const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+      setSecondActorSuggestions(actorsWithImages);
+    } catch (error) {
+      console.error("Error fetching actors:", error);
+    }
+  };
 
 
   // Fetches third actor suggestions based on user input
@@ -95,7 +123,7 @@ function ActiveGame() {
       console.error("Error fetching actors:", error);
     }
   };
-  
+
 
 
 
@@ -111,28 +139,28 @@ function ActiveGame() {
       console.error("Error fetching actors:", error);
     }
   };
-  
 
 
 
-    // Fetches fifth actor suggestions based on user input
-    const fetchFifthActorSuggestions = async (query) => {
-      if (!query) return;
-      try {
-        const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
-        // Variable to filter results so only actors with profile images appear
-        const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
-        setFifthActorSuggestions(actorsWithImages);
-      } catch (error) {
-        console.error("Error fetching actors:", error);
-      }
-    };
-  
-    
+
+  // Fetches fifth actor suggestions based on user input
+  const fetchFifthActorSuggestions = async (query) => {
+    if (!query) return;
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results so only actors with profile images appear
+      const actorsWithImages = response.data.results.filter(actor => actor.profile_path !== null);
+      setFifthActorSuggestions(actorsWithImages);
+    } catch (error) {
+      console.error("Error fetching actors:", error);
+    }
+  };
 
 
 
-      // Fetches sixth actor suggestions based on user input
+
+
+  // Fetches sixth actor suggestions based on user input
   const fetchSixthActorSuggestions = async (query) => {
     if (!query) return;
     try {
@@ -144,29 +172,42 @@ function ActiveGame() {
       console.error("Error fetching actors:", error);
     }
   };
-  
+
+
+  const fetchFirstMovieSuggestions = async (query) => {
+    const actorId = guess.first_actor_id; // Ensure you have this ID available in your state
+    if (!query || !actorId) return;
+
+    try {
+      // Using the /discover/movie endpoint with the with_cast parameter
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results to only include movies with poster images
+      const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+      setFirstMovieSuggestions(moviesWithPosters);
+    } catch (error) {
+      console.error("Error fetching movies for actor:", error);
+    }
+  };
 
 
 
+  // Fetches second movie suggestions based on selected actor and user input
+  const fetchSecondMovieSuggestions = async (query) => {
+    const actorId = guess.second_actor_id; // Ensure you have this ID available in your state
+    if (!query || !actorId) return;
+
+    try {
+      // Using the /discover/movie endpoint with the with_cast parameter
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results to only include movies with poster images
+      const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+      setSecondMovieSuggestions(moviesWithPosters);
+    } catch (error) {
+      console.error("Error fetching movies for actor:", error);
+    }
+  };
 
 
-    // Fetches second movie suggestions based on selected actor and user input
-    const fetchSecondMovieSuggestions = async (query) => {
-      const actorId = guess.second_actor_id; // Ensure you have this ID available in your state
-      if (!query || !actorId) return;
-    
-      try {
-        // Using the /discover/movie endpoint with the with_cast parameter
-        const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
-        // Variable to filter results to only include movies with poster images
-        const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
-        setSecondMovieSuggestions(moviesWithPosters);
-      } catch (error) {
-        console.error("Error fetching movies for actor:", error);
-      }
-    };
-  
-    
 
 
 
@@ -175,7 +216,7 @@ function ActiveGame() {
   const fetchThirdMovieSuggestions = async (query) => {
     const actorId = guess.third_actor_id; // Ensure you have this ID available in your state
     if (!query || !actorId) return;
-  
+
     try {
       // Using the /discover/movie endpoint with the with_cast parameter
       const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
@@ -186,13 +227,13 @@ function ActiveGame() {
       console.error("Error fetching movies for actor:", error);
     }
   };
-  
-  
+
+
   // Fetches fourth movie suggestions based on selected actor and user input
   const fetchFourthMovieSuggestions = async (query) => {
     const actorId = guess.fourth_actor_id; // Ensure you have this ID available in your state
     if (!query || !actorId) return;
-  
+
     try {
       // Using the /discover/movie endpoint with the with_cast parameter
       const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
@@ -203,35 +244,35 @@ function ActiveGame() {
       console.error("Error fetching movies for actor:", error);
     }
   };
-  
 
 
 
-    // Fetches fifth movie suggestions based on selected actor and user input
-    const fetchFifthMovieSuggestions = async (query) => {
-      const actorId = guess.fifth_actor_id; // Ensure you have this ID available in your state
-      if (!query || !actorId) return;
-    
-      try {
-        // Using the /discover/movie endpoint with the with_cast parameter
-        const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
-        // Variable to filter results to only include movies with poster images
-        const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
-        setFifthMovieSuggestions(moviesWithPosters);
-      } catch (error) {
-        console.error("Error fetching movies for actor:", error);
-      }
-    };
-  
-    
+
+  // Fetches fifth movie suggestions based on selected actor and user input
+  const fetchFifthMovieSuggestions = async (query) => {
+    const actorId = guess.fifth_actor_id; // Ensure you have this ID available in your state
+    if (!query || !actorId) return;
+
+    try {
+      // Using the /discover/movie endpoint with the with_cast parameter
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
+      // Variable to filter results to only include movies with poster images
+      const moviesWithPosters = response.data.results.filter(movie => movie.poster_path !== null);
+      setFifthMovieSuggestions(moviesWithPosters);
+    } catch (error) {
+      console.error("Error fetching movies for actor:", error);
+    }
+  };
 
 
 
-      // Fetches sixth movie suggestions based on selected actor and user input
+
+
+  // Fetches sixth movie suggestions based on selected actor and user input
   const fetchSixthMovieSuggestions = async (query) => {
     const actorId = guess.sixth_actor_id; // Ensure you have this ID available in your state
     if (!query || !actorId) return;
-  
+
     try {
       // Using the /discover/movie endpoint with the with_cast parameter
       const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}&query=${encodeURIComponent(query)}`);
@@ -242,27 +283,33 @@ function ActiveGame() {
       console.error("Error fetching movies for actor:", error);
     }
   };
-  
 
 
 
-
-// Handling changes for the second actor guess
-const handleSecondActorChange = (event) => {
-  const { value } = event.target;
-  setGuess({ ...guess, second_actor_guess: value });
-  fetchSecondActorSuggestions(value);
-};
-
-// Handling changes for the second movie guess
-const handleSecondMovieChange = (event) => {
-  const { value } = event.target;
-  setGuess({ ...guess, second_appearance_guess: value });
-  fetchSecondMovieSuggestions(value);
-};
+  // Handling changes for the first movie guess
+  const handleFirstMovieChange = (event) => {
+    const { value } = event.target;
+    setGuess({ ...guess, first_appearance_guess: value });
+    fetchFirstMovieSuggestions(value);
+  };
 
 
-// Need to implement the rest
+  // Handling changes for the second actor guess
+  const handleSecondActorChange = (event) => {
+    const { value } = event.target;
+    setGuess({ ...guess, second_actor_guess: value });
+    fetchSecondActorSuggestions(value);
+  };
+
+  // Handling changes for the second movie guess
+  const handleSecondMovieChange = (event) => {
+    const { value } = event.target;
+    setGuess({ ...guess, second_appearance_guess: value });
+    fetchSecondMovieSuggestions(value);
+  };
+
+
+  // Need to implement the rest
   const handleThirdActorChange = (event) => {
     const { value } = event.target;
     setGuess({ ...guess, third_actor_guess: value });
@@ -364,52 +411,62 @@ const handleSecondMovieChange = (event) => {
 
 
           <TextField
-              id="outlined-start-adornment"
-              color="secondary"
-              required
-              fullWidth
-              disabled
-              value={guess.first_actor ?? ''}
-            />
+            id="outlined-start-adornment"
+            color="secondary"
+            required
+            fullWidth
+            disabled
+            value={guess.first_actor ?? ''}
+          />
 
 
 
-            <TextField
-              // label="Is in:"
-              id="outlined-start-adornment"
-              color="secondary"
-              required
-              fullWidth
-              value={guess.first_appearance_guess ?? ''}
-              onChange={(e) =>
-                setGuess({
-                  ...guess,
-                  first_appearance_guess: e.target.value,
-                })
-              }
-            />
+          <TextField
+            // label="Is in:"
+            id="outlined-start-adornment"
+            color="secondary"
+            required
+            fullWidth
+            value={guess.first_appearance_guess ?? ''}
+            onChange={handleFirstMovieChange}
+            label="Search and select a movie"
+          />
+
+          <ul className="suggestions-list">
+           {firstMovieSuggestions.map((movie) => (
+            <li key={movie.id} onClick={() => {
+              setGuess({ ...guess, first_appearance_guess: movie.title });
+              setFirstMovieSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {movie.poster_path && (
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {movie.title}
+            </li>
+          ))}
+      </ul>
 
 
 
 
+<TextField
+  // label="With:"
+  id="second_actor_guess"
+  color="success"
+  required
+  fullWidth
+  value={guess.second_actor_guess ?? ''}
+  onChange={handleSecondActorChange}
+  label="Search and select an actor"
+/>
 
-            <TextField
-              // label="With:"
-              id="second_actor_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.second_actor_guess ?? ''}
-              onChange={handleSecondActorChange}
-              label="Search and select an actor"
-            />
+<ul className="suggestions-list">
   {secondActorSuggestions.map((actor) => (
-    <div key={actor.id} onClick={() => {
-      // Update this section to also include the actor's ID
-      setGuess({ 
-        ...guess, 
-        second_actor_guess: actor.name, 
-        second_actor_id: actor.id  
+    <li key={actor.id} onClick={() => {
+      setGuess({
+        ...guess,
+        second_actor_guess: actor.name,
+        second_actor_id: actor.id,
       });
       setSecondActorSuggestions([]); // Clear suggestions after selection
     }} style={{ cursor: "pointer", margin: "10px 0" }}>
@@ -417,22 +474,25 @@ const handleSecondMovieChange = (event) => {
         <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
       )}
       {actor.name}
-    </div>
+    </li>
   ))}
+</ul>
 
 
-            <TextField
-              // label="Who is in:"
-              id="second_appearance_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.second_appearance_guess ?? ''}
-              onChange={handleSecondMovieChange}
-              label="Search and select a movie"
-            />
+<TextField
+  // label="Who is in:"
+  id="second_appearance_guess"
+  color="success"
+  required
+  fullWidth
+  value={guess.second_appearance_guess ?? ''}
+  onChange={handleSecondMovieChange}
+  label="Search and select a movie"
+/>
+
+<ul className="suggestions-list">
   {secondMovieSuggestions.map((movie) => (
-    <div key={movie.id} onClick={() => {
+    <li key={movie.id} onClick={() => {
       setGuess({ ...guess, second_appearance_guess: movie.title });
       setSecondMovieSuggestions([]); // Clear suggestions after selection
     }} style={{ cursor: "pointer", margin: "10px 0" }}>
@@ -440,9 +500,10 @@ const handleSecondMovieChange = (event) => {
         <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
       )}
       {movie.title}
-    </div>
+    </li>
   ))}
-  
+</ul>
+
 
 
 
@@ -457,23 +518,24 @@ const handleSecondMovieChange = (event) => {
             onChange={handleThirdActorChange}
             label="Search and select an actor"
           />
-{thirdActorSuggestions.map((actor) => (
-  <div key={actor.id} onClick={() => {
-    // Update this section to also include the actor's ID
-    setGuess({ 
-      ...guess, 
-      third_actor_guess: actor.name, 
-      third_actor_id: actor.id  
-    });
-    setThirdActorSuggestions([]); // Clear suggestions after selection
-  }} style={{ cursor: "pointer", margin: "10px 0" }}>
-    {actor.profile_path && (
-      <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-    )}
-    {actor.name}
-  </div>
-))}
-
+          <ul className="suggestions-list">
+          {thirdActorSuggestions.map((actor) => (
+            <li key={actor.id} onClick={() => {
+              // Update this section to also include the actor's ID
+              setGuess({
+                ...guess,
+                third_actor_guess: actor.name,
+                third_actor_id: actor.id
+              });
+              setThirdActorSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {actor.profile_path && (
+                <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {actor.name}
+            </li>
+          ))}
+</ul>
 
 
           {/* Modified TextField for third_appearance_guess */}
@@ -486,201 +548,209 @@ const handleSecondMovieChange = (event) => {
             onChange={handleThirdMovieChange}
             label="Search and select a movie"
           />
-{thirdMovieSuggestions.map((movie) => (
-  <div key={movie.id} onClick={() => {
-    setGuess({ ...guess, third_appearance_guess: movie.title });
-    setThirdMovieSuggestions([]); // Clear suggestions after selection
-  }} style={{ cursor: "pointer", margin: "10px 0" }}>
-    {movie.poster_path && (
-      <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-    )}
-    {movie.title}
-  </div>
-))}
+          <ul className="suggestions-list">
+          {thirdMovieSuggestions.map((movie) => (
+            <li key={movie.id} onClick={() => {
+              setGuess({ ...guess, third_appearance_guess: movie.title });
+              setThirdMovieSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {movie.poster_path && (
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {movie.title}
+            </li>
+          ))}
+</ul>
+
+
+
+
+          <TextField
+            // label="With:"
+            id="fourth_actor_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.fourth_actor_guess ?? ''}
+            onChange={handleFourthActorChange}
+            label="Search and select an actor"
+          />
+          <ul className="suggestions-list">
+          {fourthActorSuggestions.map((actor) => (
+            <li key={actor.id} onClick={() => {
+              // Update this section to also include the actor's ID
+              setGuess({
+                ...guess,
+                fourth_actor_guess: actor.name,
+                fourth_actor_id: actor.id
+              });
+              setFourthActorSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {actor.profile_path && (
+                <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {actor.name}
+            </li>
+          ))}
+</ul>
+
+          <TextField
+            // label="Who is in:"
+            id="fourth_appearance_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.fourth_appearance_guess ?? ''}
+            onChange={handleFourthMovieChange}
+            label="Search and select a movie"
+          />
+          <ul className="suggestions-list">
+          {fourthMovieSuggestions.map((movie) => (
+            <li key={movie.id} onClick={() => {
+              setGuess({ ...guess, fourth_appearance_guess: movie.title });
+              setFourthMovieSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {movie.poster_path && (
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {movie.title}
+            </li>
+          ))}
+          </ul>
+
 
 
 
 
 
           <TextField
-              // label="With:"
-              id="fourth_actor_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.fourth_actor_guess ?? ''}
-              onChange={handleFourthActorChange}
-              label="Search and select an actor"
-            />
-  {fourthActorSuggestions.map((actor) => (
-    <div key={actor.id} onClick={() => {
-      // Update this section to also include the actor's ID
-      setGuess({ 
-        ...guess, 
-        fourth_actor_guess: actor.name, 
-        fourth_actor_id: actor.id  
-      });
-      setFourthActorSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {actor.profile_path && (
-        <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {actor.name}
-    </div>
-  ))}
+            // label="With:"
+            id="fifth_actor_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.fifth_actor_guess ?? ''}
+            onChange={handleFifthActorChange}
+            label="Search and select an actor"
+          />
+          <ul className="suggestions-list">
+          {fifthActorSuggestions.map((actor) => (
+            <li key={actor.id} onClick={() => {
+              // Update this section to also include the actor's ID
+              setGuess({
+                ...guess,
+                fifth_actor_guess: actor.name,
+                fifth_actor_id: actor.id
+              });
+              setFifthActorSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {actor.profile_path && (
+                <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {actor.name}
+            </li>
+          ))}
+</ul>
 
 
-            <TextField
-              // label="Who is in:"
-              id="fourth_appearance_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.fourth_appearance_guess ?? ''}
-              onChange={handleFourthMovieChange}
-              label="Search and select a movie"
-            />
-  {fourthMovieSuggestions.map((movie) => (
-    <div key={movie.id} onClick={() => {
-      setGuess({ ...guess, fourth_appearance_guess: movie.title });
-      setFourthMovieSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {movie.poster_path && (
-        <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {movie.title}
-    </div>
-  ))}
-
-
-
-
-
-
-            <TextField
-              // label="With:"
-              id="fifth_actor_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.fifth_actor_guess ?? ''}
-              onChange={handleFifthActorChange}
-              label="Search and select an actor"
-            />
-  {fifthActorSuggestions.map((actor) => (
-    <div key={actor.id} onClick={() => {
-      // Update this section to also include the actor's ID
-      setGuess({ 
-        ...guess, 
-        fifth_actor_guess: actor.name, 
-        fifth_actor_id: actor.id  
-      });
-      setFifthActorSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {actor.profile_path && (
-        <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {actor.name}
-    </div>
-  ))}
-
-
-
-            <TextField
-              // label="Who is in:"
-              id="fifth_appearance_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.fifth_appearance_guess ?? ''}
-              onChange={handleFifthMovieChange}
-              label="Search and select a movie"
-            />
-  {fifthMovieSuggestions.map((movie) => (
-    <div key={movie.id} onClick={() => {
-      setGuess({ ...guess, fifth_appearance_guess: movie.title });
-      setFifthMovieSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {movie.poster_path && (
-        <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {movie.title}
-    </div>
-  ))}
+          <TextField
+            // label="Who is in:"
+            id="fifth_appearance_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.fifth_appearance_guess ?? ''}
+            onChange={handleFifthMovieChange}
+            label="Search and select a movie"
+          />
+          <ul className="suggestions-list">
+          {fifthMovieSuggestions.map((movie) => (
+            <li key={movie.id} onClick={() => {
+              setGuess({ ...guess, fifth_appearance_guess: movie.title });
+              setFifthMovieSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {movie.poster_path && (
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {movie.title}
+            </li>
+          ))}
+</ul>
 
 
 
 
 
+          <TextField
+            // label="With:"
+            id="sixth_actor_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.sixth_actor_guess ?? ''}
+            onChange={handleSixthActorChange}
+            label="Search and select an actor"
+          />
+          <ul className="suggestions-list">
+          {sixthActorSuggestions.map((actor) => (
+            <li key={actor.id} onClick={() => {
+              // Update this section to also include the actor's ID
+              setGuess({
+                ...guess,
+                sixth_actor_guess: actor.name,
+                sixth_actor_id: actor.id
+              });
+              setSixthActorSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {actor.profile_path && (
+                <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {actor.name}
+            </li>
+          ))}
+</ul>
 
-            <TextField
-              // label="With:"
-              id="sixth_actor_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.sixth_actor_guess ?? ''}
-              onChange={handleSixthActorChange}
-              label="Search and select an actor"
-            />
-  {sixthActorSuggestions.map((actor) => (
-    <div key={actor.id} onClick={() => {
-      // Update this section to also include the actor's ID
-      setGuess({ 
-        ...guess, 
-        sixth_actor_guess: actor.name, 
-        sixth_actor_id: actor.id  
-      });
-      setSixthActorSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {actor.profile_path && (
-        <img src={`${IMAGE_BASE_URL}${actor.profile_path}`} alt={actor.name} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {actor.name}
-    </div>
-  ))}
-
-
-            <TextField
-              // label="Who is in:"
-              id="sixth_appearance_guess"
-              color="success"
-              required
-              fullWidth
-              value={guess.sixth_appearance_guess ?? ''}
-              onChange={handleSixthMovieChange}
-              label="Search and select a movie"
-            />
-  {sixthMovieSuggestions.map((movie) => (
-    <div key={movie.id} onClick={() => {
-      setGuess({ ...guess, sixth_appearance_guess: movie.title });
-      setSixthMovieSuggestions([]); // Clear suggestions after selection
-    }} style={{ cursor: "pointer", margin: "10px 0" }}>
-      {movie.poster_path && (
-        <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
-      )}
-      {movie.title}
-    </div>
-  ))}
-
-
-
-
-
-
-            <TextField
-              id="outlined-start-adornment"
-              required
-              fullWidth
-              disabled
-              value={guess.seventh_actor ?? ''}
-            />
+          <TextField
+            // label="Who is in:"
+            id="sixth_appearance_guess"
+            color="success"
+            required
+            fullWidth
+            value={guess.sixth_appearance_guess ?? ''}
+            onChange={handleSixthMovieChange}
+            label="Search and select a movie"
+          />
+          <ul className="suggestions-list">
+          {sixthMovieSuggestions.map((movie) => (
+            <li key={movie.id} onClick={() => {
+              setGuess({ ...guess, sixth_appearance_guess: movie.title });
+              setSixthMovieSuggestions([]); // Clear suggestions after selection
+            }} style={{ cursor: "pointer", margin: "10px 0" }}>
+              {movie.poster_path && (
+                <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} style={{ width: "50px", height: "auto", marginRight: "10px" }} />
+              )}
+              {movie.title}
+            </li>
+          ))}
+</ul>
 
 
 
 
 
-              <br/>
+          <TextField
+            id="outlined-start-adornment"
+            required
+            fullWidth
+            disabled
+            value={guess.seventh_actor ?? ''}
+          />
+
+
+
+
+
+          <br />
           <Button type="submit" variant="contained" onClick={() => handleSubmit()}>
             Submit
           </Button>
@@ -688,6 +758,10 @@ const handleSecondMovieChange = (event) => {
 
           <Button type="submit" variant="contained" onClick={() => handleSave()}>
             Save for later
+          </Button>
+
+          <Button type="submit" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }} onClick={() => handleAutofill()}>
+            Fill Data
           </Button>
 
         </FormControl>

@@ -5,16 +5,38 @@ text-align: center;
 }
 #createGameH1{
     text-align: center;
-    font-size: 50px;
+    padding: 2%;   
+    font-family: "Limelight", sans-serif;
+    font-size: 55px;
+    font-weight: 400;
+    font-style: normal;
+    color: #128bb5;
 }
 #chosenScriptH1{
     text-align: center;
-    margin-top: 50px;
+    padding: 3%;
+    margin-top: 1em;
+    font-family: "Limelight", sans-serif;
+    font-size: 2.5em;
+    font-weight: 400;
+    font-style: normal;
+    color: #deb522;
 }
 #scriptLi{
     text-align: center; 
     font-size: 20px; 
     margin-top: 10px;
+}
+
+#send-code-line {
+    text-align: center;
+    padding: 2.5%;
+    margin-top: 1.3em;
+    font-family: "Limelight", sans-serif;
+    font-size: 1.8em;
+    font-weight: 400;
+    font-style: normal;
+    color: #c74e1e;
 }
 #gameCodeP{
     text-align: center;
