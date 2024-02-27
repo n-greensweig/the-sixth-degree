@@ -8,25 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
 import './NewGame.css'
 import Swal from 'sweetalert2'
-import Modal from '@mui/material/Modal';
-
-
 function NewGame() {
     const dispatch = useDispatch();
     const history = useHistory();
-
-
-    const [showModal, setShowModal] = useState(false); // New state for modal visibility
-
-    const handleShowModal = () => {
-        setShowModal(true);
-      };
-    
-      const handleCloseModal = () => {
-        setShowModal(false);
-      };
-
-
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
@@ -62,26 +46,32 @@ function NewGame() {
     return (
         <div>
             <Nav />
-            <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
-            <div className="container">
-            </div>
-            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
-            <Paper id="scriptGame-list" elevation={24}>
-                <ul>
-                    {scripts?.map(script => (
-                        <li key={script.id} className="container">
-                            <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
-                        </li>
-                    ))}
-                </ul>
-            </Paper>
-            {<NewScript showModal={showModal} handleClose={handleCloseModal} />}
-            {/* <Button variant="contained" color="primary" onClick={handleShowModal}>Post a New Script</Button> */}
+
+            <div className="container"> 
+                <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
+                                    
+                <Paper id="scriptGame-list" elevation={24}>
+                    <ul>
+                        {scripts?.map(script => (
+                            <li key={script.id} className="container">
+                                <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
+                                <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </Paper>
+
+                <Button 
+                    id="create-game-button-2"
+                    variant="contained"                  
+                    size="large" 
+                    onClick={e => handleClick(e)}> Create Game </Button> 
+
+                {<NewScript />}
+            </div>           
         </div>
     )
 }
 export default NewGame;
-
 
 

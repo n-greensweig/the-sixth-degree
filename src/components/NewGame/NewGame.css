@@ -1,5 +1,21 @@
 
-  #checkboxes, #theScripts{
+ .container {
+  text-align: center;
+ }
+ 
+ #create-game-button-2{
+    text-align: center;
+    width:67%;
+    margin: 5px;
+    margin-bottom: 15px;
+    font-size: larger;
+    font-family: "Limelight", sans-serif;
+    border: 8px dotted rgb(34, 172, 34);
+    color: rgb(34, 172, 34);
+    background-color: white;
+}
+
+ #checkboxes, #theScripts{
     display: inline-block;
     vertical-align: middle;
     margin: 5px;
@@ -7,21 +23,12 @@
    #checkboxes{
     margin-left: -20px;
    }
-  #createGameBtn {
-    top:150px;
-       right:10%;
-       width:100px;
-       height:40px;
-       position: absolute;
-       z-index: 2; 
-       background: #de5722; 
-       font-size: 10px;
-       margin-top: 10px;
-       margin-bottom: 20px;
-  }
+  
   #scriptGame-list{
     /* brought from Nav.css */
-    background-image: linear-gradient(to top, #242319, 1%, #dcdada);  
+    background-image: linear-gradient(to top, #242319, 1%, #dcdada);
+    margin-right:1em; 
+    
   }
   #gameLinkHeader{
        font-size: 40px; 
@@ -32,7 +39,7 @@
   }
   #pick-scripts-line {
     text-align: center;
-    padding: 3%;   
+    padding: 2%;   
     font-family: "Limelight", sans-serif;
     font-size: 45px;
     font-weight: 400;

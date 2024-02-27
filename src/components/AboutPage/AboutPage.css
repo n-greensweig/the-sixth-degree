@@ -1,0 +1,29 @@
+.rulesDiv, .rulesTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.rulesTitle {
+    flex-direction: row;
+    margin: 20px 0 0 0;
+    font-size: 20px;
+}
+.spoool {
+    font-size: 30px;
+}
+.rulesDiv p, h4 {
+    border-left: 10px dotted rgb(229, 219, 166);
+    border-right: 10px dotted rgb(229, 219, 166);
+    padding: 5px 20px;
+    width: 600px;
+    text-align: center;    
+}
+@media (max-width: 425px) {
+    .rulesDiv p, h4 {
+        width: 340px;
+    }    
+  }
+  
+
