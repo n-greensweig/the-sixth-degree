@@ -21,13 +21,18 @@ function NewScript() {
     });
 
 
-    const handleAutofill = async () => {
-        // Dummy Data
-        let formData = {
-            second_actor: "Christopher Patrick Nolan" ,
-            second_appearance: "Lynn + Lucy",
-            complete: true
-        }};
+ 
+    const handleAutoFill = (event) => {
+      event.preventDefault();
+      // Dummy Data
+      let dummyData = {
+          secondActor: "Christopher Patrick Nolan",
+          secondAppearance: "Lynn + Lucy",
+      };
+  //formData state with dummy data
+      setFormData(dummyData);
+  };
+  
 
 
 
@@ -326,7 +331,7 @@ function NewScript() {
                     <Button variant='contained' onClick={handleSubmit}>Submit</Button>
 
                     <Button type="submit" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
-                     onClick={() => handleAutofill()}>
+                     onClick={() => handleAutoFill()}>
                          Fill Data
                          </Button>
                 </form>
