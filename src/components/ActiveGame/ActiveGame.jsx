@@ -52,17 +52,17 @@ function ActiveGame() {
   const handleAutofill = () => {
     setGuess({
       ...guess,
-      first_appearance_guess: "VS.",
+      first_appearance_guess: "The Lost Daughter",
       second_actor_guess: "Christopher Patrick Nolan",
-      second_appearance_guess: "Lynn + Lucy",
+      second_appearance_guess: "Macbeth",
       third_actor_guess: "Morgan Freeman",
-      third_appearance_guess: "Se7en",
+      third_appearance_guess: "The Shawshank Redemption",
       fourth_actor_guess: "Christopher Patrick Nolan",
-      fourth_appearance_guess: "The Ballad Of Billy McCrae",
+      fourth_appearance_guess: "Rogue One: A Star Wars Story",
       fifth_actor_guess: "Lizze Broadway",
       fifth_appearance_guess: "American Pie Presents: Girls' Rules",
       sixth_actor_guess: "Emma Stone",
-      sixth_appearance_guess: "The Help",
+      sixth_appearance_guess: "Cruella",
       complete: true
     });
   };
