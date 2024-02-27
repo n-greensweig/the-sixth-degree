@@ -141,7 +141,8 @@ function UserPage() {
                                   null
                             }
                             {game.their_total_scripts === '3' ? null :
-                              <Button variant='outlined'
+                              <Button 
+                                variant='outlined'
                                 onClick={() => sendScriptsBack(game.id, game.code, user.id === game.player_one_id ? game.player_two_id : game.player_one_id)}
                                 sx={{
                                   marginTop: '15px',
