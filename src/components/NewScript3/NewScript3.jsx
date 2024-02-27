@@ -494,7 +494,7 @@ function NewScript({ showModal, handleClose }) {
             Swal.fire({
                 title: "New Script Submitted!",
                 icon: "success"
-              });
+            });
             dispatch({ type: 'FETCH_SCRIPTS' });
         } catch (error) {
             console.error('Error submitting script:', error);
@@ -519,8 +519,8 @@ function NewScript({ showModal, handleClose }) {
 
     return (
         <>
-        <Modal className='Modal'isOpen={showModal} onRequestClose={handleClose} contentLabel="New Script Modal">
-            {/* <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button> */}
+            <Modal className='Modal' isOpen={showModal} onRequestClose={handleClose} contentLabel="New Script Modal">
+                {/* <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button> */}
                 <form className='inputForm'>
                     {/* First Actor and Appearance Input Fields */}
                     <label>
@@ -763,8 +763,8 @@ function NewScript({ showModal, handleClose }) {
                         ))}
                     </ul>
                     <Button variant='contained' onClick={() => { handleSubmit(); handleClose(); }}>
-  Submit
-</Button>
+                        Submit
+                    </Button>
 
                     <Button type="button" variant="contained" style={{ backgroundColor: 'inherit', color: 'white', boxShadow: 'none' }}
                         onClick={(event) => handleAutoFill(event)}>Fill data</Button>
