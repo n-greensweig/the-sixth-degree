@@ -8,9 +8,25 @@ import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Nav/Nav';
 import './NewGame.css'
 import Swal from 'sweetalert2'
+import Modal from '@mui/material/Modal';
+
+
 function NewGame() {
     const dispatch = useDispatch();
     const history = useHistory();
+
+
+    const [showModal, setShowModal] = useState(false); // New state for modal visibility
+
+    const handleShowModal = () => {
+        setShowModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+      };
+
+
 
     // GET request to display user's scripts on the DOM
     const scripts = useSelector((store) => store.scriptReducer);
@@ -60,7 +76,8 @@ function NewGame() {
                     ))}
                 </ul>
             </Paper>
-            {<NewScript />}
+            {<NewScript showModal={showModal} handleClose={handleCloseModal} />}
+            {/* <Button variant="contained" color="primary" onClick={handleShowModal}>Post a New Script</Button> */}
         </div>
     )
 }

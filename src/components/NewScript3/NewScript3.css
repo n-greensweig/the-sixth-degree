@@ -5,6 +5,7 @@
   border: 8px dotted black;
   color: black;
   background-color: white;
+  font-family: "Limelight", sans-serif;
 }
 
 #create-new-script-button:hover {
@@ -21,7 +22,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7); /*issue with opacity */
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+
   }
  
   
@@ -34,7 +37,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 90px;
+    padding: 40px;
     border-radius: 8px; 
     max-width: 600px; 
     width: 90%; 

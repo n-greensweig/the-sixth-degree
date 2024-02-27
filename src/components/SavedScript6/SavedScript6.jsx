@@ -6,14 +6,23 @@ import NewScript from '../NewScript3/NewScript3';
 import Nav from "../Nav/Nav";
 import './SavedScript6.css'
 import swal from 'sweetalert';
-
+import Modal from '@mui/material/Modal';
 
 function savedScripts() {
+
 
     const scripts = useSelector((store) => store.scriptReducer);
     const dispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
+    const [showModal, setShowModal] = useState(false); // New state for modal visibility
+
+    const handleShowModal = () => {
+        setShowModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+      };
 
 
 
@@ -55,7 +64,9 @@ function savedScripts() {
             <Grid container justifyContent="center">
                 <h2 id="my-scripts-line">My Scripts</h2>
                 <br></br>
-                <NewScript id="create-new-script-button"/>
+                <Button id="create-new-script-button" variant="contained" color="primary" onClick={handleShowModal}>Post a New Script</Button>
+                {/* New Script Modal Below */}
+                <NewScript showModal={showModal} handleClose={handleCloseModal}/>
             </Grid>
             
             <Box>

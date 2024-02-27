@@ -39,3 +39,8 @@
 .card:hover {
     border: 15px dotted #d6d82c;
 }
+
+
+#create-new-script-button:hover {
+    border: 8px dotted #d6d82c;
+  }
