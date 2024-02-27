@@ -4,11 +4,12 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import './NewScript3.css';
+import Swal from 'sweetalert2';
 
 
 
 
-function NewScript() {
+function NewScript({ showModal, handleClose }) {
 
     let dispatch = useDispatch();
 
@@ -35,17 +36,17 @@ function NewScript() {
         event.preventDefault();
         // Dummy Data
         let dummyData = {
-            secondActor: "Christopher Patrick Nolan",
-            secondAppearance: "Lynn + Lucy",
-            thirdActor: "Morgan Freeman",
-            thirdAppearance: "Se7en",
-            fourthActor: "Christopher Patrick Nolan",
-            fourthAppearance: "The Ballad Of Billy McCrae",
-            fifthActor: "Lizze Broadway",
-            fifthAppearance: "American Pie Presents: Girls' Rules",
-            sixthActor: "Emma Stone",
-            sixthAppearance: "The Help",
-            seventhActor: "Will Smith",
+            secondActor: "Tom Hanks",
+            secondAppearance: "Forrest Gump",
+            thirdActor: "Robin Wright",
+            thirdAppearance: "The Princess Bride",
+            fourthActor: "Cary Elwes",
+            fourthAppearance: "Saw",
+            fifthActor: "Danny Glover",
+            fifthAppearance: "Lethal Weapon",
+            sixthActor: "Mel Gibson",
+            sixthAppearance: "Mad Max",
+            seventhActor: "Charlize Theron",
         };
         // Update formData state with dummy data, preserving existing data
         setFormData(prevFormData => ({
@@ -489,6 +490,11 @@ function NewScript() {
             const response = await axios.post('/api/script', scriptData);
             console.log(response.data); // Handle the response as needed
             closeModal(); // Closes the modal on successful submission
+
+            Swal.fire({
+                title: "New Script Submitted!",
+                icon: "success"
+              });
             dispatch({ type: 'FETCH_SCRIPTS' });
         } catch (error) {
             console.error('Error submitting script:', error);
@@ -513,8 +519,8 @@ function NewScript() {
 
     return (
         <>
-            <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button>
-            <Modal className='Modal' isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="New Script Modal">
+        <Modal className='Modal'isOpen={showModal} onRequestClose={handleClose} contentLabel="New Script Modal">
+            {/* <Button id="create-new-script-button" variant='contained' onClick={openModal}>Create New Script</Button> */}
                 <form className='inputForm'>
                     {/* First Actor and Appearance Input Fields */}
                     <label>
@@ -756,8 +762,9 @@ function NewScript() {
                             </li>
                         ))}
                     </ul>
-
-                    <Button variant='contained' onClick={handleSubmit}>Submit</Button>
+                    <Button variant='contained' onClick={() => { handleSubmit(); handleClose(); }}>
+  Submit
+</Button>
 
                     <Button type="button" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
                         onClick={(event) => handleAutoFill(event)}>
