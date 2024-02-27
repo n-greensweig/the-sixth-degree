@@ -29,42 +29,31 @@ function NewScript() {
     });
 
 
-        //Variable for Dummy for data
-    const [dummyFormData, setDummyFormData] = useState({
-        firstActor: '',
-        firstAppearance: '',
-        secondActor: '',
-        secondAppearance: '',
-        thirdActor: '',
-        thirdAppearance: '',
-        fourthActor: '',
-        fourthAppearance: '',
-        fifthActor: '',
-        fifthAppearance: '',
-        sixthActor: '',
-        sixthAppearance: '',
-        seventhActor: '',
-      });
+
+        const handleAutoFill = () => {
+            // Dummy Data
+            let dummyData = {
+                secondActor: "Christopher Patrick Nolan",
+                secondAppearance: "Lynn + Lucy",
+                thirdActor: "Morgan Freeman",
+                thirdAppearance: "Se7en",
+                fourthActor: "Christopher Patrick Nolan",
+                fourthAppearance:  "The Ballad Of Billy McCrae",
+                fifthActor: "Lizze Broadway",
+                fifthAppearance: "American Pie Presents: Girls' Rules",
+                sixthActor: "Emma Stone",
+                sixthAppearance: "The Help",
+                seventhActor: "Will Smith",
+            };
+        //formData state with dummy data
+            setFormData(dummyData);
+        };
+        
 
 
 
-      const fillWithDummyData = () => {
-        setDummyFormData({
-            firstActor: 'Will Smith',
-            firstAppearance: 'Independence Day',
-            secondActor: '',
-            secondAppearance: '',
-            thirdActor: '',
-            thirdAppearance: '',
-            fourthActor: '',
-            fourthAppearance: '',
-            fifthActor: '',
-            fifthAppearance: '',
-            sixthActor: '',
-            sixthAppearance: '',
-            seventhActor: '',
-        });
-      };
+
+
 
 
 
@@ -767,6 +756,11 @@ function NewScript() {
                     </ul>
 
                     <Button variant='contained' onClick={handleSubmit}>Submit</Button>
+
+                    <Button type="submit" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
+                     onClick={() => handleAutoFill()}>
+                         Fill Data
+                         </Button>
                 </form>
             </Modal>
         </>
