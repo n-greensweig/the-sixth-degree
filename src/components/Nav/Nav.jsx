@@ -13,7 +13,6 @@ import TheSixthLogo from '../../images/t6d.png';
 import { FaTheaterMasks } from "react-icons/fa";
 import { PiFilmSlateLight } from "react-icons/pi";
 import { GiFilmProjector } from "react-icons/gi";
-import { GiFilmSpool } from "react-icons/gi";
 import { VscMegaphone } from "react-icons/vsc";
 import { IoMdFilm } from "react-icons/io";
 
