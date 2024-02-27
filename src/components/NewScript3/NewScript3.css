@@ -5,6 +5,7 @@
   border: 8px dotted black;
   color: black;
   background-color: white;
+  font-family: "Limelight", sans-serif;
 }
 
 #create-new-script-button:hover {

@@ -52,21 +52,28 @@ function SendScriptsBack() {
     return (
         <div>
             <Nav />
-            <h1>Pick 3 Scripts to send back!</h1>
-            <div className="container">
+
+            <div className="container"> 
+                <h1 id="pick-three-scripts-line">Pick 3 Scripts to send back!</h1>
+                
+                <Paper id="scriptGame-list" elevation={24}>
+                    <ul>
+                        {scripts?.map(script => (
+                            <li key={script.id} className="container">
+                                <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
+                                <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </Paper>
+
+                <Button 
+                    id="send-scripts-button2" 
+                    variant="contained" 
+                    onClick={e => handleClick(e)}> Send Scripts </Button>
+
+                {<NewScript />}
             </div>
-            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}>Send Scripts</Button>
-            <Paper id="scriptGame-list" elevation={24}>
-                <ul>
-                    {scripts?.map(script => (
-                        <li key={script.id} className="container">
-                            <input onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
-                        </li>
-                    ))}
-                </ul>
-            </Paper>
-            {<NewScript />}
         </div>
     )
 }

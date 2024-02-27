@@ -46,21 +46,29 @@ function NewGame() {
     return (
         <div>
             <Nav />
-            <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
-            <div className="container">
-            </div>
-            <Button variant="contained" id="createGameBtn" onClick={e => handleClick(e)}> Create Game </Button>
-            <Paper id="scriptGame-list" elevation={24}>
-                <ul>
-                    {scripts?.map(script => (
-                        <li key={script.id} className="container">
-                            <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
-                            <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
-                        </li>
-                    ))}
-                </ul>
-            </Paper>
-            {<NewScript />}
+
+            <div className="container"> 
+                <h1 id="pick-scripts-line">Pick 3 Scripts!</h1>
+                                    
+                <Paper id="scriptGame-list" elevation={24}>
+                    <ul>
+                        {scripts?.map(script => (
+                            <li key={script.id} className="container">
+                                <input id="checkboxes" onChange={() => handleScriptSelection(script.id)} value={script.id} type="checkbox" />
+                                <p id="theScripts">{script.first_actor} to {script.seventh_actor}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </Paper>
+
+                <Button 
+                    id="create-game-button-2"
+                    variant="contained"                  
+                    size="large" 
+                    onClick={e => handleClick(e)}> Create Game </Button> 
+
+                {<NewScript />}
+            </div>           
         </div>
     )
 }
