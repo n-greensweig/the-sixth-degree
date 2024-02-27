@@ -766,10 +766,8 @@ function NewScript({ showModal, handleClose }) {
   Submit
 </Button>
 
-                    <Button type="button" variant="contained" style={{ backgroundColor: 'inherit', color: '#fcf7f7', boxShadow: 'none' }}
-                        onClick={(event) => handleAutoFill(event)}>
-                        Fill Data
-                    </Button>
+                    <Button type="button" variant="contained" style={{ backgroundColor: 'inherit', color: 'white', boxShadow: 'none' }}
+                        onClick={(event) => handleAutoFill(event)}>Fill data</Button>
 
                 </form>
             </Modal>
