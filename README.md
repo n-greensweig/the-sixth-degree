@@ -10,6 +10,9 @@
 ## Description
 The Sixth Degree is a digital version of the game 'The Six Degrees of Kevin Bacon'. The app allows two users to play the game against one another and has a scoring system to identify winners and losers of a challenge. The app is built with React, Redux, Node.js, PostgreSQL, and the Movie Database Project's API. Users save scripts (cards to play against one another) and challenge one another to see who can create the closest links between actors and movies.
 
+## Screenshot
+<img width=1000 alt="Screenshot of the Sixth Degree" href="https://github.com/n-greensweig/the-sixth-degree/assets/129970968/fb02a2dc-c5d4-40cc-971f-7288d7f1db3c" />
+
 ## Installation
 1. Create a database named ```the_sixth_degree```
 2. Fork and clone this repository
